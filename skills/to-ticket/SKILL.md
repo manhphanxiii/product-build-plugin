@@ -29,3 +29,10 @@ Set `Status: ready` unless repository evidence requires another state.
 Declare `Blocked by` explicitly, using `none` where appropriate.
 Add one row per ticket to the roadmap Task table with the ticket path in `Nguồn`.
 Update only the step 4 row and the inserted task rows in `prd/roadmap.md`.
+
+## Next step
+
+Recommend `/implement` as the next command, with one sentence explaining why.
+Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+If yes, tell the user to run `/clear` and then `/implement`.
+If not now, stop without further action.

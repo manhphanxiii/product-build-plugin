@@ -34,4 +34,12 @@ Resolve every actionable finding and rerun affected checks.
 Commit on the current branch with the ticket identifier in the commit message.
 Change the ticket frontmatter to `Status: done`.
 Update its Task row and the step 5 progress row in `prd/roadmap.md`, including the commit identifier.
-Remind the user to run `/clear` before the next ticket.
+
+## Next step
+
+Read `prd/roadmap.md` for remaining tasks whose blockers are done and status is `ready`.
+If one remains, recommend `/implement` for that ticket; otherwise recommend `/evals-gate`.
+State one sentence explaining why.
+Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+If yes, tell the user to run `/clear` and then run the recommended command.
+If not now, stop without further action.

@@ -44,3 +44,10 @@ On discard, remove only that approved spike directory after its ADR exists.
 On promotion, move it to `demos/<name>/` and add a Vietnamese or project-language `SCRIPT.md` presentation script.
 Keep the ADR in either case.
 Update only the step 2 row and related decision entries in `prd/roadmap.md`.
+
+## Next step
+
+Recommend `/to-prd` as the next command, with one sentence explaining why.
+Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+If yes, tell the user to run `/clear` and then `/to-prd`.
+If not now, stop without further action.

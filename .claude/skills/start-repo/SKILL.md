@@ -1,7 +1,6 @@
 ---
 name: start-repo
 description: Initialize a product repository once with canonical instructions, quality gates, workspace structure, and the first product-building roadmap.
-disable-model-invocation: true
 ---
 
 # Start Repo

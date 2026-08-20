@@ -48,6 +48,9 @@ Show the exact `.claude/settings.json` change and obtain separate approval befor
 
 ## Next step
 
-Finish with exactly one next command and one sentence explaining why it is next.
+Recommend exactly one next command and one sentence explaining why it is next.
 Also list the three most valuable roadmap actions in order and the current blocker, writing `none` when repository evidence shows no blocker.
+Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+If yes, tell the user to run `/clear` and then run the recommended command.
+If not now, stop without further action.
 Do not propose work outside the roadmap.

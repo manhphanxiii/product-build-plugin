@@ -37,3 +37,10 @@ Open Lavish `plan` and `diagram` playbooks before writing the HTML artifact, pol
 Treat Markdown under `prd/` as the source of truth and `.lavish/` as a disposable review surface.
 If the user wants a presentation artifact, export it to `demos/<name>/`.
 Update only the step 3 row and decision index in `prd/roadmap.md`.
+
+## Next step
+
+Recommend `/to-ticket` as the next command, with one sentence explaining why.
+Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+If yes, tell the user to run `/clear` and then `/to-ticket`.
+If not now, stop without further action.

@@ -21,6 +21,7 @@ Mỗi bước chính dùng một context window riêng và để lại bằng ch
 
 Chạy `/clear` giữa các bước chính và giữa mỗi ticket ở bước 5.
 Sau bước 0, chạy `/update` để làm tươi tiến độ và biết đúng một lệnh tiếp theo.
+Mỗi bước chính, kể cả `/update`, kết thúc bằng cách nêu tên lệnh tiếp theo và hỏi có muốn tiếp tục ngay không, không kết thúc im lặng.
 
 ## Cấu trúc repo lớn
 

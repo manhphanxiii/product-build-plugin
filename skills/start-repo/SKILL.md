@@ -1,7 +1,6 @@
 ---
 name: start-repo
 description: Initialize a product repository once with canonical instructions, quality gates, workspace structure, and the first product-building roadmap.
-disable-model-invocation: true
 ---
 
 # Start Repo
@@ -121,7 +120,16 @@ Leave Out of scope empty with a note that `/idea-to-product-concept` will supply
 Do not infer progress or add tasks.
 
 Tell the user to use `/update`, not `/start-repo`, to refresh roadmap progress and choose future commands.
-Finish with exactly `/idea-to-product-concept` as the next command and one sentence explaining why.
+
+Ask exactly one question using `❓ **Q2** - **<title>**` followed by `➡️ <recommended answer>`.
+Ask whether to communicate with the user in Vietnamese or English for the rest of the chain.
+This is separate from the Phase 2 question, which only controls the language of generated file content.
+Add the answer as a new Conventions line in the `AGENTS.md` already written in Phase 3, for example `- Giao tiếp với người dùng bằng <Tiếng Việt/English>.`.
+
+Recommend `/idea-to-product-concept` as the next command with one sentence explaining why.
+Ask using `❓ **Q3** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+If yes, tell the user to run `/clear` and then `/idea-to-product-concept`.
+If not now, stop without further action.
 Do not start product code in the same turn.
 
 ## Repository operating rules to preserve

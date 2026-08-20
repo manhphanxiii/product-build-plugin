@@ -28,3 +28,11 @@ Diagnose failed cases before changing implementation.
 After a fix, rerun the complete set, not only failed cases.
 Before shipping a fix for any real-world bug, add a permanent regression case that reproduces it.
 Update only the step 6 row and related blocker entries in `prd/roadmap.md`.
+
+## Next step
+
+Only when the gate passes, recommend `/update` as the next command, with one sentence explaining why.
+Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+If yes, tell the user to run `/clear` and then `/update`.
+If not now, stop without further action.
+While the gate is failing, do not offer a next command; stay focused on fixing the failures.

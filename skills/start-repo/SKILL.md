@@ -1,6 +1,7 @@
 ---
 name: start-repo
 description: Initialize a product repository once with canonical instructions, quality gates, workspace structure, and the first product-building roadmap.
+disable-model-invocation: true
 ---
 
 # Start Repo
@@ -11,6 +12,9 @@ After initialization, use `/update` to refresh progress and choose the next comm
 ## Ground rules
 
 Resolve `<root>` in phase 0 before using it in any later phase.
+A repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md` is the skill-set repository and is never a valid `<root>`; refuse such a path and ask again.
+Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
+Run repository commands with `<root>` as the working directory and every Git command as `git -C <root> ...`.
 Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, and prototypes only under `<root>/demos/prototypes/`.
 Root governance files `AGENTS.md` and `CLAUDE.md` may be written only by `/start-repo`, after approval. The ship checklist at `prd/evals/checklist.md` is also seeded only by `/start-repo`, after approval.
 Treat `client-note/` as read-only.
@@ -27,9 +31,15 @@ Do not interview about the product, buyer, promise, or scope.
 Those decisions belong to `/idea-to-product-concept`.
 Record unknown setup facts as explicit TODOs and never invent project commands.
 
-## Phase 0: choose the initialization mode
+## Phase 0: choose the language and the initialization mode
 
-Ask whether this product needs `new` or `restructure` mode.
+Before anything else, ask exactly one question using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>`.
+Ask whether to use Vietnamese or English, offering Vietnamese for both, English for both, or a different language for each.
+That answer sets both the language of the conversation for the rest of the chain and the language of generated repository file content.
+Only when the user picks a different language for each, ask one follow-up naming which language applies to which.
+Use the chosen conversation language from the next message onward, including the mode and path questions below.
+
+Then ask whether this product needs `new` or `restructure` mode.
 Use `new` only when no product code exists yet.
 Use `restructure` whenever an application or product code already exists.
 
@@ -52,7 +62,7 @@ Present exactly one table with `Item`, `Status`, and `Proposal` columns.
 Do not create files, initialize Git, authenticate services, or create directories before approval.
 
 If `prd/roadmap.md` already exists, report what exists and what is missing.
-Propose only the missing files, never modify `prd/roadmap.md`, skip phases 2 and 4 except for questions required to fill a missing file, and finish by directing the user to `/update`.
+Propose only the missing files, never modify `prd/roadmap.md`, skip phase 4 except for questions required to fill a missing file, and finish by directing the user to `/update`.
 
 If a root-level `REVIEW.md` exists, that is the old layout. Propose migrating its content to `prd/evals/checklist.md` and deleting the root file, as one row in the phase 1 table, and wait for approval. Never overwrite `prd/evals/checklist.md` if it already exists.
 
@@ -79,12 +89,6 @@ Explain that writing through a symlink writes directly to its real target and th
 Wait for approval of every row before running the scaffold.
 Do not reorganize or edit anything inside the existing application repository.
 
-## Phase 2: interview setup
-
-Ask exactly one question using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>`.
-
-Ask whether generated repository files should use Vietnamese or English.
-
 ## Phase 3: scaffold and fill canonical files
 
 After approval, run the mode-appropriate scaffold command and relay its created, skipped, and symlink lists verbatim.
@@ -105,7 +109,7 @@ Leave product-specific quality criteria as the self-describing TODOs owned by `/
 Always install both `weekly-ops-review.md` and `pr-auto-review.md` in `routines/`.
 Do not fill or seed any file whose approved symlink resolves inside the existing application repository in the separate-folder branch.
 If `.cursorrules`, `GEMINI.md`, or another agent configuration duplicates canonical instructions, propose reducing it to a thin pointer.
-Translate the Vietnamese templates while filling them if the user selected English.
+Fill the templates in the file content language chosen in phase 0, translating the Vietnamese templates when that language is English.
 
 ## Phase 4: initialize the chain and hand off
 
@@ -121,13 +125,11 @@ Do not infer progress or add tasks.
 
 Tell the user to use `/update`, not `/start-repo`, to refresh roadmap progress and choose future commands.
 
-Ask exactly one question using `❓ **Q2** - **<title>**` followed by `➡️ <recommended answer>`.
-Ask whether to communicate with the user in Vietnamese or English for the rest of the chain.
-This is separate from the Phase 2 question, which only controls the language of generated file content.
-Add the answer as a new Conventions line in the `AGENTS.md` already written in Phase 3, for example `- Giao tiếp với người dùng bằng <Tiếng Việt/English>.`.
+Add the conversation language chosen in phase 0 as a new Conventions line in the `AGENTS.md` already written in phase 3, for example `- Giao tiếp với người dùng bằng <Tiếng Việt/English>.`.
+Every later chain skill reads its conversation language from that line, so it must be present.
 
 Recommend `/idea-to-product-concept` as the next command with one sentence explaining why.
-Ask using `❓ **Q3** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+Ask using `❓ **Q2** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
 If yes, tell the user to run `/clear` and then `/idea-to-product-concept`.
 If not now, stop without further action.
 Do not start product code in the same turn.

@@ -2,6 +2,7 @@
 
 Read source enablement and roots from `prd/README.md`.
 Report disabled sources before scanning.
+Every path here is relative to the `<root>` resolved in [SKILL.md](SKILL.md), and every `git` or `gh` command runs with `<root>` as the working directory.
 
 ## GitHub Issues
 
@@ -15,7 +16,7 @@ Extract unfinished work and review blockers.
 
 ## Commits
 
-Run `git log` from the last update timestamp recorded in the roadmap or latest product report.
+Run `git -C <root> log` from the last update timestamp recorded in the roadmap or latest product report.
 Use commits only as evidence that tracked work may already be complete.
 
 ## Notion

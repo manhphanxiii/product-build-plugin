@@ -23,6 +23,15 @@ Chạy `/clear` giữa các bước chính và giữa mỗi ticket ở bước 5
 Sau bước 0, chạy `/update` để làm tươi tiến độ và biết đúng một lệnh tiếp theo.
 Mỗi bước chính, kể cả `/update`, kết thúc bằng cách nêu tên lệnh tiếp theo và hỏi có muốn tiếp tục ngay không, không kết thúc im lặng.
 
+## Chạy chuỗi từ đâu
+
+Mở repo này rồi gọi lệnh. Đây là buồng lái, không phải nơi chứa artifact.
+Mỗi skill tự giải `<root>` là repo sản phẩm: dùng đường dẫn bạn cung cấp, nếu không có thì lấy git root của thư mục hiện tại.
+`<root>` chỉ hợp lệ khi tồn tại `<root>/prd/roadmap.md`, và repo bộ skill này không bao giờ là `<root>`.
+Root không hợp lệ thì skill in đường dẫn đã giải, nêu lý do, rồi hỏi một câu về đường dẫn repo sản phẩm; nó không bao giờ tự tạo `prd/`, `app/` hay `demos/` trong repo bộ skill.
+Mọi path trong skill không có tiền tố đều tính từ `<root>`, và mọi lệnh Git chạy dạng `git -C <root>`.
+`AGENTS.md` của repo sản phẩm không được nạp tự động khi thư mục hiện tại nằm ở nơi khác, nên mỗi skill đọc `<root>/AGENTS.md` trước câu hỏi đầu tiên, gồm cả dòng Conventions về ngôn ngữ.
+
 ## Cấu trúc repo lớn
 
 Có hai chế độ khởi tạo.
@@ -92,10 +101,13 @@ Write policy chi tiết nằm ở `skills/start-repo/REPO-LAYOUT.md`.
 ## Cài đặt
 
 Bộ skill gồm chín skill trong `skills/` cộng `lavish` vendor tại `lavish-axi/skills/lavish/`, tổng mười skill khai báo trong `.claude-plugin/plugin.json`.
-Có hai đường cài, dùng cái nào cũng được:
+Có ba vị trí khai báo skill; thêm hoặc đổi tên skill thì phải đồng bộ cả ba:
 
-- Khai báo plugin qua `.claude-plugin/plugin.json`.
-- Symlink toàn cục: chạy `bash link.sh` từ chính folder này. Script ghi mười skill vào `~/.claude/skills` và `~/.agents/skills`, và hỏi xác nhận trước khi thay thế thư mục đã tồn tại.
+- `.claude/skills/` trong chính repo này: mười pointer, mỗi pointer trỏ về skill thật trong `skills/` hoặc `lavish-axi/skills/`. Đây là đường đang dùng, có sẵn ngay khi bạn mở repo này.
+- `.claude-plugin/plugin.json`: danh sách mười skill khi cài dạng plugin.
+- `link.sh`: symlink toàn cục. Chạy `bash link.sh` từ chính folder này thì script ghi mười skill vào `~/.claude/skills` và `~/.agents/skills`, và hỏi xác nhận trước khi thay thế thư mục đã tồn tại.
+
+Pointer trong `.claude/skills/` tự định vị bằng git root nên không nhúng tên thư mục repo; đổi tên hoặc symlink repo này thì chúng vẫn chạy.
 
 Sau khi cài, chạy `/start-repo` và cung cấp đường dẫn repo sản phẩm; lệnh sẽ tạo folder và khởi tạo Git sau khi bạn duyệt đề xuất.
 Không copy bộ skill vào repo sản phẩm.

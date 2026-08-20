@@ -4,6 +4,8 @@ This is a self-contained skill chain for building a product from idea to code th
 Read `README.md` before changing anything in this folder.
 Follow the three-destination rule: documents go into `prd/`, production code into `app/`, prototypes into `demos/prototypes/`.
 If a destination directory is missing, the agent must state its path, propose creating it, and wait for approval.
+`<root>` is the product repository and is never automatically the Git root of the current working directory: a skill uses the path the user supplied, requires `<root>/prd/roadmap.md` to exist, and never accepts this skill-set repository as `<root>`.
+No skill writes chain artifacts into this repository, and every path in a skill without an explicit prefix is relative to `<root>`.
 Never edit `client-note/` or runtime content in `app/knowledge-base/`.
 This skill must not depend on anything outside its own folder, and must work correctly whether it is symlinked or installed as a plugin.
 Do not reference the name, brand, or path of any other skill set in this folder, except `lavish-axi/`, which is vendored in this repo and declared in `.claude-plugin/plugin.json`.

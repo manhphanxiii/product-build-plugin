@@ -6,9 +6,27 @@ disable-model-invocation: true
 
 # Idea to Product Concept
 
+## Root resolution
+
+Resolve `<root>` before reading or writing anything.
+Use the product repository path if the user supplied one in this invocation; otherwise run `git rev-parse --show-toplevel`.
+
+`<root>` is valid only when `<root>/prd/roadmap.md` exists.
+A repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md` is the skill-set repository and is never a valid `<root>`.
+
+When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
+Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
+Never create chain destinations in an invalid `<root>`, never write anything into the skill-set repository, and never silently fall back to the current working directory.
+When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/start-repo` first instead of asking again.
+
+State the confirmed `<root>` once before the first read.
+Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
+Run repository commands with `<root>` as the working directory and every Git command as `git -C <root> ...`.
+Read `<root>/AGENTS.md` before the first question and before the first write, because the product repository's own agent instructions are not loaded automatically when the current working directory is elsewhere.
+Follow its Conventions line about the language used with the user; when that line is absent, use the language of the user's own messages and do not ask the user to choose a language again.
+
 ## Repository destinations
 
-Resolve the repository root with `git rev-parse --show-toplevel`.
 Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, and prototypes only under `<root>/demos/prototypes/`.
 If a destination is missing, propose its exact path and wait for approval before creating it.
 Treat existing files in `client-note/` as read-only.
@@ -68,12 +86,30 @@ Use this format for each question:
 ```
 
 Cover the problem, who experiences it, success measures, scope, out of scope, constraints, and the largest risks.
+Cover surfaces and logic in the same batch, because `/prototype` cannot choose a prototyping method without those answers.
 Offer operator, builder, and researcher as optional lenses for missing perspectives.
 If the user says those lenses are irrelevant, drop them immediately and do not insist.
 After the response, analyze the full set for contradictions, newly opened issues, and answers too vague to act on.
 Ask a second round only for real gaps and explain which answer created each follow-up.
 Investigate facts in the repository instead of asking the user, using sub-agents when available and authorized.
 Reserve product decisions for the user.
+
+## Surfaces and logic
+
+Read [SURFACES-AND-LOGIC.md](SURFACES-AND-LOGIC.md) before writing these questions.
+Ask one surface question for each of the three stakeholders: the person who uses the features, the developer who debugs and maintains the product, and the admin who manages and controls it.
+Offer Web/App and Zero UI as the two surface types, accept `none` as a real answer, and accept both types on one stakeholder when that is the truth.
+A Zero UI answer must name the host product, such as Zalo, Google Sheets, Slack, or email.
+
+Ask one logic question for each main capability, offering all four levels: plain code, workflow, skill, and agent.
+Say inside the question that the levels stack, so one product usually uses several at once.
+When an answer is agent or skill, ask exactly one follow-up about which part of that capability could move down to plain code.
+Ask separately what has to outlive a session, who owns it, and what already runs that the product must reuse.
+Add one optional question about concrete technology and say in the question itself that "not decided yet" is a fine answer.
+
+Record every unresolved technology or level as an open question in `## Risks and open decisions` for `/prototype` to settle with a spike.
+Do not choose any of this for the user, and never let a recommended answer become a decision the user did not make.
+Write an unanswered surface or level as `TODO - chưa xác nhận`, never as a default of Web/App and never as a default of plain code.
 
 ## Write the concept
 

@@ -9,7 +9,7 @@ Run every check read-only and report one table before proposing changes.
 5. Run `gh auth status`; if authenticated, ask which remote repository belongs to the product and whether GitHub Issues is an enabled task source.
 6. Check whether a Notion connector is available; if unavailable, explain that the user must enable it in connector settings and this session cannot complete OAuth on its own.
 7. If Notion is enabled, ask for the root product page or database.
-8. Check whether `start-repo` and the remaining chain skills are available under the project `.claude/skills/` or `~/.claude/skills/`; if absent, point to `product-building-agents/link.sh` but do not run it.
+8. Check whether `start-repo` and the remaining chain skills are available to the current session. The chain is normally invoked from the skill-set repository, whose own `.claude/skills/` holds one pointer per skill, so `<root>` needs no `.claude/skills/` of its own. If the skills are absent, point to `<skill-set-root>/link.sh` but do not run it.
 9. Require Node 22 or newer and working `npx` for visual review.
 10. Discover install, development, test, typecheck, lint, and build commands from the existing app manifest, `Makefile`, or `pyproject.toml`. A command counts only when discovery verifies it; there is no interview fallback.
 11. In `restructure` mode, list the first-level directories in the existing application repository and compare them with every canonical role in [REPO-LAYOUT.md](REPO-LAYOUT.md), without changing anything.

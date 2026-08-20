@@ -5,9 +5,16 @@ description: Use when reviewing an implementation diff against its product speci
 
 # Review Code
 
-Resolve the repository root and verify that the diff is non-empty before delegating.
+## Root resolution
+
+Use the `<root>` supplied by the calling skill.
+When no caller supplied one, resolve it with `git rev-parse --show-toplevel`, and reject a repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md`, because that is the skill-set repository and never a valid `<root>`.
+Every path in this skill without an explicit prefix is relative to `<root>`, and every Git command runs as `git -C <root> ...`.
+Pass `<root>` to every sub-agent so both axes read the same repository.
+
+Verify that the diff is non-empty before delegating.
 Use the merge base with the default branch as the fixed point unless the caller supplies another one.
-Review `git diff <fixed-point>...HEAD`.
+Review `git -C <root> diff <fixed-point>...HEAD`.
 
 Run two sub-agents in parallel so their contexts remain independent.
 Limit each report to fewer than 400 words.

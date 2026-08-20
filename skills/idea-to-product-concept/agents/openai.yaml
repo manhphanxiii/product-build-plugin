@@ -1,0 +1,5 @@
+interface:
+  display_name: "Idea To Product Concept"
+  short_description: "Turn evidence into a product concept"
+policy:
+  allow_implicit_invocation: false

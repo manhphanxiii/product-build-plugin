@@ -1,0 +1,6 @@
+interface:
+  display_name: "Start Repo"
+  short_description: "Initialize and route product work once"
+policy:
+  allow_implicit_invocation: false
+

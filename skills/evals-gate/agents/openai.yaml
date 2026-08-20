@@ -1,0 +1,5 @@
+interface:
+  display_name: "Evals Gate"
+  short_description: "Enforce the product ship gate"
+policy:
+  allow_implicit_invocation: false

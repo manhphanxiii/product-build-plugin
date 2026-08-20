@@ -1,0 +1,40 @@
+# Ship checklist
+
+Checklist chạy trước khi ship. File này nằm ở `prd/evals/checklist.md`; mọi đường dẫn bên dưới tính từ gốc repo.
+Còn một ô chưa tick thì chưa ship.
+
+## Phạm vi
+
+- [ ] Thay đổi này nằm trong mục tiêu ở `prd/roadmap.md`?
+- [ ] Nếu là tính năng, có PRD và ticket tương ứng trong `prd/` không, và code có bám chúng?
+- [ ] Có chạm vào thứ gì trong danh sách out of scope không?
+- [ ] Thay đổi đủ nhỏ để một người review được trong một lượt?
+
+## Chức năng
+
+- [ ] Flow chính còn chạy qua kiểm tra thật, không suy đoán?
+- [ ] Chạy được trên mobile, không chỉ desktop?
+- [ ] Form xử lý input sai, để trống và submit hai lần?
+- [ ] Trạng thái loading và trạng thái rỗng có được xử lý?
+
+## Rủi ro
+
+- [ ] Có đụng auth, payment hoặc production data không? Nếu có thì dừng và cần người duyệt.
+- [ ] Có secret hoặc key nào lỡ commit không?
+
+## Chất lượng
+
+- [ ] Có thêm độ phức tạp thừa không?
+- [ ] Boundary hoặc dependency thay đổi đã được cập nhật trong `prd/architecture.md` và ADR liên quan?
+- [ ] Có chép lại nội dung đã có ở file khác thay vì trỏ tới nó không?
+- [ ] Ngôn từ hiển thị cho người dùng có khớp `/client-note` không?
+- [ ] Eval gate trong `/evals-gate` đã pass chưa?
+- [ ] Đã ghi rõ: đã đổi gì / đã test gì / cần người review gì?
+
+## Tiêu chí riêng của sản phẩm này
+
+Đây là nguồn chính thức của tiêu chí chất lượng riêng, không chép sang file khác.
+`/to-prd` bổ sung các tiêu chí từ PRD dưới dạng kết quả quan sát được, không phải khẳng định chung chung.
+
+- [ ] TODO (`/to-prd`): thêm tiêu chí chất lượng riêng mô tả một kết quả quan sát được từ PRD.
+- [ ] TODO (`/to-prd`): thêm tiêu chí chất lượng riêng mô tả một kết quả quan sát được từ PRD.

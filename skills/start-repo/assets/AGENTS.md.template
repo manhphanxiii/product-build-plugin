@@ -1,0 +1,95 @@
+# AGENTS.md
+
+Canonical instructions cho mọi coding agent làm việc trong repo này.
+Các file hướng dẫn riêng của từng tool chỉ trỏ về đây và chứa phần đặc thù thật sự của tool đó.
+
+## Canonical sources
+
+| Cần gì | Đọc ở đâu |
+|---|---|
+| Quy ước làm việc, commands, ràng buộc | `AGENTS.md` |
+| Sản phẩm, buyer, lời hứa | `prd/concept.md` |
+| Bối cảnh nghiệp vụ, thuật ngữ | `app/knowledge-base/` (chỉ đọc, app ghi lúc chạy) |
+| Tiếng nói khách hàng nguyên văn | `/client-note` |
+| Đang làm gì, out of scope | `prd/roadmap.md` |
+| Spec đầy đủ | `prd/PRD.md` |
+| Kiến trúc | `prd/architecture.md` |
+| Vì sao chọn kiến trúc đó | `prd/adr/` |
+| Ticket đang mở | `prd/tickets/` |
+| Eval và ngưỡng ship | `prd/evals/` |
+| Chuẩn để ship | `prd/evals/checklist.md` |
+| Nguồn thông tin ngoài | `prd/README.md` |
+| Việc lặp theo lịch, output | `/routines`, `/report` |
+
+## Cấu trúc và liên kết
+
+| Vai trò canonical | Đường dẫn thật | Loại |
+|---|---|---|
+| `app/` | TODO | symlink hoặc thư mục thật |
+| `client-note/` | TODO | symlink hoặc thư mục thật |
+| `prd/` | TODO | symlink hoặc thư mục thật |
+| `demos/` | TODO | symlink hoặc thư mục thật |
+| `routines/` | TODO | thư mục thật |
+| `report/` | TODO | thư mục thật |
+
+Ở chế độ `new`, thay bảng trên bằng một dòng: toàn bộ vai trò là thư mục thật trong repo này.
+
+## Commands
+
+```bash
+{{INSTALL_CMD}}      # cài dependency
+{{DEV_CMD}}          # chạy local
+{{TEST_CMD}}         # chạy test
+{{TYPECHECK_CMD}}    # kiểm tra kiểu
+{{LINT_CMD}}         # lint / format check
+{{BUILD_CMD}}        # build
+```
+
+Không biết lệnh nào thì giữ `TODO`, không đoán.
+
+## Conventions
+
+- Thay đổi nhỏ, dễ review. Một PR = một ý.
+- Theo code style sẵn có trong repo, không format lại file ngoài phạm vi.
+- Thay đổi ảnh hưởng hành vi phải bám `prd/PRD.md` và ticket đã duyệt.
+- Đụng component boundary hoặc dependency mới thì cập nhật `prd/architecture.md` trong cùng PR.
+- Quyết định kiến trúc đáng nhớ phải có ADR trong `prd/adr/`, gồm phương án đã loại và lý do loại.
+- Ngôn từ hiển thị cho người dùng lấy từ `/client-note`, không tự đặt.
+- Làm tươi roadmap bằng `/update`, không sửa tay bảng tiến độ.
+
+## Constraints
+
+- **Không** đụng auth, payment hay production data mà chưa có người duyệt.
+- **Không** commit secret, key hay `.env`.
+- **Không** thêm dependency mới nếu chưa nêu lý do và chưa được duyệt.
+- **Không** chạy migration hay lệnh phá huỷ dữ liệu.
+- **Không** mở rộng phạm vi ngoài `prd/roadmap.md`.
+- **Không** sửa tay nội dung trong `app/knowledge-base/`; app sở hữu dữ liệu runtime tại đó.
+- Permission posture hiện tại: **{{PERMISSION_MODE}}**.
+
+## Definition of done
+
+1. Chạy qua toàn bộ `prd/evals/checklist.md`, không còn ô chưa tick.
+2. Tài liệu bị ảnh hưởng đã cập nhật trong cùng PR.
+3. Báo cáo ba dòng: **đã đổi gì / đã test gì / cần người review gì**.
+
+## Hai quy ước vận hành
+
+- **Gõ lại cùng một prompt lần thứ ba thì biến nó thành skill.**
+- **Mỗi parallel session là một người khác nhau:** chung context, riêng nhiệm vụ, riêng output, tách biệt thay đổi.
+
+## General Guidelines
+
+- General Guidelines: Không dùng ký tự em dash hoặc en dash; dùng dấu gạch ngang thường.
+- Viết commit message thì không tự thêm tên agent làm co-author.
+- Không sửa tay `CHANGELOG.md` hay bất cứ file nào được đánh dấu auto-generated.
+- Markdown dài: mỗi câu đủ nằm trên một dòng riêng.
+  Giữ cấu trúc Markdown bình thường, chỉ tránh dồn nhiều câu vào một dòng vật lý.
+- Ra quyết định kỹ thuật thì đừng cân nặng chi phí phát triển.
+  Ưu tiên chất lượng, đơn giản, chắc chắn, khả năng mở rộng và khả năng bảo trì dài hạn.
+- Sửa bug thì bắt đầu bằng tái hiện bug ở mức E2E, càng sát cách người dùng cuối gặp nó càng tốt.
+  Đây là thứ bảo đảm tìm đúng nguyên nhân thật nên bản vá mới thực sự sửa được.
+- Test end-to-end một sản phẩm thì khó tính với UI nhìn thấy và ám ảnh về pixel.
+  Thấy chỗ nào rõ ràng lệch thì sửa, kể cả khi nó không thuộc việc đang làm.
+- Áp cùng chuẩn đó cho chất lượng kỹ thuật: lint, test fail, test flaky.
+  Thấy một cái thì sửa, kể cả khi nó không do việc đang làm gây ra.

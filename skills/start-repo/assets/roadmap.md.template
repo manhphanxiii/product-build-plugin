@@ -1,0 +1,40 @@
+# Roadmap - TODO
+
+Cập nhật: TODO
+
+## Mục tiêu tuần này
+
+Hoàn thành `prd/concept.md`.
+
+## Out of scope
+
+TODO - `/idea-to-product-concept` sẽ xác nhận và điền từ concept.
+
+## Tiến độ
+
+| Bước | Lệnh | Trạng thái | Artifact | Ngày |
+|---|---|---|---|---|
+| 1. Concept | /idea-to-product-concept | chưa bắt đầu | prd/concept.md | |
+| 2. Prototype | /prototype | chưa bắt đầu | prd/adr/ | |
+| 3. PRD | /to-prd | chưa bắt đầu | prd/PRD.md, prd/architecture.md | |
+| 4. Tickets | /to-ticket | chưa bắt đầu | prd/tickets/ | |
+| 5. Implement | /implement | chưa bắt đầu | app/ | |
+| 6. Evals | /evals-gate | chưa bắt đầu | prd/evals/ | |
+
+## Task
+
+| # | Task | Nguồn | Blocked by | Trạng thái | Commit |
+|---|---|---|---|---|---|
+
+## Quyết định đã chốt
+
+Chưa có.
+
+## Đang vướng
+
+Chưa có.
+
+## Bước kế tiếp
+
+/idea-to-product-concept - cần chốt concept có bằng chứng trước mọi quyết định sản phẩm khác.
+

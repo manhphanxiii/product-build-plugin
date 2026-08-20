@@ -1,0 +1,12 @@
+# Product documents
+
+Thư mục này giữ concept, PRD, architecture, ADR, ticket, eval và roadmap của chuỗi sản phẩm.
+Lệnh dự án nằm trong `AGENTS.md`, không chép lại ở đây.
+
+## Nguồn thông tin
+
+| Nguồn | Trạng thái | Root hoặc phạm vi |
+|---|---|---|
+| GitHub | {{GITHUB_STATUS}} | {{GITHUB_ROOT}} |
+| Notion | {{NOTION_STATUS}} | {{NOTION_ROOT}} |
+

@@ -1,0 +1,12 @@
+# Claude Code Instructions
+
+Follow `AGENTS.md` as the canonical repository instructions.
+Read the relevant documents referenced there before modifying code.
+
+## Claude-specific
+
+- Keep plans concise.
+- Verify changes with repository commands before completion.
+- Use plan mode for changes to product behavior and follow the approved PRD and ticket.
+- End every task with: what changed / what was tested / what a human still needs to review.
+

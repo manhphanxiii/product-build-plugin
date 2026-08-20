@@ -1,0 +1,5 @@
+interface:
+  display_name: "To PRD"
+  short_description: "Synthesize decisions into product documents"
+policy:
+  allow_implicit_invocation: false

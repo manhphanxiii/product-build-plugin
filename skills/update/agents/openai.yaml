@@ -1,0 +1,5 @@
+interface:
+  display_name: "Update"
+  short_description: "Refresh progress and reconcile roadmap sources"
+policy:
+  allow_implicit_invocation: false

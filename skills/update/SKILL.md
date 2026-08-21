@@ -9,6 +9,16 @@ disable-model-invocation: true
 Do not create or rebuild `prd/roadmap.md`.
 Add new task rows, update changed task rows, and add unresolved conflicts to `Đang vướng`.
 
+## Phase 0: choose the conversation language
+
+Before anything else in an interactive run, ask exactly one question using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>`.
+Ask whether to use Vietnamese or English for this conversation, recommending the language of the user's own messages.
+This question sets only the conversation language for this run; content written into `prd/roadmap.md` stays in whatever language the file already uses, so the file is never mixed.
+Use the chosen language from the next message onward, including the root question in the next section.
+
+Skip this question when the run has no one to ask, such as a routine, morning brief, Stop hook, or `/loop` invocation.
+In that case, read the Conventions line in `<root>/AGENTS.md` and use its language instead.
+
 ## Root resolution
 
 Resolve `<root>` before reading or writing anything.
@@ -18,7 +28,7 @@ Use the product repository path if the user supplied one in this invocation; oth
 A repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md` is the skill-set repository and is never a valid `<root>`.
 
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
-Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
+Ask exactly one question using `❓ **Q2** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
 Never create chain destinations in an invalid `<root>`, never write anything into the skill-set repository, and never silently fall back to the current working directory.
 When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/start-repo` first instead of asking again.
 
@@ -26,7 +36,7 @@ State the confirmed `<root>` once before the first read.
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
 Run repository commands with `<root>` as the working directory and every Git command as `git -C <root> ...`.
 Read `<root>/AGENTS.md` before the first question and before the first write, because the product repository's own agent instructions are not loaded automatically when the current working directory is elsewhere.
-Follow its Conventions line about the language used with the user; when that line is absent, use the language of the user's own messages and do not ask the user to choose a language again.
+When its Conventions line names a language different from the one chosen in Phase 0, use the Phase 0 choice for this run, print one line noting the mismatch, and do not edit `AGENTS.md`; only `/start-repo` writes that file.
 
 ## Repository destinations
 
@@ -37,11 +47,9 @@ Treat `client-note/` as read-only.
 Read `app/knowledge-base/` freely, but never write there because it is runtime data owned by the application.
 Do not write chain files outside these destinations.
 
-## Refresh progress
+## Refresh and report
 
-Read the roadmap and refresh the six-step progress table only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result.
-Update the weekly goal and Out of scope from `prd/concept.md` together with actual progress.
-Do not recreate the file, remove externally sourced Task rows, or invent progress.
+Read the roadmap and gather evidence for the six-step progress table only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result.
 
 Read the `Nguồn thông tin` section in `prd/README.md` and [SOURCES.md](SOURCES.md).
 State every disabled source that will be skipped.
@@ -52,8 +60,17 @@ Merge duplicate work found in several sources into one row and list every source
 When sources disagree about the status of the same work, do not choose a winner.
 Propose an entry under `Đang vướng` with both sources and ask the user to resolve it.
 
-Before writing, show a diff grouped as new tasks, status changes, and conflicts.
+Print the report using [REPORT-FORMAT.md](REPORT-FORMAT.md): exactly three parts, roadmap progress with the proposed diff grouped as new tasks, status changes, and conflicts; current task listing every open task in priority order and ending with one recommended next command; and an optional note, omitted entirely when there is nothing to note.
+Update the weekly goal and Out of scope from `prd/concept.md` together with actual progress.
+Do not recreate the file, remove externally sourced Task rows, or invent progress.
+
 Wait for approval, then modify only the affected roadmap rows and blocker entries.
+State in one line what was actually applied.
+Do not propose work outside the roadmap.
+
+Ask using `❓ **Q3** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now with the recommended next command.
+If yes, tell the user to run `/clear` and then run that command.
+If not now, stop without further action.
 
 ## Routine mode
 
@@ -62,12 +79,3 @@ Offer Stop hook, `/loop`, and scheduled routine options with their tradeoffs.
 After the user selects and approves a setup, write its definition to `routines/update-roadmap.md` and append each run report as `report/product/roadmap-<YYYY-MM-DD>.md`.
 Run the approved routine once after setup so its first dated report exists.
 Show the exact `.claude/settings.json` change and obtain separate approval before writing it.
-
-## Next step
-
-Recommend exactly one next command and one sentence explaining why it is next.
-Also list the three most valuable roadmap actions in order and the current blocker, writing `none` when repository evidence shows no blocker.
-Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
-If yes, tell the user to run `/clear` and then run the recommended command.
-If not now, stop without further action.
-Do not propose work outside the roadmap.

@@ -123,13 +123,26 @@ Set the weekly goal to completing `prd/concept.md`.
 Leave Out of scope empty with a note that `/idea-to-product-concept` will supply it.
 Do not infer progress or add tasks.
 
+## Phase 4b: offer the morning brief routine
+
+Ask `❓ **Q2** - **Morning brief**` whether to run `/update` as a daily morning brief and at what time, recommending `➡️ Có, 08:00`.
+When the answer is no, skip the rest of this phase, create no file, and note that routine mode in `/update` can enable this later.
+
+When the answer is yes, write `routines/update-roadmap.md` from the [morning brief template](assets/routines/update-roadmap.md) with the chosen time filled in.
+Then present exactly one table of activation mechanisms and their tradeoffs, the same style as the table in `skills/update/ROUTINE-SETUP.md`, and show the exact content that will be written or run before asking.
+Ask `❓ **Q3** - **Kích hoạt**` which mechanism to use and whether to activate now, recommending the one that actually fires on a wall-clock schedule.
+A Stop hook in `.claude/settings.json` does not fire on a schedule and only runs for sessions opened in `<root>`; offer it only as an alternative for a session-based brief instead of a time-based one, and when chosen show the exact merged JSON patch and preserve existing settings.
+Wait for approval separate from the phase 1 approval before writing `.claude/settings.json` or registering anything with a scheduler.
+When the user declines activation, keep the routine definition file, state plainly that nothing runs it yet, and give the command to enable it later.
+After activation, run the routine once so its first dated report at `report/product/roadmap-<YYYY-MM-DD>.md` exists.
+
 Tell the user to use `/update`, not `/start-repo`, to refresh roadmap progress and choose future commands.
 
 Add the conversation language chosen in phase 0 as a new Conventions line in the `AGENTS.md` already written in phase 3, for example `- Giao tiếp với người dùng bằng <Tiếng Việt/English>.`.
 Every later chain skill reads its conversation language from that line, so it must be present.
 
 Recommend `/idea-to-product-concept` as the next command with one sentence explaining why.
-Ask using `❓ **Q2** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+Ask using `❓ **Q4** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
 If yes, tell the user to run `/clear` and then `/idea-to-product-concept`.
 If not now, stop without further action.
 Do not start product code in the same turn.

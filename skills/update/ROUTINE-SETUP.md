@@ -8,10 +8,15 @@ Offer these choices before writing configuration:
 | `/loop` | At an interval during one long session | Continuous building for several hours | Stops with the session |
 | Scheduled routine | A cron-like schedule, such as each morning | Long-running products with daily reporting | Requires scheduler setup and credentials |
 
+When `routines/update-roadmap.md` already exists, read it and propose changes to its cadence or mechanism instead of offering to create a second file for the same job.
+`/start-repo` may seed this file once, during phase 4b, as a morning brief; `/update` owns refreshing it afterward.
+Neither skill touches `weekly-ops-review.md` or `pr-auto-review.md`, which belong to `/start-repo` alone.
+
 Write the approved routine definition to `routines/update-roadmap.md` with schedule, enabled sources, scan root, deduplication policy, conflict policy, and report path.
-Each run appends `report/product/roadmap-<YYYY-MM-DD>.md` with scanned sources, skipped sources, proposed changes, applied changes, and unresolved conflicts.
+Each run appends `report/product/roadmap-<YYYY-MM-DD>.md` using the three parts in [REPORT-FORMAT.md](REPORT-FORMAT.md).
 This daily roadmap routine and its report replace a separate daily brief.
-`/update` owns only `routines/update-roadmap.md`; routines installed by `/start-repo` are outside its write scope.
+
+An unattended run skips the Phase 0 language question and reads the language from the Conventions line in `AGENTS.md` instead.
 
 For a Stop hook, show the exact merged JSON patch for `<root>/.claude/settings.json`.
 State plainly that such a hook fires only for sessions opened in `<root>`, so it does nothing while the chain is driven from the skill-set repository; when that is the user's normal way of working, recommend `/loop` or a scheduled routine instead.

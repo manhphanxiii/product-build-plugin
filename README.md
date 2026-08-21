@@ -8,14 +8,14 @@ Mỗi bước chính dùng một context window riêng và để lại bằng ch
 
 | Bước | Lệnh | Kết quả |
 |---|---|---|
-| 0 | `/start-repo` | Chọn `new` hoặc `restructure`, dựng workspace quanh code mới hoặc app có sẵn, ghi cấu hình và tạo roadmap ban đầu |
+| 0 | `/start-repo` | Chọn `new` hoặc `restructure`, dựng workspace quanh code mới hoặc app có sẵn, ghi cấu hình, tạo roadmap ban đầu, và hỏi có kích hoạt morning brief hàng ngày không |
 | 1 | `/idea-to-product-concept` | Phân tích tư liệu, phỏng vấn và ghi `prd/concept.md` |
 | 2 | `/prototype` | Chạy spike để chốt quyết định và ghi ADR |
 | 3 | `/to-prd` | Ghi `prd/PRD.md`, `prd/architecture.md` và hoàn tất ADR |
 | 4 | `/to-ticket` | Chia kế hoạch thành ticket vertical slice |
 | 5 | `/implement` | Làm một ticket trong `app/`, review và commit |
 | 6 | `/evals-gate` | Chạy eval và chặn ship nếu chưa đạt ngưỡng |
-| Lặp lại | `/update` | Làm tươi tiến độ, đồng bộ nguồn ngoài và chỉ ra lệnh tiếp theo |
+| Lặp lại | `/update` | Hỏi ngôn ngữ hội thoại rồi in báo cáo ba phần: cập nhật roadmap, current task, note |
 | Nội bộ | `review-code` | Review diff theo Spec và Standards |
 | Nội bộ | `lavish` | Tạo bề mặt HTML để review và annotate |
 
@@ -31,6 +31,7 @@ Mỗi skill tự giải `<root>` là repo sản phẩm: dùng đường dẫn b�
 Root không hợp lệ thì skill in đường dẫn đã giải, nêu lý do, rồi hỏi một câu về đường dẫn repo sản phẩm; nó không bao giờ tự tạo `prd/`, `app/` hay `demos/` trong repo bộ skill.
 Mọi path trong skill không có tiền tố đều tính từ `<root>`, và mọi lệnh Git chạy dạng `git -C <root>`.
 `AGENTS.md` của repo sản phẩm không được nạp tự động khi thư mục hiện tại nằm ở nơi khác, nên mỗi skill đọc `<root>/AGENTS.md` trước câu hỏi đầu tiên, gồm cả dòng Conventions về ngôn ngữ.
+`/update` là ngoại lệ: vì chạy lặp lại nhiều lần, nó luôn hỏi lại ngôn ngữ hội thoại cho mỗi lượt chạy có người, và chỉ đọc dòng Conventions khi chạy không tương tác.
 
 ## Cấu trúc repo lớn
 
@@ -69,7 +70,7 @@ Quy ước đánh dấu:
     ├── demos/
     │   └── prototypes/<slug>/      + /prototype, throwaway
     ├── routines/                     định nghĩa công việc lặp
-    │   └── update-roadmap.md       + /update sau khi duyệt
+    │   └── update-roadmap.md       + /start-repo hoặc /update sau khi duyệt
     └── report/
         └── product/                  báo cáo có ngày từ routine
 ```

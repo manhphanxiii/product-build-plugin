@@ -105,14 +105,19 @@ Write policy chi tiết nằm ở `skills/start-repo/REPO-LAYOUT.md`.
 Bộ này cài dưới dạng plugin, và đó là đường cài duy nhất.
 Mười skill đều nằm trong `skills/`, tức đúng thư mục Claude Code quét mặc định, nên `.claude-plugin/plugin.json` không cần liệt kê từng skill.
 
-Từ thư mục cha của repo này, chạy trong Claude Code:
+Nguồn chính thức là repo Git <https://github.com/manhphanxiii/product-build-plugin>.
+Chạy trong Claude Code:
 
 ```
-/plugin marketplace add ./product-building-agents
+/plugin marketplace add manhphanxiii/product-build-plugin
 /plugin install build@manhphanxiii
 ```
 
 Nếu bản tóm tắt cài đặt báo `Run /reload-plugins to activate.` thì chạy lệnh đó.
+
+Cài bằng nguồn Git, không cài bằng đường dẫn thư mục local.
+Marketplace kiểu `directory` chỉ tồn tại trên đúng một máy, nên mọi session ở nơi khác - cloud session của Claude Code, máy thứ hai, đồng đội - sẽ báo `Unknown command: /build:update` vì không thấy plugin.
+Repo đang để private, nên môi trường nào cần cài cũng phải có GitHub credential đọc được nó.
 
 Plugin tên `build`, nên mọi skill đều có tiền tố `build:`: `/build:start-repo`, `/build:prototype`, `/build:update`.
 Kiểm tra bằng `claude plugin details build`, phải thấy đủ mười skill.

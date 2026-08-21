@@ -47,8 +47,12 @@ Do not write chain files outside these destinations.
 ## Read the concept and split the questions
 
 Read `prd/concept.md` and list open architecture questions.
-Read its `## Surfaces and logic` section first, because the recorded surface and logic level decide how every spike is built.
+Read its `## Workflow and story map` and `## Surfaces and logic` sections first, because the approved journey, recorded surface, and logic level decide how every spike is built.
+Use the approved flow diagram as the starting point instead of redrawing the journey from a blank page.
+Create one spike candidate for every HITL row, even when the surrounding workflow decision is already settled.
+Each HITL spike targets that exact review moment and shows what the person sees and what they are allowed to do.
 Treat every cell holding `TODO - chưa xác nhận` as a paper question and settle it with the user before writing any spike.
+When `prd/concept.md` has no `## Workflow and story map` section, ask the tool landscape, journey, HITL, and unclear UI/UX pattern questions once inside the decision batch and write the answers back into the concept, because `/build:to-prd` is forbidden to interview again.
 When `prd/concept.md` has no `## Surfaces and logic` section, ask the surface and logic questions once inside the decision batch and write the answers back into the concept, because `/build:to-prd` is forbidden to interview again.
 Separate questions that can be decided on paper from questions that need running code.
 Decide paper questions with the user and record qualifying decisions as ADRs.

@@ -8,6 +8,7 @@ Each of those has a cheapest honest spike, and using the wrong one produces a de
 | Web/App | one route with variants selected by a URL search parameter, pinned to a real device viewport when the target is an installed app | layout, flow, information density, the one risky interaction | device capability, real data volume, permissions, latency |
 | Web/App needing a device capability | a single screen in the real toolchain, running on a real device or emulator | camera, offline, push, background work, biometrics, store review rules | everything else about the product |
 | Zero UI | a scripted transcript played inside the real host product | wording, turn order, whether the stakeholder understands what to do | host platform limits, quotas, approval rules |
+| HITL step | a transcript or screen of the exact review moment | what the person sees, which actions are available, and what remains blocked | the reliability of the surrounding automation |
 | Any logic level, required first step | draw the flow before writing code | the steps, the provider at each step, the input and output of each step, the branching conditions | anything that only appears when it runs |
 | Logic, plain code | one runnable file driven by the hard cases, with assertions | the algorithm, the failure modes, the shape of the data | production load, real integration behaviour |
 | Logic, workflow | run the approved graph on fixtures and force every LLM node to return garbage once | node boundaries, the failure path, where a human must approve | long term stability of the LLM nodes |
@@ -41,7 +42,9 @@ Record how the stakeholder discovers and triggers the product, since Zero UI has
 This step is required before the first line of spike code at every logic level, from plain code to agent.
 For a logic heavy product the flow diagram is the design, standing exactly where a UI mockup stands for a screen product, not decorating it afterwards.
 
-The diagram must carry four things: the steps, the provider at each step, the input and output of each step, and the branching conditions.
+Start from the approved flow diagram in `prd/concept.md` and expand its provider, input, and output details instead of drawing the journey from a blank page.
+Draw a new flow only when the concept has no approved diagram.
+The expanded diagram must carry four things: the steps, the provider at each step, the input and output of each step, and the branching conditions.
 Ask whether to open a Lavish surface for it and recommend yes, then invoke `lavish` through the active host mapping in [SKILL.md](SKILL.md) and open the `diagram` playbook with editable Mermaid.
 If the user declines Lavish, still draw it, and accept raw Mermaid in the conversation, a draw.io export, or a photo of paper, but never skip the step.
 Poll for feedback, apply it back to the Mermaid source, and write the spike only after the flow is approved.

@@ -76,6 +76,14 @@ class CheckScriptTests(unittest.TestCase):
                 ),
             ),
             (
+                "relative Markdown link",
+                lambda root: self.mutate_text(
+                    root / "skills" / "idea-to-product-concept" / "SKILL.md",
+                    "](SURFACES-AND-LOGIC.md)",
+                    "](MISSING-REFERENCE.md)",
+                ),
+            ),
+            (
                 "plan gate",
                 lambda root: self.mutate_text(
                     root / "skills" / "start-repo" / "SKILL.md",

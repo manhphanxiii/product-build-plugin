@@ -33,8 +33,37 @@ List measurable signals, baselines when known, and target direction.
 
 Cover time, budget, stack, compliance, operations, and other confirmed limits.
 
+## Workflow and story map
+
+This section is the input `/build:prototype` uses to choose spikes, so keep it at the step level and leave task-level decomposition to `/build:to-ticket`.
+
+### Tools in use today
+
+| Stakeholder | Tool or system | What they do in it | Must the product live here? | Still open |
+|---|---|---|---|---|
+
+### Story map
+
+| Activity | Step | Actor | Trigger | Input | Output | Where it happens | UI/UX pattern | HITL | Still open |
+|---|---|---|---|---|---|---|---|---|---|
+
+### End to end flow
+
+Use one actor subgraph as each swimlane, put the tool and provider in every node label, show every branch condition, draw HITL nodes with the person and allowed action, and style external systems separately.
+
+```mermaid
+flowchart TD
+    TODO["TODO - chưa xác nhận<br/>Tool: TODO - chưa xác nhận<br/>Provider: TODO - chưa xác nhận"]
+```
+
+### Human in the loop
+
+| Step | Who decides | What they can do | What is blocked while waiting | What happens if they never act | Where the request reaches them |
+|---|---|---|---|---|---|
+
 ## Surfaces and logic
 
+Infer each stakeholder's surface from where their steps happen in the story map, then ask the user to confirm it instead of asking without context.
 Record where each stakeholder does the work and how determined each capability must be, not which framework builds it.
 `none` is a real answer and is different from an unanswered question.
 

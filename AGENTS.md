@@ -47,6 +47,7 @@ Keep shared metadata and the release version synchronized between `.claude-plugi
 
 `scripts/check.py` enforces shared-block, skill-metadata, and manifest-synchronization invariants, with negative fixtures in `tests/`.
 The checker requires every first-party review-surface probe to use separate CLI and current-platform browser-opener checks and rejects chained forms that can hide a working setup behind the other platform's exit status.
+Every relative Markdown link in first-party skill documentation must resolve to an existing file.
 Every `vX.Y.Z` release ref in `README.md` must equal the version in both plugin manifests.
 When `scripts/check.py --release` runs, the matching `v<version>` tag must exist on `origin`.
 Run `python3 scripts/check.py` and `python3 -m unittest discover -s tests -v` before every release.

@@ -96,7 +96,7 @@ Use this format for each question:
 ➡️ <recommended answer>
 ```
 
-Cover the problem, who experiences it, success measures, scope, out of scope, constraints, and the largest risks.
+Cover the problem, who experiences it, success measures, scope, out of scope, constraints, workflow steps, tools in use today, HITL, UI/UX patterns, and the largest risks.
 Cover surfaces and logic in the same batch, because `/build:prototype` cannot choose a prototyping method without those answers.
 Offer operator, builder, and researcher as optional lenses for missing perspectives.
 If the user says those lenses are irrelevant, drop them immediately and do not insist.
@@ -104,6 +104,19 @@ After the response, analyze the full set for contradictions, newly opened issues
 Ask a second round only for real gaps and explain which answer created each follow-up.
 Investigate facts in the repository instead of asking the user, using sub-agents when available and authorized.
 Reserve product decisions for the user.
+
+## Workflow and story map
+
+Read [JOURNEY-AND-WORKFLOW.md](JOURNEY-AND-WORKFLOW.md) before writing these questions.
+Ask about the real tool landscape first, because it often establishes the host product for a later Zero UI answer.
+Walk through the journey end to end from trigger to done, keeping the story map at backbone activity and step level.
+After collecting the journey, read every step back as one numbered list and ask the user to confirm that the sequence is complete.
+Ask the HITL questions at every step that contains a decision or approval, or where an incorrect action would be costly.
+Ask for a UI/UX pattern only where the pattern remains unclear or choosing the wrong pattern would be costly.
+Draw the complete Mermaid flow from the confirmed answers and include it in the review draft.
+Do not invent a step, tool, actor, reviewer, branch, or UI/UX pattern.
+Put every unresolved item in `## Risks and open decisions` as `TODO - chưa xác nhận`.
+When the Review gate uses Lavish, open the `diagram` playbook in addition to the playbooks needed by the rest of the draft.
 
 ## Surfaces and logic
 
@@ -121,7 +134,7 @@ Record every unresolved technology or level as an open question in `## Risks and
 Do not choose any of this for the user, and never let a recommended answer become a decision the user did not make.
 Write an unanswered surface or level as `TODO - chưa xác nhận`, never as a default of Web/App and never as a default of plain code.
 
-Build the review draft as the complete `prd/concept.md` defined by [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md), together with the proposed step 2 roadmap row.
+Build the review draft as the complete `prd/concept.md` defined by [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md), including its end-to-end flow diagram, together with the proposed step 2 roadmap row.
 
 ## Review gate
 

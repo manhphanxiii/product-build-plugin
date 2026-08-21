@@ -9,6 +9,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from urllib.parse import unquote
 
 
 FIRST_PARTY = (
@@ -358,6 +359,35 @@ def check_probe_shape(root: Path, errors: list[str]) -> None:
             )
 
 
+def check_skill_references(root: Path, errors: list[str]) -> None:
+    link_pattern = re.compile(r"\]\(([^)\n]+)\)")
+    scheme_pattern = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
+    for skill_name in FIRST_PARTY:
+        skill_dir = root / "skills" / skill_name
+        for path in sorted(skill_dir.rglob("*.md")):
+            text = path.read_text(encoding="utf-8")
+            for match in link_pattern.finditer(text):
+                raw_target = match.group(1).strip()
+                if raw_target.startswith("<") and ">" in raw_target:
+                    target = raw_target[1 : raw_target.index(">")]
+                else:
+                    target = raw_target.split(maxsplit=1)[0]
+                if (
+                    not target
+                    or target.startswith("#")
+                    or target.startswith("/")
+                    or scheme_pattern.match(target)
+                ):
+                    continue
+                target = unquote(target.split("#", 1)[0].split("?", 1)[0])
+                if target and not (path.parent / target).exists():
+                    relative = path.relative_to(root)
+                    errors.append(
+                        f"{relative}: relative Markdown link target does not exist: "
+                        f"{target}"
+                    )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -398,6 +428,7 @@ def main() -> int:
         check_release_tag(root, manifest_versions, errors)
     check_portability(root, errors)
     check_probe_shape(root, errors)
+    check_skill_references(root, errors)
 
     if errors:
         for error in errors:

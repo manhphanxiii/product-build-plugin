@@ -12,7 +12,7 @@ Trên Codex universal plugin, đọc `/build:<skill>` thành `$build:<skill>`; v
 | Bước | Lệnh | Kết quả |
 |---|---|---|
 | 1 | `/build:start-repo` | Hỏi và soi repo sản phẩm, dựng một plan đầy đủ để duyệt một lần, rồi chạy liền mạch việc tạo workspace, ghi cấu hình, tạo roadmap, publish GitHub khi chưa có remote và kích hoạt morning brief theo lựa chọn đã duyệt |
-| 2 | `/build:idea-to-product-concept` | Phân tích tư liệu, phỏng vấn và ghi `prd/concept.md` |
+| 2 | `/build:idea-to-product-concept` | Phân tích tư liệu, phỏng vấn và ghi `prd/concept.md` với workflow, story map và các điểm HITL |
 | 3 | `/build:prototype` | Chạy spike để chốt quyết định và ghi ADR |
 | 4 | `/build:to-prd` | Ghi `prd/PRD.md`, `prd/architecture.md` và hoàn tất ADR |
 | 5 | `/build:to-ticket` | Chia kế hoạch thành ticket vertical slice |

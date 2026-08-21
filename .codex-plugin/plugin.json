@@ -1,0 +1,35 @@
+{
+  "name": "build",
+  "version": "2.2.0",
+  "description": "A self-contained skill chain from product idea to shipped code.",
+  "author": {
+    "name": "Manh Phan"
+  },
+  "homepage": "https://github.com/manhphanxiii/product-build-plugin#readme",
+  "repository": "https://github.com/manhphanxiii/product-build-plugin",
+  "license": "MIT",
+  "keywords": [
+    "product",
+    "prd",
+    "prototype",
+    "implementation",
+    "evals"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Product Build Plugin",
+    "shortDescription": "Build a product from idea through its ship gate.",
+    "longDescription": "A review-gated product workflow covering repository setup, concept, prototypes, PRD, tickets, implementation, and evals.",
+    "developerName": "Manh Phan",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Initialize a product repository and show the next step.",
+      "Turn product evidence into a reviewed concept.",
+      "Refresh the roadmap and recommend the next command."
+    ]
+  }
+}

@@ -5,13 +5,25 @@ description: Split an approved PRD and architecture into dependency-ordered vert
 
 # To Ticket
 
+## Host resolution
+
+Resolve the host once, before anything else, and apply these mappings for the rest of the run.
+`<skill_dir>` is the directory containing this `SKILL.md`; resolve every relative reference and bundled script from that directory, never from the current working directory.
+On Claude Code, commands use `/build:<skill>`, and cross-skill calls use the Skill tool with `build:<skill>`.
+On Codex with the `build` plugin installed, commands use `$build:<skill>`.
+On Codex with the standalone fallback installed, commands use `$<skill>`.
+On Codex, a cross-skill call means reading the complete sibling file at `<skill_dir>/../<skill>/SKILL.md`, resolving its relative references from that sibling directory, passing the caller's explicit inputs, following it in place, and then returning to the caller's workflow.
+Read every `/build:<skill>` mention in this skill set through the active mapping above, and read `/clear` on Codex as starting a fresh conversation.
+Use the selector exposed by the current skill list when both Codex installation forms are present, preferring the namespaced plugin selector and never invoking both copies.
+Use tools by capability, not by assumed host; when a named tool is unavailable, apply the fallback stated by the current phase and report the substitution in one line.
+
 ## Root resolution
 
 Resolve `<root>` before reading or writing anything.
 Use the product repository path if the user supplied one in this invocation; otherwise run `git rev-parse --show-toplevel`.
 
 `<root>` is valid only when `<root>/prd/roadmap.md` exists.
-A repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md` is the skill-set repository and is never a valid `<root>`.
+A repository whose root contains `skills/start-repo/SKILL.md` and either `.claude-plugin/plugin.json` or `.codex-plugin/plugin.json` is the skill-set repository and is never a valid `<root>`.
 
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
 Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
@@ -47,14 +59,15 @@ Never write the final file before that approval.
 Choose the surface with this probe and state the chosen surface in one line before rendering.
 
 1. Prefer Lavish.
-   Lavish is usable when its CLI runs and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
+   Lavish is usable when its CLI runs, any required package is already installed or network access is available, and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
    When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
-2. When the probe fails, use the Artifact tool.
+2. When the probe fails and both the Artifact tool and `artifact-design` skill are available, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
    Lavish drafts are temporary and do not survive a cloud session.
 3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
+   A user-started asynchronous cloud run is interactive across turns: print the Markdown draft, stop before writing any approval-gated file, and wait for explicit approval in a follow-up.
 
-With Lavish, call the Skill tool with "build:lavish".
+With Lavish, invoke `lavish` through the active host mapping in `## Host resolution`.
 Open every playbook that matches the draft, and always open `input`, because this gate collects a decision.
 Poll for feedback, apply every returned prompt, and poll again until the user approves or ends the session.
 State the artifact path in one line, and add that the user may reply `artifact` to switch surfaces if the page does not open for them.
@@ -65,7 +78,7 @@ Read comment threads with the Artifact tool's `comments` action when the user sa
 Republish the same file path after each revision so the link stays stable.
 
 `prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
-Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
+Skip this gate only for genuinely unattended automation with no user available to approve a draft; a user-started asynchronous cloud run does not qualify.
 
 Read [TICKET-TEMPLATE.md](TICKET-TEMPLATE.md).
 Write one approved ticket per file at `prd/tickets/NN-<slug>.md`, starting at `01`.

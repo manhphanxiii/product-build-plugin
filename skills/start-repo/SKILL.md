@@ -1,10 +1,24 @@
 ---
 name: start-repo
-description: Initialize a product repository once with canonical instructions, quality gates, workspace structure, and the first product-building roadmap.
-disable-model-invocation: true
+description: Use only when the user explicitly invokes this one-time initializer for a product repository; create canonical instructions, quality gates, workspace structure, and the first product-building roadmap.
 ---
 
 # Start Repo
+
+Run this one-time initializer only when the user explicitly invokes the active host selector for `start-repo`.
+If the skill was selected implicitly, stop before reading or writing repository state and tell the user to invoke `/build:start-repo`, `$build:start-repo`, or `$start-repo` for the installed host.
+
+## Host resolution
+
+Resolve the host once, before anything else, and apply these mappings for the rest of the run.
+`<skill_dir>` is the directory containing this `SKILL.md`; resolve every relative reference and bundled script from that directory, never from the current working directory.
+On Claude Code, commands use `/build:<skill>`, and cross-skill calls use the Skill tool with `build:<skill>`.
+On Codex with the `build` plugin installed, commands use `$build:<skill>`.
+On Codex with the standalone fallback installed, commands use `$<skill>`.
+On Codex, a cross-skill call means reading the complete sibling file at `<skill_dir>/../<skill>/SKILL.md`, resolving its relative references from that sibling directory, passing the caller's explicit inputs, following it in place, and then returning to the caller's workflow.
+Read every `/build:<skill>` mention in this skill set through the active mapping above, and read `/clear` on Codex as starting a fresh conversation.
+Use the selector exposed by the current skill list when both Codex installation forms are present, preferring the namespaced plugin selector and never invoking both copies.
+Use tools by capability, not by assumed host; when a named tool is unavailable, apply the fallback stated by the current phase and report the substitution in one line.
 
 This is the one-time initialization command for a product repository.
 After initialization, use `/build:update` to refresh progress and choose the next command.
@@ -12,7 +26,7 @@ After initialization, use `/build:update` to refresh progress and choose the nex
 ## Ground rules
 
 Resolve `<root>` in phase 1 before using it in any later phase.
-A repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md` is the skill-set repository and is never a valid `<root>`; refuse such a path and ask again.
+A repository whose root contains `skills/start-repo/SKILL.md` and either `.claude-plugin/plugin.json` or `.codex-plugin/plugin.json` is the skill-set repository and is never a valid `<root>`; refuse such a path and ask again.
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
 Run repository commands with `<root>` as the working directory and every Git command as `git -C <root> ...`.
 Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, and prototypes only under `<root>/demos/prototypes/`.
@@ -115,9 +129,9 @@ Do not reorganize or edit anything inside the existing application repository.
 ## Phase 6: scaffold and fill canonical files
 
 After approval, run the mode-appropriate scaffold command and relay its created, skipped, and symlink lists verbatim.
-The scaffold script ships with this skill, so always address it through `${CLAUDE_PLUGIN_ROOT}` and never through a path relative to the current working directory, which is `<root>` and not the skill folder.
-Use `python3 "${CLAUDE_PLUGIN_ROOT}/skills/start-repo/scripts/scaffold.py" <root> --init-git` for `new`.
-For the separate-folder branch of `restructure`, keep the same `python3 "${CLAUDE_PLUGIN_ROOT}/skills/start-repo/scripts/scaffold.py" <root>` prefix and add `--init-git --no-knowledge-base` and every approved `--link ROLE=PATH` mapping.
+The scaffold script ships with this skill, so always address it as `<skill_dir>/scripts/scaffold.py` and never through a path relative to the current working directory, which is `<root>` and not the skill folder.
+Use `python3 "<skill_dir>/scripts/scaffold.py" <root> --init-git` for `new`.
+For the separate-folder branch of `restructure`, keep the same `python3 "<skill_dir>/scripts/scaffold.py" <root>` prefix and add `--init-git --no-knowledge-base` and every approved `--link ROLE=PATH` mapping.
 For the in-place branch, keep that same prefix and use `--retrofit` and every approved non-app `--link ROLE=PATH` mapping.
 
 The scaffold never creates or edits `.gitignore`.
@@ -157,9 +171,12 @@ When the answer is no, skip the rest of this phase, create no file, and note tha
 
 When the answer is yes, write `routines/update-roadmap.md` from the [morning brief template](assets/routines/update-roadmap.md) with the chosen time and the `AGENTS.md` timezone filled in.
 Then present exactly one table of activation mechanisms and their tradeoffs, the same style as the table in `skills/update/ROUTINE-SETUP.md`, and show the exact content that will be written or run before asking.
-Ask `❓ **Q5** - **Activation**` which mechanism to use and whether to activate now, recommending `/schedule`, the mechanism that actually fires on a wall-clock schedule; it requires `<root>` to be on GitHub and Claude Code routines enabled on the account.
+Ask `❓ **Q5** - **Activation**` which available mechanism to use and whether to activate now.
+On Claude Code when `/schedule` is available, recommend it because it fires on a wall-clock schedule; it requires `<root>` to be on GitHub and Claude Code routines enabled on the account.
 A Stop hook in `.claude/settings.json` does not fire on a schedule and only runs for sessions opened in `<root>`, cloud or local; offer it only as an alternative for a session-based brief instead of a time-based one, and when chosen show the exact merged JSON patch and preserve existing settings.
-Wait for approval separate from the phase 4 approval before writing `.claude/settings.json` or creating a `/schedule` routine.
+Offer `/schedule`, `/loop`, and the Stop hook only when the current host exposes that mechanism.
+On Codex, when no native mechanism capable of running this routine is available, keep the approved routine definition, state that nothing runs it automatically, and offer manual `$build:update` or an external scheduler that runs `codex exec` from `<root>`.
+Wait for approval separate from the phase 4 approval before writing `.claude/settings.json`, creating a `/schedule` routine, or giving an exact external scheduler command that would be activated.
 When the user declines activation, keep the routine definition file, state plainly that nothing runs it yet, and give the command to enable it later.
 After activation, run the routine once so its first dated report at `report/product/roadmap-<YYYY-MM-DD>.md` exists.
 

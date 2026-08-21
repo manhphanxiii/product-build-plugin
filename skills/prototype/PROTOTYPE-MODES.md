@@ -42,7 +42,7 @@ This step is required before the first line of spike code at every logic level, 
 For a logic heavy product the flow diagram is the design, standing exactly where a UI mockup stands for a screen product, not decorating it afterwards.
 
 The diagram must carry four things: the steps, the provider at each step, the input and output of each step, and the branching conditions.
-Ask whether to open a Lavish surface for it and recommend yes, then call the Skill tool with "build:lavish" and open the `diagram` playbook with editable Mermaid.
+Ask whether to open a Lavish surface for it and recommend yes, then invoke `lavish` through the active host mapping in [SKILL.md](SKILL.md) and open the `diagram` playbook with editable Mermaid.
 If the user declines Lavish, still draw it, and accept raw Mermaid in the conversation, a draw.io export, or a photo of paper, but never skip the step.
 Poll for feedback, apply it back to the Mermaid source, and write the spike only after the flow is approved.
 The approved diagram belongs in the `## Context` of the ADR, because it is what explains why the spike was written this way.

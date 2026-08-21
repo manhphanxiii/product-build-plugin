@@ -5,10 +5,22 @@ description: Use when reviewing an implementation diff against its product speci
 
 # Review Code
 
+## Host resolution
+
+Resolve the host once, before anything else, and apply these mappings for the rest of the run.
+`<skill_dir>` is the directory containing this `SKILL.md`; resolve every relative reference and bundled script from that directory, never from the current working directory.
+On Claude Code, commands use `/build:<skill>`, and cross-skill calls use the Skill tool with `build:<skill>`.
+On Codex with the `build` plugin installed, commands use `$build:<skill>`.
+On Codex with the standalone fallback installed, commands use `$<skill>`.
+On Codex, a cross-skill call means reading the complete sibling file at `<skill_dir>/../<skill>/SKILL.md`, resolving its relative references from that sibling directory, passing the caller's explicit inputs, following it in place, and then returning to the caller's workflow.
+Read every `/build:<skill>` mention in this skill set through the active mapping above, and read `/clear` on Codex as starting a fresh conversation.
+Use the selector exposed by the current skill list when both Codex installation forms are present, preferring the namespaced plugin selector and never invoking both copies.
+Use tools by capability, not by assumed host; when a named tool is unavailable, apply the fallback stated by the current phase and report the substitution in one line.
+
 ## Root resolution
 
 Use the `<root>` supplied by the calling skill.
-When no caller supplied one, resolve it with `git rev-parse --show-toplevel`, and reject a repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md`, because that is the skill-set repository and never a valid `<root>`.
+When no caller supplied one, resolve it with `git rev-parse --show-toplevel`, and reject a repository whose root contains `skills/start-repo/SKILL.md` and either `.claude-plugin/plugin.json` or `.codex-plugin/plugin.json`, because that is the skill-set repository and never a valid `<root>`.
 Every path in this skill without an explicit prefix is relative to `<root>`, and every Git command runs as `git -C <root> ...`.
 Pass `<root>` to every sub-agent so both axes read the same repository.
 

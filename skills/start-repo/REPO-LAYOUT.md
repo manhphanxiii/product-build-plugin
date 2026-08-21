@@ -24,9 +24,9 @@ Every artifact must answer a clear workspace question.
 | `<root>/demos/` | Throwaway prototypes and promoted demos | Prototypes start under `demos/prototypes/` |
 | `<root>/routines/` | Recurring workflow definitions | Write only after approval |
 | `<root>/report/` | Dated routine output | Product reports go under `report/product/` |
-| `<root>/.claude/settings.json` | Declares and enables this plugin's marketplace for any session opened at `<root>` | Seeded once by `/build:start-repo`; a later patch, such as adding a Stop hook, must preserve this declaration |
+| `<root>/.claude/settings.json` | Declares and enables the Claude Code marketplace for any Claude session opened at `<root>` | Seeded once by `/build:start-repo`; a later patch, such as adding a Stop hook, must preserve this declaration |
 
-`.claude/settings.json` is not one of the six canonical roles above; it exists purely so a cloud session, a second machine, or a teammate can see `/build:*` without first enabling the plugin in their own user settings. Never remove or replace its `extraKnownMarketplaces` and `enabledPlugins` entries when writing to this file for another reason.
+`.claude/settings.json` is not one of the six canonical roles above; it exists so a Claude Code cloud session, a second machine, or a teammate can see `/build:*` without first enabling the plugin in user settings. Codex plugin installation stays outside the product repository. Never remove or replace the Claude file's `extraKnownMarketplaces` and `enabledPlugins` entries when writing to it for another reason.
 
 `/build:start-repo` always seeds `routines/weekly-ops-review.md` and `routines/pr-auto-review.md`.
 It seeds `routines/update-roadmap.md` only when the user approves a morning brief in phase 8; `/build:update` owns refreshing that file afterward.

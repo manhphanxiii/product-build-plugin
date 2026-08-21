@@ -6,12 +6,14 @@ Every path here is relative to the `<root>` resolved in [SKILL.md](SKILL.md), an
 
 ## GitHub Issues
 
-Use the built-in GitHub tools to list open issues; fall back to `gh issue list --state open --json number,title,labels,assignees` only when the built-in tools are unavailable and `gh` is installed. A cloud session does not have `gh` installed.
+Use an available GitHub connector to list open issues; fall back to `gh issue list --state open --json number,title,labels,assignees` only when no connector is available and `gh` is installed.
+A cloud session may not have `gh` installed.
+Connector availability depends on the current host and account configuration.
 Create source labels such as `github#12`.
 
 ## GitHub pull requests
 
-Use the built-in GitHub tools to list pull requests; fall back to `gh pr list --json number,title,state` only when the built-in tools are unavailable and `gh` is installed.
+Use an available GitHub connector to list pull requests; fall back to `gh pr list --json number,title,state` only when no connector is available and `gh` is installed.
 Extract unfinished work and review blockers.
 
 ## Commits
@@ -21,7 +23,8 @@ Use commits only as evidence that tracked work may already be complete.
 
 ## Notion
 
-Use the available Notion connector to search pages and databases under the configured product root.
+Use an available Notion connector to search pages and databases under the configured product root.
+If no Notion connector is available on the current host, report the source as disabled instead of assuming Claude-side connector access.
 Do not search outside that root.
 Use source labels such as `notion:<page title>`.
 

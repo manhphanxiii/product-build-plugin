@@ -5,13 +5,25 @@ description: Implement one ready product ticket in the production application, t
 
 # Implement
 
+## Host resolution
+
+Resolve the host once, before anything else, and apply these mappings for the rest of the run.
+`<skill_dir>` is the directory containing this `SKILL.md`; resolve every relative reference and bundled script from that directory, never from the current working directory.
+On Claude Code, commands use `/build:<skill>`, and cross-skill calls use the Skill tool with `build:<skill>`.
+On Codex with the `build` plugin installed, commands use `$build:<skill>`.
+On Codex with the standalone fallback installed, commands use `$<skill>`.
+On Codex, a cross-skill call means reading the complete sibling file at `<skill_dir>/../<skill>/SKILL.md`, resolving its relative references from that sibling directory, passing the caller's explicit inputs, following it in place, and then returning to the caller's workflow.
+Read every `/build:<skill>` mention in this skill set through the active mapping above, and read `/clear` on Codex as starting a fresh conversation.
+Use the selector exposed by the current skill list when both Codex installation forms are present, preferring the namespaced plugin selector and never invoking both copies.
+Use tools by capability, not by assumed host; when a named tool is unavailable, apply the fallback stated by the current phase and report the substitution in one line.
+
 ## Root resolution
 
 Resolve `<root>` before reading or writing anything.
 Use the product repository path if the user supplied one in this invocation; otherwise run `git rev-parse --show-toplevel`.
 
 `<root>` is valid only when `<root>/prd/roadmap.md` exists.
-A repository whose root contains both `.claude-plugin/plugin.json` and `skills/start-repo/SKILL.md` is the skill-set repository and is never a valid `<root>`.
+A repository whose root contains `skills/start-repo/SKILL.md` and either `.claude-plugin/plugin.json` or `.codex-plugin/plugin.json` is the skill-set repository and is never a valid `<root>`.
 
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
 Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
@@ -46,7 +58,7 @@ Where practical, write a test at the architecture-defined seam before production
 Run focused tests and type checking frequently using the exact commands recorded in the `Commands` section of `AGENTS.md`.
 Run the full test suite once at the end.
 
-After the implementation passes local checks, call the Skill tool with "build:review-code", passing `<root>` and the merge base with the default branch as the fixed point.
+After the implementation passes local checks, invoke `review-code` through the active host mapping, passing `<root>` and the merge base with the default branch as the fixed point.
 Resolve every actionable finding and rerun affected checks.
 Commit on the current branch with the ticket identifier in the commit message.
 Change the ticket frontmatter to `Status: done`.

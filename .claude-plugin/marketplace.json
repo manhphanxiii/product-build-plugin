@@ -1,0 +1,14 @@
+{
+  "name": "manhphanxiii",
+  "owner": {
+    "name": "Manh Phan"
+  },
+  "description": "Manh Phan's plugins for product building with Claude Code.",
+  "plugins": [
+    {
+      "name": "build",
+      "source": "./",
+      "description": "A self-contained skill chain from product idea to shipped code."
+    }
+  ]
+}

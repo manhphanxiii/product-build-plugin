@@ -1,10 +1,13 @@
 {
-  "name": "product-building-agents",
+  "name": "build",
+  "displayName": "Product Building Agents",
   "version": "0.1.0",
   "description": "A self-contained skill chain from product idea to shipped code.",
   "author": {
     "name": "Manh Phan"
   },
+  "homepage": "https://github.com/manhphanxiii/product-building-agents#readme",
+  "repository": "https://github.com/manhphanxiii/product-building-agents",
   "license": "MIT",
   "keywords": [
     "product",
@@ -12,17 +15,5 @@
     "prototype",
     "implementation",
     "evals"
-  ],
-  "skills": [
-    "./skills/start-repo",
-    "./skills/idea-to-product-concept",
-    "./skills/prototype",
-    "./skills/to-prd",
-    "./skills/to-ticket",
-    "./skills/implement",
-    "./skills/review-code",
-    "./skills/evals-gate",
-    "./skills/update",
-    "./lavish-axi/skills/lavish"
   ]
 }

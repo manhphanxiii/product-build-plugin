@@ -16,7 +16,7 @@ A repository whose root contains both `.claude-plugin/plugin.json` and `skills/s
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
 Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
 Never create chain destinations in an invalid `<root>`, never write anything into the skill-set repository, and never silently fall back to the current working directory.
-When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/start-repo` first instead of asking again.
+When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/build:start-repo` first instead of asking again.
 
 State the confirmed `<root>` once before the first read.
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
@@ -37,7 +37,7 @@ Do not write chain files outside these destinations.
 Read `prd/concept.md` and list open architecture questions.
 Read its `## Surfaces and logic` section first, because the recorded surface and logic level decide how every spike is built.
 Treat every cell holding `TODO - chưa xác nhận` as a paper question and settle it with the user before writing any spike.
-When `prd/concept.md` has no `## Surfaces and logic` section, ask the surface and logic questions once inside the decision batch and write the answers back into the concept, because `/to-prd` is forbidden to interview again.
+When `prd/concept.md` has no `## Surfaces and logic` section, ask the surface and logic questions once inside the decision batch and write the answers back into the concept, because `/build:to-prd` is forbidden to interview again.
 Separate questions that can be decided on paper from questions that need running code.
 Decide paper questions with the user and record qualifying decisions as ADRs.
 
@@ -66,7 +66,7 @@ Ask about Lavish at two moments and never skip either question.
 Ask before the first line of spike code at any logic level whether to open a Lavish surface for the flow diagram.
 Ask again after a spike runs and before writing its ADR whether to open a Lavish surface for the review.
 Use the `❓ **Q<n>** - **<title>**` block followed by `➡️ <recommended answer>` for both, and recommend yes both times.
-If the user agrees, call the Skill tool with "lavish".
+If the user agrees, call the Skill tool with "build:lavish".
 Never open Lavish without asking, and never drop the question because the spike looks small.
 When the user declines, say in one sentence what is lost and move on, but still draw the flow diagram in a rough form.
 For a Web/App spike, open the running spike as the review surface and collect element annotations.
@@ -89,7 +89,7 @@ Update only the step 2 row and related decision entries in `prd/roadmap.md`.
 
 ## Next step
 
-Recommend `/to-prd` as the next command, with one sentence explaining why.
+Recommend `/build:to-prd` as the next command, with one sentence explaining why.
 Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
-If yes, tell the user to run `/clear` and then `/to-prd`.
+If yes, tell the user to run `/clear` and then `/build:to-prd`.
 If not now, stop without further action.

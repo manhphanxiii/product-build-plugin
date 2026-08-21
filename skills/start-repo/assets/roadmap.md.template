@@ -8,19 +8,19 @@ Hoàn thành `prd/concept.md`.
 
 ## Out of scope
 
-TODO - `/idea-to-product-concept` sẽ xác nhận và điền từ concept.
+TODO - `/build:idea-to-product-concept` sẽ xác nhận và điền từ concept.
 
 ## Tiến độ
 
 | Bước | Lệnh | Trạng thái | Artifact | Ngày |
 |---|---|---|---|---|
-| 1. Start repo | /start-repo | chưa bắt đầu | AGENTS.md, CLAUDE.md, prd/evals/checklist.md | |
-| 2. Concept | /idea-to-product-concept | chưa bắt đầu | prd/concept.md | |
-| 3. Prototype | /prototype | chưa bắt đầu | prd/adr/ | |
-| 4. PRD | /to-prd | chưa bắt đầu | prd/PRD.md, prd/architecture.md | |
-| 5. Tickets | /to-ticket | chưa bắt đầu | prd/tickets/ | |
-| 6. Implement | /implement | chưa bắt đầu | app/ | |
-| 7. Evals | /evals-gate | chưa bắt đầu | prd/evals/ | |
+| 1. Start repo | /build:start-repo | chưa bắt đầu | AGENTS.md, CLAUDE.md, prd/evals/checklist.md | |
+| 2. Concept | /build:idea-to-product-concept | chưa bắt đầu | prd/concept.md | |
+| 3. Prototype | /build:prototype | chưa bắt đầu | prd/adr/ | |
+| 4. PRD | /build:to-prd | chưa bắt đầu | prd/PRD.md, prd/architecture.md | |
+| 5. Tickets | /build:to-ticket | chưa bắt đầu | prd/tickets/ | |
+| 6. Implement | /build:implement | chưa bắt đầu | app/ | |
+| 7. Evals | /build:evals-gate | chưa bắt đầu | prd/evals/ | |
 
 Ngôn ngữ: TODO. Múi giờ: TODO. Routine morning brief: TODO.
 
@@ -39,5 +39,5 @@ Chưa có.
 
 ## Bước kế tiếp
 
-/idea-to-product-concept - cần chốt concept có bằng chứng trước mọi quyết định sản phẩm khác.
+/build:idea-to-product-concept - cần chốt concept có bằng chứng trước mọi quyết định sản phẩm khác.
 

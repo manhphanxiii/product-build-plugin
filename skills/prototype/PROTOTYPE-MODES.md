@@ -65,7 +65,7 @@ Record which nodes need a human approval and which are allowed to run unattended
 
 The prototype is the prompt plus a small, hard, fixed input set.
 Run the same input several times and record the variance, because this level is semi determined and one good run proves nothing.
-Record the disagreement rate in the ADR, and keep that input set so `/evals-gate` can reuse it as eval cases.
+Record the disagreement rate in the ADR, and keep that input set so `/build:evals-gate` can reuse it as eval cases.
 
 ## Logic, agent
 

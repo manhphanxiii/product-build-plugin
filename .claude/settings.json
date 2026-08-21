@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "WebSearch",
+      "Bash(git count-objects *)",
+      "WebFetch(domain:docs.claude.com)"
     ]
   }
 }

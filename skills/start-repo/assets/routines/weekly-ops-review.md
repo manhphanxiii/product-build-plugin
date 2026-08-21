@@ -16,4 +16,4 @@ Tổng kết tuần bằng bằng chứng từ `prd/roadmap.md`, artifact và co
 7. Đề xuất mục tiêu tuần sau cùng out of scope tuần sau.
 
 Kết thúc bằng bản nháp thay đổi cho `prd/roadmap.md` để người dùng duyệt.
-Không ghi đè roadmap; `/update` làm tươi nó sau khi đề xuất được duyệt.
+Không ghi đè roadmap; `/build:update` làm tươi nó sau khi đề xuất được duyệt.

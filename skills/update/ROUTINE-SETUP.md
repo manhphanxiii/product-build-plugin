@@ -9,8 +9,8 @@ Offer these choices before writing configuration:
 | Scheduled routine | A cron-like schedule, such as each morning | Long-running products with daily reporting | Requires scheduler setup and credentials |
 
 When `routines/update-roadmap.md` already exists, read it and propose changes to its cadence or mechanism instead of offering to create a second file for the same job.
-`/start-repo` may seed this file once, during phase 4b, as a morning brief; `/update` owns refreshing it afterward.
-Neither skill touches `weekly-ops-review.md` or `pr-auto-review.md`, which belong to `/start-repo` alone.
+`/build:start-repo` may seed this file once, during phase 4b, as a morning brief; `/build:update` owns refreshing it afterward.
+Neither skill touches `weekly-ops-review.md` or `pr-auto-review.md`, which belong to `/build:start-repo` alone.
 
 Write the approved routine definition to `routines/update-roadmap.md` with schedule, enabled sources, scan root, deduplication policy, conflict policy, and report path.
 Each run appends `report/product/roadmap-<YYYY-MM-DD>.md` using the three parts in [REPORT-FORMAT.md](REPORT-FORMAT.md).

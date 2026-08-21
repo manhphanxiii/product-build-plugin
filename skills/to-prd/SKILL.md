@@ -19,7 +19,7 @@ A repository whose root contains both `.claude-plugin/plugin.json` and `skills/s
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
 Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
 Never create chain destinations in an invalid `<root>`, never write anything into the skill-set repository, and never silently fall back to the current working directory.
-When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/start-repo` first instead of asking again.
+When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/build:start-repo` first instead of asking again.
 
 State the confirmed `<root>` once before the first read.
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
@@ -49,7 +49,7 @@ When a newer decision replaces an older one, mark the older ADR as superseded an
 Add an ADR for any qualifying prototype decision that was not recorded.
 
 After drafting, offer a Lavish review.
-If the user agrees, call the Skill tool with "lavish".
+If the user agrees, call the Skill tool with "build:lavish".
 Open Lavish `plan` and `diagram` playbooks before writing the HTML artifact, poll for annotations, and apply accepted feedback back to the Markdown sources.
 Treat Markdown under `prd/` as the source of truth and `.lavish/` as a disposable review surface.
 If the user wants a presentation artifact, export it to `demos/<name>/`.
@@ -57,7 +57,7 @@ Update only the step 3 row and decision index in `prd/roadmap.md`.
 
 ## Next step
 
-Recommend `/to-ticket` as the next command, with one sentence explaining why.
+Recommend `/build:to-ticket` as the next command, with one sentence explaining why.
 Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
-If yes, tell the user to run `/clear` and then `/to-ticket`.
+If yes, tell the user to run `/clear` and then `/build:to-ticket`.
 If not now, stop without further action.

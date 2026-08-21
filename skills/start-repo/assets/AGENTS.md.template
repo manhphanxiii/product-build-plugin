@@ -57,7 +57,7 @@ Không biết lệnh nào thì giữ `TODO`, không đoán.
 - Đụng component boundary hoặc dependency mới thì cập nhật `prd/architecture.md` trong cùng PR.
 - Quyết định kiến trúc đáng nhớ phải có ADR trong `prd/adr/`, gồm phương án đã loại và lý do loại.
 - Ngôn từ hiển thị cho người dùng lấy từ `/client-note`, không tự đặt.
-- Làm tươi roadmap bằng `/update`, không sửa tay bảng tiến độ.
+- Làm tươi roadmap bằng `/build:update`, không sửa tay bảng tiến độ.
 
 ## Constraints
 

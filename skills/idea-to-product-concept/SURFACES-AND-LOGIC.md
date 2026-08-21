@@ -1,7 +1,7 @@
 # Surfaces and logic
 
 This reference exists so the interview asks where the product lives and how determined it must be.
-Without these answers `/prototype` cannot choose a prototyping method, and `/to-prd` is forbidden to ask again.
+Without these answers `/build:prototype` cannot choose a prototyping method, and `/build:to-prd` is forbidden to ask again.
 
 ## Three stakeholders
 
@@ -80,12 +80,12 @@ One question for data:
 One optional question for technology:
 
 > If you already know the technology for the logic and the store, name it.
-> "Not decided yet" is a fine answer and `/prototype` will settle it with a spike.
+> "Not decided yet" is a fine answer and `/build:prototype` will settle it with a spike.
 
 ## Recording rules
 
 - Surface and logic level are not technology choices.
-  Record where each stakeholder works and how determined each capability must be, and leave framework choice to `/prototype` and its ADRs.
+  Record where each stakeholder works and how determined each capability must be, and leave framework choice to `/build:prototype` and its ADRs.
 - A Zero UI row without a named host product is incomplete.
 - "Not decided yet" belongs in `## Risks and open decisions` as an open question, never in the table as a settled fact.
 - An unanswered cell is `TODO - chưa xác nhận`.

@@ -25,8 +25,8 @@ Every artifact must answer a clear workspace question.
 | `<root>/routines/` | Recurring workflow definitions | Write only after approval |
 | `<root>/report/` | Dated routine output | Product reports go under `report/product/` |
 
-`/start-repo` always seeds `routines/weekly-ops-review.md` and `routines/pr-auto-review.md`.
-It seeds `routines/update-roadmap.md` only when the user approves a morning brief in phase 4b; `/update` owns refreshing that file afterward.
+`/build:start-repo` always seeds `routines/weekly-ops-review.md` and `routines/pr-auto-review.md`.
+It seeds `routines/update-roadmap.md` only when the user approves a morning brief in phase 4b; `/build:update` owns refreshing that file afterward.
 
 The six top-level destinations answer where production code, evidence, plans, demonstrations, recurring work, and dated output belong.
 Root governance files answer how work is performed.

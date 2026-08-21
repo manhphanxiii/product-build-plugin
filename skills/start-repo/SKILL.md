@@ -7,7 +7,7 @@ disable-model-invocation: true
 # Start Repo
 
 This is the one-time initialization command for a product repository.
-After initialization, use `/update` to refresh progress and choose the next command.
+After initialization, use `/build:update` to refresh progress and choose the next command.
 
 ## Ground rules
 
@@ -16,7 +16,7 @@ A repository whose root contains both `.claude-plugin/plugin.json` and `skills/s
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
 Run repository commands with `<root>` as the working directory and every Git command as `git -C <root> ...`.
 Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, and prototypes only under `<root>/demos/prototypes/`.
-Root governance files `AGENTS.md` and `CLAUDE.md` may be written only by `/start-repo`, after approval. The ship checklist at `prd/evals/checklist.md` is also seeded only by `/start-repo`, after approval.
+Root governance files `AGENTS.md` and `CLAUDE.md` may be written only by `/build:start-repo`, after approval. The ship checklist at `prd/evals/checklist.md` is also seeded only by `/build:start-repo`, after approval.
 Treat `client-note/` as read-only.
 Read `app/knowledge-base/` freely, but never write there because it is runtime data owned by the application.
 In the separate-folder branch of `restructure`, never create, edit, or delete anything inside the existing application repository, including `knowledge-base`.
@@ -29,7 +29,7 @@ Reduce other agent instruction files to thin pointers plus genuinely tool-specif
 Link to facts owned by another file instead of copying them.
 
 Do not interview about the product, buyer, promise, or scope.
-Those decisions belong to `/idea-to-product-concept`.
+Those decisions belong to `/build:idea-to-product-concept`.
 Record unknown setup facts as explicit TODOs and never invent project commands.
 
 ## Phase 0: language, timezone, and the product repository
@@ -88,7 +88,7 @@ Present exactly one table with `Item`, `Status`, and `Proposal` columns.
 Do not create files, initialize Git, authenticate services, or create directories before approval.
 
 If `prd/roadmap.md` already exists, report what exists and what is missing.
-Propose only the missing files, never modify `prd/roadmap.md`, skip phase 4 except for questions required to fill a missing file, and finish by directing the user to `/update`.
+Propose only the missing files, never modify `prd/roadmap.md`, skip phase 4 except for questions required to fill a missing file, and finish by directing the user to `/build:update`.
 
 If a root-level `REVIEW.md` exists, that is the old layout. Propose migrating its content to `prd/evals/checklist.md` and deleting the root file, as one row in the phase 1 table, and wait for approval. Never overwrite `prd/evals/checklist.md` if it already exists.
 
@@ -118,9 +118,10 @@ Do not reorganize or edit anything inside the existing application repository.
 ## Phase 3: scaffold and fill canonical files
 
 After approval, run the mode-appropriate scaffold command and relay its created, skipped, and symlink lists verbatim.
-Use `python3 scripts/scaffold.py <root> --init-git` for `new`.
-For the separate-folder branch of `restructure`, add `--init-git --no-knowledge-base` and every approved `--link ROLE=PATH` mapping.
-For the in-place branch, use `--retrofit --app-dir <detected-path>` and every approved non-app `--link ROLE=PATH` mapping.
+The scaffold script ships with this skill, so always address it through `${CLAUDE_PLUGIN_ROOT}` and never through a path relative to the current working directory, which is `<root>` and not the skill folder.
+Use `python3 "${CLAUDE_PLUGIN_ROOT}/skills/start-repo/scripts/scaffold.py" <root> --init-git` for `new`.
+For the separate-folder branch of `restructure`, keep the same `python3 "${CLAUDE_PLUGIN_ROOT}/skills/start-repo/scripts/scaffold.py" <root>` prefix and add `--init-git --no-knowledge-base` and every approved `--link ROLE=PATH` mapping.
+For the in-place branch, keep that same prefix and use `--retrofit --app-dir <detected-path>` and every approved non-app `--link ROLE=PATH` mapping.
 
 The scaffold never creates or edits `.gitignore`.
 After symlinks are created, separately propose adding each symlink name to `.gitignore`, then apply only entries the user approves.
@@ -132,7 +133,7 @@ Write a conservative permission posture into `AGENTS.md` and state how it may lo
 Populate commands only with values verified by the Phase 0b checks in [REPO-CHECKS.md](REPO-CHECKS.md).
 Leave every unverified command as `TODO`; do not ask and do not guess.
 A missing command is safer than a plausible but incorrect command.
-Leave product-specific quality criteria as the self-describing TODOs owned by `/to-prd` in the checklist template.
+Leave product-specific quality criteria as the self-describing TODOs owned by `/build:to-prd` in the checklist template.
 Always install both `weekly-ops-review.md` and `pr-auto-review.md` in `routines/`.
 Do not fill or seed any file whose approved symlink resolves inside the existing application repository in the separate-folder branch.
 If `.cursorrules`, `GEMINI.md`, or another agent configuration duplicates canonical instructions, propose reducing it to a thin pointer.
@@ -148,13 +149,13 @@ Read [ROADMAP-FORMAT.md](ROADMAP-FORMAT.md) and create `prd/roadmap.md` for the 
 Mark step 1 (start-repo) completed with today's date and its artifacts (`AGENTS.md`, `CLAUDE.md`, `prd/evals/checklist.md`), and fill the note line under the Tiến độ table with the conversation language and working timezone chosen in phase 0; leave the routine part of that note as not yet installed, phase 4b fills it in after Q4/Q5 resolve.
 Set steps 2 through 7 to not started.
 Set the weekly goal to completing `prd/concept.md`.
-Leave Out of scope empty with a note that `/idea-to-product-concept` will supply it.
+Leave Out of scope empty with a note that `/build:idea-to-product-concept` will supply it.
 Do not infer progress or add tasks for steps 2 through 7.
 
 ## Phase 4b: offer the morning brief routine
 
-Ask `❓ **Q4** - **Morning brief**` whether to run `/update` as a daily morning brief and at what time, recommending `➡️ Có, 08:00` and stating that time is in the working timezone recorded in `AGENTS.md` during phase 3.
-When the answer is no, skip the rest of this phase, create no file, and note that routine mode in `/update` can enable this later.
+Ask `❓ **Q4** - **Morning brief**` whether to run `/build:update` as a daily morning brief and at what time, recommending `➡️ Có, 08:00` and stating that time is in the working timezone recorded in `AGENTS.md` during phase 3.
+When the answer is no, skip the rest of this phase, create no file, and note that routine mode in `/build:update` can enable this later.
 
 When the answer is yes, write `routines/update-roadmap.md` from the [morning brief template](assets/routines/update-roadmap.md) with the chosen time and the `AGENTS.md` timezone filled in.
 Then present exactly one table of activation mechanisms and their tradeoffs, the same style as the table in `skills/update/ROUTINE-SETUP.md`, and show the exact content that will be written or run before asking.
@@ -164,15 +165,15 @@ Wait for approval separate from the phase 1 approval before writing `.claude/set
 When the user declines activation, keep the routine definition file, state plainly that nothing runs it yet, and give the command to enable it later.
 After activation, run the routine once so its first dated report at `report/product/roadmap-<YYYY-MM-DD>.md` exists.
 
-Whatever Q4/Q5 resolved to, update the note line under the Tiến độ table in `prd/roadmap.md` with the final routine status: installed with its time, or not installed. This is the one direct edit `/start-repo` makes to `prd/roadmap.md` after phase 4, and it is allowed because `/start-repo` owns step 1's row and note line exclusively.
+Whatever Q4/Q5 resolved to, update the note line under the Tiến độ table in `prd/roadmap.md` with the final routine status: installed with its time, or not installed. This is the one direct edit `/build:start-repo` makes to `prd/roadmap.md` after phase 4, and it is allowed because `/build:start-repo` owns step 1's row and note line exclusively.
 
-Tell the user to use `/update`, not `/start-repo`, to refresh roadmap progress and choose future commands.
+Tell the user to use `/build:update`, not `/build:start-repo`, to refresh roadmap progress and choose future commands.
 
 Confirm the `AGENTS.md` written in phase 3 already carries both Conventions lines from phase 0, conversation language and working timezone; every later chain skill reads both from there, so neither may be missing.
 
-Recommend `/idea-to-product-concept` as the next command with one sentence explaining why.
+Recommend `/build:idea-to-product-concept` as the next command with one sentence explaining why.
 Ask using `❓ **Q6** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
-If yes, tell the user to run `/clear` and then `/idea-to-product-concept`.
+If yes, tell the user to run `/clear` and then `/build:idea-to-product-concept`.
 If not now, stop without further action.
 Do not start product code in the same turn.
 

@@ -58,7 +58,7 @@ Push work down to plain code wherever it fits, and keep an agent only where the 
 ### Data and technology
 
 Describe what must outlive a session, who owns it, and anything already running that the product must reuse.
-Name a technology only when the user actually chose it, and leave it open otherwise so `/prototype` can settle it with a spike.
+Name a technology only when the user actually chose it, and leave it open otherwise so `/build:prototype` can settle it with a spike.
 Name every external system the product depends on, including the host product of any Zero UI surface.
 
 ## Risks and open decisions

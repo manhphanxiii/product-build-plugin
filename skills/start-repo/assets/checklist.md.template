@@ -28,13 +28,13 @@ Còn một ô chưa tick thì chưa ship.
 - [ ] Boundary hoặc dependency thay đổi đã được cập nhật trong `prd/architecture.md` và ADR liên quan?
 - [ ] Có chép lại nội dung đã có ở file khác thay vì trỏ tới nó không?
 - [ ] Ngôn từ hiển thị cho người dùng có khớp `/client-note` không?
-- [ ] Eval gate trong `/evals-gate` đã pass chưa?
+- [ ] Eval gate trong `/build:evals-gate` đã pass chưa?
 - [ ] Đã ghi rõ: đã đổi gì / đã test gì / cần người review gì?
 
 ## Tiêu chí riêng của sản phẩm này
 
 Đây là nguồn chính thức của tiêu chí chất lượng riêng, không chép sang file khác.
-`/to-prd` bổ sung các tiêu chí từ PRD dưới dạng kết quả quan sát được, không phải khẳng định chung chung.
+`/build:to-prd` bổ sung các tiêu chí từ PRD dưới dạng kết quả quan sát được, không phải khẳng định chung chung.
 
-- [ ] TODO (`/to-prd`): thêm tiêu chí chất lượng riêng mô tả một kết quả quan sát được từ PRD.
-- [ ] TODO (`/to-prd`): thêm tiêu chí chất lượng riêng mô tả một kết quả quan sát được từ PRD.
+- [ ] TODO (`/build:to-prd`): thêm tiêu chí chất lượng riêng mô tả một kết quả quan sát được từ PRD.
+- [ ] TODO (`/build:to-prd`): thêm tiêu chí chất lượng riêng mô tả một kết quả quan sát được từ PRD.

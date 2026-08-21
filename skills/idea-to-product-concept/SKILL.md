@@ -16,7 +16,7 @@ A repository whose root contains both `.claude-plugin/plugin.json` and `skills/s
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
 Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
 Never create chain destinations in an invalid `<root>`, never write anything into the skill-set repository, and never silently fall back to the current working directory.
-When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/start-repo` first instead of asking again.
+When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/build:start-repo` first instead of asking again.
 
 State the confirmed `<root>` once before the first read.
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
@@ -61,7 +61,7 @@ If `client-note/` is empty and the user has no material, say plainly that the re
 
 Use prose when the material remains easy to verify.
 When several documents, links, long transcripts, or data exports make a prose summary hard to audit, offer a Lavish consolidation surface before building one.
-If the user agrees, call the Skill tool with "lavish".
+If the user agrees, call the Skill tool with "build:lavish".
 Open the `table` playbook before writing HTML, add `comparison` when sources conflict, and add `input` when the user needs to confirm or correct rows in the artifact.
 Use the source table columns from [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md) and add one column for what remains unclear.
 Poll for feedback, apply it, and only then interview so the questions cover facts the material could not answer.
@@ -85,7 +85,7 @@ Use this format for each question:
 ```
 
 Cover the problem, who experiences it, success measures, scope, out of scope, constraints, and the largest risks.
-Cover surfaces and logic in the same batch, because `/prototype` cannot choose a prototyping method without those answers.
+Cover surfaces and logic in the same batch, because `/build:prototype` cannot choose a prototyping method without those answers.
 Offer operator, builder, and researcher as optional lenses for missing perspectives.
 If the user says those lenses are irrelevant, drop them immediately and do not insist.
 After the response, analyze the full set for contradictions, newly opened issues, and answers too vague to act on.
@@ -106,7 +106,7 @@ When an answer is agent or skill, ask exactly one follow-up about which part of 
 Ask separately what has to outlive a session, who owns it, and what already runs that the product must reuse.
 Add one optional question about concrete technology and say in the question itself that "not decided yet" is a fine answer.
 
-Record every unresolved technology or level as an open question in `## Risks and open decisions` for `/prototype` to settle with a spike.
+Record every unresolved technology or level as an open question in `## Risks and open decisions` for `/build:prototype` to settle with a spike.
 Do not choose any of this for the user, and never let a recommended answer become a decision the user did not make.
 Write an unanswered surface or level as `TODO - chưa xác nhận`, never as a default of Web/App and never as a default of plain code.
 
@@ -120,7 +120,7 @@ Update only the step 1 row in `prd/roadmap.md` and its evidence-backed next step
 
 ## Next step
 
-Recommend `/prototype` as the next command, with one sentence explaining why.
+Recommend `/build:prototype` as the next command, with one sentence explaining why.
 Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
-If yes, tell the user to run `/clear` and then `/prototype`.
+If yes, tell the user to run `/clear` and then `/build:prototype`.
 If not now, stop without further action.

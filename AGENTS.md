@@ -7,13 +7,14 @@ If a destination directory is missing, the agent must state its path, propose cr
 `<root>` is the product repository and is never automatically the Git root of the current working directory: a skill uses the path the user supplied, requires `<root>/prd/roadmap.md` to exist, and never accepts this skill-set repository as `<root>`.
 No skill writes chain artifacts into this repository, and every path in a skill without an explicit prefix is relative to `<root>`.
 Never edit `client-note/` or runtime content in `app/knowledge-base/`.
-This skill must not depend on anything outside its own folder, and must work correctly whether it is symlinked or installed as a plugin.
-Do not reference the name, brand, or path of any other skill set in this folder, except `lavish-axi/`, which is vendored in this repo and declared in `.claude-plugin/plugin.json`.
+This skill must not depend on anything outside its own folder, and must work correctly when installed as a plugin, which is the only supported installation path.
+Do not reference the name, brand, or path of any other skill set in this folder, except `skills/lavish/`, a third-party MIT skill by Kun Chen vendored from <https://github.com/kunchenguid/lavish-axi>. Keep its `license` and `metadata.author` frontmatter intact.
 `SKILL.md`, `AGENTS.md`, and `CLAUDE.md` are written in English; `README.md` is written in Vietnamese.
-A skill calls another skill through the Skill tool by name, not by file path.
+A skill calls another skill through the Skill tool by its namespaced name `build:<skill>`, not by file path, because every skill here ships inside the `build` plugin.
+A script bundled with a skill is addressed as `${CLAUDE_PLUGIN_ROOT}/skills/<skill>/scripts/<file>`, never by a path relative to the current working directory.
 Keep the frontmatter and invocation policy in `agents/openai.yaml` always in sync.
-Never run `link.sh` without the user's explicit permission.
-When adding or renaming a skill, sync all three locations listed in `README.md`.
+This repo is installed only as a plugin, so a new skill is added by creating `skills/<name>/SKILL.md` and nothing else; `.claude-plugin/plugin.json` must not list skills individually.
+When adding or renaming a skill, update the chain table and the install section in `README.md`.
 
 ## General Guidelines
 

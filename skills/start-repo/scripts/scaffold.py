@@ -162,7 +162,7 @@ def main() -> int:
         print("\nSymlink đã tạo:")
         for role, source in created_links:
             print(f"  @ {role} -> {source}")
-    print("\nBước tiếp: điền AGENTS.md trước, rồi CLAUDE.md, rồi prd/evals/checklist.md, rồi chạy /idea-to-product-concept.")
+    print("\nBước tiếp: điền AGENTS.md trước, rồi CLAUDE.md, rồi prd/evals/checklist.md, rồi chạy /build:idea-to-product-concept.")
     return 0
 
 

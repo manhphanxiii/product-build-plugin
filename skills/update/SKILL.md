@@ -29,13 +29,13 @@ A repository whose root contains both `.claude-plugin/plugin.json` and `skills/s
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
 Ask exactly one question using `❓ **Q2** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
 Never create chain destinations in an invalid `<root>`, never write anything into the skill-set repository, and never silently fall back to the current working directory.
-When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/start-repo` first instead of asking again.
+When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/build:start-repo` first instead of asking again.
 
 State the confirmed `<root>` once before the first read.
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
 Run repository commands with `<root>` as the working directory and every Git command as `git -C <root> ...`.
 Read `<root>/AGENTS.md` before the first question and before the first write, because the product repository's own agent instructions are not loaded automatically when the current working directory is elsewhere.
-When its Conventions line names a language different from the one chosen in Phase 0, use the Phase 0 choice for this run, print one line noting the mismatch, and do not edit `AGENTS.md`; only `/start-repo` writes that file.
+When its Conventions line names a language different from the one chosen in Phase 0, use the Phase 0 choice for this run, print one line noting the mismatch, and do not edit `AGENTS.md`; only `/build:start-repo` writes that file.
 
 ## Repository destinations
 
@@ -48,7 +48,7 @@ Do not write chain files outside these destinations.
 
 ## Refresh and report
 
-Read the roadmap and gather evidence for the seven-step progress table only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result. Steps 2 through 7 only; step 1 (start-repo) is owned by `/start-repo` and is never re-evaluated here.
+Read the roadmap and gather evidence for the seven-step progress table only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result. Steps 2 through 7 only; step 1 (start-repo) is owned by `/build:start-repo` and is never re-evaluated here.
 
 Read the `Nguồn thông tin` section in `prd/README.md` and [SOURCES.md](SOURCES.md).
 State every disabled source that will be skipped.

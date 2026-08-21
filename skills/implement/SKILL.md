@@ -16,7 +16,7 @@ A repository whose root contains both `.claude-plugin/plugin.json` and `skills/s
 When `<root>` is invalid, print the resolved path and the reason, then look for candidates by listing sibling directories of the resolved repository that contain `prd/roadmap.md`.
 Ask exactly one question using `❓ **Q0** - **<title>**` followed by `➡️ <recommended answer>` for the product repository path, recommending the single candidate when exactly one was found.
 Never create chain destinations in an invalid `<root>`, never write anything into the skill-set repository, and never silently fall back to the current working directory.
-When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/start-repo` first instead of asking again.
+When no candidate exists and the user names no repository holding `prd/roadmap.md`, stop and tell the user to run `/build:start-repo` first instead of asking again.
 
 State the confirmed `<root>` once before the first read.
 Every path in this skill without an explicit prefix is relative to `<root>`, never to the current working directory.
@@ -46,7 +46,7 @@ Where practical, write a test at the architecture-defined seam before production
 Run focused tests and type checking frequently using the exact commands recorded in the `Commands` section of `AGENTS.md`.
 Run the full test suite once at the end.
 
-After the implementation passes local checks, call the Skill tool with "review-code".
+After the implementation passes local checks, call the Skill tool with "build:review-code".
 Resolve every actionable finding and rerun affected checks.
 Commit on the current branch with the ticket identifier in the commit message.
 Change the ticket frontmatter to `Status: done`.
@@ -55,7 +55,7 @@ Update its Task row and the step 5 progress row in `prd/roadmap.md`, including t
 ## Next step
 
 Read `prd/roadmap.md` for remaining tasks whose blockers are done and status is `ready`.
-If one remains, recommend `/implement` for that ticket; otherwise recommend `/evals-gate`.
+If one remains, recommend `/build:implement` for that ticket; otherwise recommend `/build:evals-gate`.
 State one sentence explaining why.
 Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
 If yes, tell the user to run `/clear` and then run the recommended command.

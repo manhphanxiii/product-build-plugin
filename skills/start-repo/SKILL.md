@@ -140,15 +140,16 @@ Fill the templates in the file content language chosen in phase 0, translating t
 
 ## Phase 4: initialize the chain and hand off
 
-Explain steps 1 through 6 for someone seeing the workflow for the first time.
+Explain step 1 (start-repo, just completed) and steps 2 through 7 for someone seeing the workflow for the first time.
 For every step, state the question it answers, the decision the user must make, its artifact and location, an honest time estimate, and evidence of completion.
 Recommend one context window per step, `/clear` between steps, and `/clear` between implementation tickets.
 
 Read [ROADMAP-FORMAT.md](ROADMAP-FORMAT.md) and create `prd/roadmap.md` for the first time.
-Set all six product-building steps to not started.
+Mark step 1 (start-repo) completed with today's date and its artifacts (`AGENTS.md`, `CLAUDE.md`, `prd/evals/checklist.md`), and fill the note line under the Tiến độ table with the conversation language and working timezone chosen in phase 0; leave the routine part of that note as not yet installed, phase 4b fills it in after Q4/Q5 resolve.
+Set steps 2 through 7 to not started.
 Set the weekly goal to completing `prd/concept.md`.
 Leave Out of scope empty with a note that `/idea-to-product-concept` will supply it.
-Do not infer progress or add tasks.
+Do not infer progress or add tasks for steps 2 through 7.
 
 ## Phase 4b: offer the morning brief routine
 
@@ -162,6 +163,8 @@ A Stop hook in `.claude/settings.json` does not fire on a schedule and only runs
 Wait for approval separate from the phase 1 approval before writing `.claude/settings.json` or registering anything with a scheduler.
 When the user declines activation, keep the routine definition file, state plainly that nothing runs it yet, and give the command to enable it later.
 After activation, run the routine once so its first dated report at `report/product/roadmap-<YYYY-MM-DD>.md` exists.
+
+Whatever Q4/Q5 resolved to, update the note line under the Tiến độ table in `prd/roadmap.md` with the final routine status: installed with its time, or not installed. This is the one direct edit `/start-repo` makes to `prd/roadmap.md` after phase 4, and it is allowed because `/start-repo` owns step 1's row and note line exclusively.
 
 Tell the user to use `/update`, not `/start-repo`, to refresh roadmap progress and choose future commands.
 

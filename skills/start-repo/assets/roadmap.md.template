@@ -14,12 +14,15 @@ TODO - `/idea-to-product-concept` sẽ xác nhận và điền từ concept.
 
 | Bước | Lệnh | Trạng thái | Artifact | Ngày |
 |---|---|---|---|---|
-| 1. Concept | /idea-to-product-concept | chưa bắt đầu | prd/concept.md | |
-| 2. Prototype | /prototype | chưa bắt đầu | prd/adr/ | |
-| 3. PRD | /to-prd | chưa bắt đầu | prd/PRD.md, prd/architecture.md | |
-| 4. Tickets | /to-ticket | chưa bắt đầu | prd/tickets/ | |
-| 5. Implement | /implement | chưa bắt đầu | app/ | |
-| 6. Evals | /evals-gate | chưa bắt đầu | prd/evals/ | |
+| 1. Start repo | /start-repo | chưa bắt đầu | AGENTS.md, CLAUDE.md, prd/evals/checklist.md | |
+| 2. Concept | /idea-to-product-concept | chưa bắt đầu | prd/concept.md | |
+| 3. Prototype | /prototype | chưa bắt đầu | prd/adr/ | |
+| 4. PRD | /to-prd | chưa bắt đầu | prd/PRD.md, prd/architecture.md | |
+| 5. Tickets | /to-ticket | chưa bắt đầu | prd/tickets/ | |
+| 6. Implement | /implement | chưa bắt đầu | app/ | |
+| 7. Evals | /evals-gate | chưa bắt đầu | prd/evals/ | |
+
+Ngôn ngữ: TODO. Múi giờ: TODO. Routine morning brief: TODO.
 
 ## Task
 

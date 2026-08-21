@@ -48,7 +48,7 @@ Do not write chain files outside these destinations.
 
 ## Refresh and report
 
-Read the roadmap and gather evidence for the six-step progress table only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result.
+Read the roadmap and gather evidence for the seven-step progress table only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result. Steps 2 through 7 only; step 1 (start-repo) is owned by `/start-repo` and is never re-evaluated here.
 
 Read the `Nguồn thông tin` section in `prd/README.md` and [SOURCES.md](SOURCES.md).
 State every disabled source that will be skipped.

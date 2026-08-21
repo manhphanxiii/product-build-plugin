@@ -68,6 +68,14 @@ class CheckScriptTests(unittest.TestCase):
                 ),
             ),
             (
+                "review-surface probe shape",
+                lambda root: self.mutate_text(
+                    root / "skills" / "start-repo" / "SKILL.md",
+                    "Never join the CLI check and the browser-opener check into one chained command, because the platform branch that does not apply always exits non-zero and would make a working setup read as a failure.\n",
+                    "",
+                ),
+            ),
+            (
                 "plan gate",
                 lambda root: self.mutate_text(
                     root / "skills" / "start-repo" / "SKILL.md",

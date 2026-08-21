@@ -336,6 +336,28 @@ def check_portability(root: Path, errors: list[str]) -> None:
                 errors.append(f"{path}: root guard does not mention {manifest_path}")
 
 
+def check_probe_shape(root: Path, errors: list[str]) -> None:
+    required_warning = (
+        "Never join the CLI check and the browser-opener check into one chained "
+        "command"
+    )
+    chained_probe = re.compile(
+        r"lavish-axi --help[^\n]*(?:&&|;)[^\n]*command -v"
+    )
+    for skill_name in FIRST_PARTY:
+        path = root / "skills" / skill_name / "SKILL.md"
+        text = path.read_text(encoding="utf-8")
+        if "Choose the surface with this probe" in text and required_warning not in text:
+            errors.append(
+                f"{path}: review-surface probe must forbid chaining the CLI and "
+                "browser-opener checks"
+            )
+        if chained_probe.search(text):
+            errors.append(
+                f"{path}: review-surface probe chains lavish-axi --help and command -v"
+            )
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -375,6 +397,7 @@ def main() -> int:
     if args.release:
         check_release_tag(root, manifest_versions, errors)
     check_portability(root, errors)
+    check_probe_shape(root, errors)
 
     if errors:
         for error in errors:

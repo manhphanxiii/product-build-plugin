@@ -39,7 +39,7 @@ Run against the `<root>` chosen in phase 3.
    Codex plugin installation is account or environment configuration and is not written into the product repository.
    If the Claude settings file is missing or lacks this declaration, the phase 4 table proposes seeding or patching it from [assets/settings.json.template](assets/settings.json.template).
 6. Require Node 22 or newer and working `npx` for visual review.
-   Also check whether `open` on macOS or `xdg-open` on Linux is available.
+   Separately check only the browser-opener command for the current platform: `open` on macOS or `xdg-open` on Linux.
    This review-surface probe is also the single surface-selection probe for the plan gate; do not create a second source of truth.
    Report whether the setup will use Lavish, the Artifact tool when that tool and `artifact-design` are available, or Markdown in the conversation.
    Treat a user-started asynchronous cloud run as interactive across turns and stop before writing until the user approves the Markdown draft.

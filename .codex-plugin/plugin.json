@@ -1,6 +1,6 @@
 {
   "name": "build",
-  "version": "2.3.0",
+  "version": "2.3.0+codex.20260821121812",
   "description": "A self-contained skill chain from product idea to shipped code.",
   "author": {
     "name": "Manh Phan"

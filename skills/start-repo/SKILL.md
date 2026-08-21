@@ -168,9 +168,14 @@ The plan must include:
 - the routine file and selected activation mechanism, including the exact merged JSON patch or `/schedule` definition, or an explicit statement that no routine or activation will be created.
 
 Choose the surface with this probe and state the chosen surface in one line before rendering.
+Run the probe as two separate commands and judge each one by its own exit status.
+Never join the CLI check and the browser-opener check into one chained command, because the platform branch that does not apply always exits non-zero and would make a working setup read as a failure.
 
 1. Prefer Lavish.
-   Lavish is usable when its CLI runs, any required package is already installed or network access is available, and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
+   Lavish is usable when its CLI runs, any required package is already installed or network access is available, and a local browser can be opened.
+   Check one: `npx -y lavish-axi --help` must exit 0.
+   Check two: run `command -v open` on macOS or `command -v xdg-open` on Linux, and only the command for the current platform must exit 0.
+   The probe passes when both checks pass, and a non-zero exit from the opener that does not belong to the current platform means nothing.
    When `npx -y` exits opaquely, retry once with `lavish-axi --help`; if that binary is unavailable, run `npm root -g`, then run `node <global-node-modules>/lavish-axi/dist/cli.mjs --help` using the printed path before declaring Lavish unusable.
 2. When the probe fails and both the Artifact tool and `artifact-design` skill are available, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.

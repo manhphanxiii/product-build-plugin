@@ -15,7 +15,7 @@ Ask whether to use Vietnamese or English for this conversation, recommending the
 This question sets only the conversation language for this run; content written into `prd/roadmap.md` stays in whatever language the file already uses, so the file is never mixed.
 Use the chosen language from the next message onward, including the root question in the next section.
 
-Skip this question when the run has no one to ask, such as a routine, morning brief, Stop hook, or `/loop` invocation.
+Skip this question and the Review gate when the run has no one to ask, such as a routine, morning brief, Stop hook, or `/loop` invocation.
 In that case, read the Conventions line in `<root>/AGENTS.md` and use its language instead.
 
 ## Root resolution
@@ -63,7 +63,38 @@ Print the report using [REPORT-FORMAT.md](REPORT-FORMAT.md): exactly three parts
 Update the weekly goal and Out of scope from `prd/concept.md` together with actual progress.
 Do not recreate the file, remove externally sourced Task rows, or invent progress.
 
-Wait for approval, then modify only the affected roadmap rows and blocker entries.
+Build the review draft as the proposed roadmap-row diff and the complete `report/product/roadmap-<YYYY-MM-DD>.md` content.
+
+## Review gate
+
+Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
+Never write the final file before that approval.
+
+Choose the surface with this probe and state the chosen surface in one line before rendering.
+
+1. Prefer Lavish.
+   Lavish is usable when its CLI runs and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
+   When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
+2. When the probe fails, use the Artifact tool.
+   Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
+   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
+
+With Lavish, call the Skill tool with "build:lavish".
+Open every playbook that matches the draft, and always open `input`, because this gate collects a decision.
+Poll for feedback, apply every returned prompt, and poll again until the user approves or ends the session.
+State the artifact path in one line, and add that the user may reply `artifact` to switch surfaces if the page does not open for them.
+
+With the Artifact tool, load the `artifact-design` skill first, write the draft to a file in the session scratchpad, publish it, and give the user the link.
+The user approves or gives feedback in this conversation.
+Read comment threads with the Artifact tool's `comments` action when the user says they commented on the page.
+Republish the same file path after each revision so the link stays stable.
+
+`prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
+Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
+
+After approval, modify only the affected roadmap rows and blocker entries and write the dated report.
 State in one line what was actually applied.
 Do not propose work outside the roadmap.
 

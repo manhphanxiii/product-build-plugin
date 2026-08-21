@@ -65,7 +65,7 @@ If the user agrees, call the Skill tool with "build:lavish".
 Open the `table` playbook before writing HTML, add `comparison` when sources conflict, and add `input` when the user needs to confirm or correct rows in the artifact.
 Use the source table columns from [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md) and add one column for what remains unclear.
 Poll for feedback, apply it, and only then interview so the questions cover facts the material could not answer.
-Markdown under `prd/` remains the source of truth and `.lavish/` is a disposable review surface.
+This surface consolidates evidence before the interview and does not replace the Review gate for the final concept.
 
 ## Do not invent the business
 
@@ -109,6 +109,37 @@ Add one optional question about concrete technology and say in the question itse
 Record every unresolved technology or level as an open question in `## Risks and open decisions` for `/build:prototype` to settle with a spike.
 Do not choose any of this for the user, and never let a recommended answer become a decision the user did not make.
 Write an unanswered surface or level as `TODO - chưa xác nhận`, never as a default of Web/App and never as a default of plain code.
+
+Build the review draft as the complete `prd/concept.md` defined by [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md), together with the proposed step 2 roadmap row.
+
+## Review gate
+
+Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
+Never write the final file before that approval.
+
+Choose the surface with this probe and state the chosen surface in one line before rendering.
+
+1. Prefer Lavish.
+   Lavish is usable when its CLI runs and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
+   When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
+2. When the probe fails, use the Artifact tool.
+   Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
+   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
+
+With Lavish, call the Skill tool with "build:lavish".
+Open every playbook that matches the draft, and always open `input`, because this gate collects a decision.
+Poll for feedback, apply every returned prompt, and poll again until the user approves or ends the session.
+State the artifact path in one line, and add that the user may reply `artifact` to switch surfaces if the page does not open for them.
+
+With the Artifact tool, load the `artifact-design` skill first, write the draft to a file in the session scratchpad, publish it, and give the user the link.
+The user approves or gives feedback in this conversation.
+Read comment threads with the Artifact tool's `comments` action when the user says they commented on the page.
+Republish the same file path after each revision so the link stays stable.
+
+`prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
+Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
 
 ## Write the concept
 

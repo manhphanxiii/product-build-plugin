@@ -12,6 +12,7 @@ Do not reference the name, brand, or path of any other skill set in this folder,
 `SKILL.md`, `AGENTS.md`, and `CLAUDE.md` are written in English; `README.md` is written in Vietnamese.
 A skill calls another skill through the Skill tool by its namespaced name `build:<skill>`, not by file path, because every skill here ships inside the `build` plugin.
 A script bundled with a skill is addressed as `${CLAUDE_PLUGIN_ROOT}/skills/<skill>/scripts/<file>`, never by a path relative to the current working directory.
+`## Review gate` is duplicated like `## Root resolution`; every copy must remain byte-identical, with Lavish as the default surface and the Artifact tool as the cloud fallback.
 Keep the frontmatter and invocation policy in `agents/openai.yaml` always in sync.
 This repo is installed only as a plugin, so a new skill is added by creating `skills/<name>/SKILL.md` and nothing else; `.claude-plugin/plugin.json` must not list skills individually.
 When adding or renaming a skill, update the chain table and the install section in `README.md`.

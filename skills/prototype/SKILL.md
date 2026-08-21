@@ -61,28 +61,49 @@ Analyze the full response before asking more.
 Ask follow-ups only for contradictions, newly opened issues, or answers too vague to act on, and state which answer caused each follow-up.
 Investigate repository facts yourself and leave decisions to the user.
 
-## Always ask about Lavish
+Read [ADR-FORMAT.md](ADR-FORMAT.md).
+For every spike, ask whether to discard or promote it before building the review draft.
+After every spike in the current batch has run, build the review draft as the complete ADR set defined by [ADR-FORMAT.md](ADR-FORMAT.md), the discard or promote conclusion for each spike, and the proposed step 3 roadmap row.
+For a Web/App spike, include the running spike as a matching review surface when it helps the user annotate elements.
+For a Zero UI spike, use the `table` playbook for transcript variants.
+For logic and architecture, use `diagram`, and add `comparison` when several options compete.
 
-Ask about Lavish at two moments and never skip either question.
-Ask before the first line of spike code at any logic level whether to open a Lavish surface for the flow diagram.
-Ask again after a spike runs and before writing its ADR whether to open a Lavish surface for the review.
-Use the `❓ **Q<n>** - **<title>**` block followed by `➡️ <recommended answer>` for both, and recommend yes both times.
-If the user agrees, call the Skill tool with "build:lavish".
-Never open Lavish without asking, and never drop the question because the spike looks small.
-When the user declines, say in one sentence what is lost and move on, but still draw the flow diagram in a rough form.
-For a Web/App spike, open the running spike as the review surface and collect element annotations.
-For a Zero UI spike, use the `table` playbook on the transcript variants, because there is nothing to open.
-For logic and architecture, use the `diagram` playbook at the first question and `comparison` at the second when several options compete, include editable Mermaid, poll for feedback, and apply feedback to the decision source.
+## Review gate
+
+Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
+Never write the final file before that approval.
+
+Choose the surface with this probe and state the chosen surface in one line before rendering.
+
+1. Prefer Lavish.
+   Lavish is usable when its CLI runs and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
+   When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
+2. When the probe fails, use the Artifact tool.
+   Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
+   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
+
+With Lavish, call the Skill tool with "build:lavish".
+Open every playbook that matches the draft, and always open `input`, because this gate collects a decision.
+Poll for feedback, apply every returned prompt, and poll again until the user approves or ends the session.
+State the artifact path in one line, and add that the user may reply `artifact` to switch surfaces if the page does not open for them.
+
+With the Artifact tool, load the `artifact-design` skill first, write the draft to a file in the session scratchpad, publish it, and give the user the link.
+The user approves or gives feedback in this conversation.
+Read comment threads with the Artifact tool's `comments` action when the user says they commented on the page.
+Republish the same file path after each revision so the link stays stable.
+
+`prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
+Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
 
 ## Record decisions as ADRs
 
-Read [ADR-FORMAT.md](ADR-FORMAT.md).
 Create an ADR only when a decision is hard to reverse, surprising without context, and the result of a real tradeoff.
 Apply any whiteboard edits back to the Mermaid source before finalizing the ADR.
 
 ## Discard or promote
 
-For every spike, ask whether to discard or promote it.
 On discard, remove only that approved spike directory after its ADR exists.
 On promotion, move it to `demos/<name>/` and add a Vietnamese or project-language `SCRIPT.md` presentation script.
 Keep the ADR in either case.

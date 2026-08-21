@@ -33,18 +33,48 @@ Read `app/knowledge-base/` freely, but never write there because it is runtime d
 Do not write chain files outside these destinations.
 
 Read `prd/PRD.md` and [EVAL-FORMAT.md](EVAL-FORMAT.md).
-Turn every relevant user story into stable eval cases in `prd/evals/cases.md`.
+Draft stable eval cases from every relevant user story for `prd/evals/cases.md`.
 Each case must have a stable `id`, `input`, `must`, `must_not`, `source`, and `added` date.
 State the numeric ship gate at the top of the file.
 Default to pass rate at least 90 percent, zero critical failures, and zero pass-to-fail regressions unless the product has an approved stricter gate.
 
-Run the entire eval set against the current product behavior.
-Append every run, including failures, to `prd/evals/results.md`.
+Run the entire draft eval set against the current product behavior.
+Build the review draft as `prd/evals/cases.md`, the proposed run conclusion for `prd/evals/results.md`, and the proposed step 7 roadmap row.
+
+## Review gate
+
+Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
+Never write the final file before that approval.
+
+Choose the surface with this probe and state the chosen surface in one line before rendering.
+
+1. Prefer Lavish.
+   Lavish is usable when its CLI runs and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
+   When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
+2. When the probe fails, use the Artifact tool.
+   Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
+   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
+
+With Lavish, call the Skill tool with "build:lavish".
+Open every playbook that matches the draft, and always open `input`, because this gate collects a decision.
+Poll for feedback, apply every returned prompt, and poll again until the user approves or ends the session.
+State the artifact path in one line, and add that the user may reply `artifact` to switch surfaces if the page does not open for them.
+
+With the Artifact tool, load the `artifact-design` skill first, write the draft to a file in the session scratchpad, publish it, and give the user the link.
+The user approves or gives feedback in this conversation.
+Read comment threads with the Artifact tool's `comments` action when the user says they commented on the page.
+Republish the same file path after each revision so the link stays stable.
+
+`prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
+Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
+
+After approval, write `prd/evals/cases.md`, append the run including failures to `prd/evals/results.md`, and update only the step 7 row and related blocker entries in `prd/roadmap.md`.
 When the gate fails, explicitly refuse to ship.
 Diagnose failed cases before changing implementation.
 After a fix, rerun the complete set, not only failed cases.
 Before shipping a fix for any real-world bug, add a permanent regression case that reproduces it.
-Update only the step 7 row and related blocker entries in `prd/roadmap.md`.
 
 ## Next step
 

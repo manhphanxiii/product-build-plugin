@@ -36,9 +36,36 @@ Read `prd/PRD.md`, `prd/architecture.md`, and all ADRs under `prd/adr/`.
 Split work into thin vertical slices that cross the required schema, API, UI, and test layers, can be demonstrated independently, and fit one context window.
 Order tickets by dependency.
 
-Before writing files, show a numbered proposal with Title, Blocked by, and independently deliverable outcome.
-Ask whether ticket size is right, dependency edges are right, and any ticket should be merged or split.
-Revise until the user approves.
+Build the review draft as the complete ticket set with each ticket's size, dependency edges, vertical-slice boundary, and independently deliverable outcome, together with the proposed step 5 roadmap row.
+
+## Review gate
+
+Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
+Never write the final file before that approval.
+
+Choose the surface with this probe and state the chosen surface in one line before rendering.
+
+1. Prefer Lavish.
+   Lavish is usable when its CLI runs and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
+   When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
+2. When the probe fails, use the Artifact tool.
+   Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
+   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
+
+With Lavish, call the Skill tool with "build:lavish".
+Open every playbook that matches the draft, and always open `input`, because this gate collects a decision.
+Poll for feedback, apply every returned prompt, and poll again until the user approves or ends the session.
+State the artifact path in one line, and add that the user may reply `artifact` to switch surfaces if the page does not open for them.
+
+With the Artifact tool, load the `artifact-design` skill first, write the draft to a file in the session scratchpad, publish it, and give the user the link.
+The user approves or gives feedback in this conversation.
+Read comment threads with the Artifact tool's `comments` action when the user says they commented on the page.
+Republish the same file path after each revision so the link stays stable.
+
+`prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
+Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
 
 Read [TICKET-TEMPLATE.md](TICKET-TEMPLATE.md).
 Write one approved ticket per file at `prd/tickets/NN-<slug>.md`, starting at `01`.

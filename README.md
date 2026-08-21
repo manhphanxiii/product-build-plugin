@@ -17,11 +17,19 @@ Mỗi bước chính dùng một context window riêng và để lại bằng ch
 | 6 | `/build:evals-gate` | Chạy eval và chặn ship nếu chưa đạt ngưỡng |
 | Lặp lại | `/build:update` | Hỏi ngôn ngữ hội thoại rồi in báo cáo ba phần: cập nhật roadmap, current task, note |
 | Nội bộ | `/build:review-code` | Review diff theo Spec và Standards, thường do `/build:implement` gọi |
-| Nội bộ | `/build:lavish` | Tạo bề mặt HTML để review và annotate |
+| Nội bộ | `/build:lavish` | Bề mặt review mặc định khi browser nhìn thấy local server; Artifact trên claude.ai là fallback cho cloud |
 
 Chạy `/clear` giữa các bước chính và giữa mỗi ticket ở bước 5.
 Sau bước 0, chạy `/build:update` để làm tươi tiến độ và biết đúng một lệnh tiếp theo.
 Mỗi bước chính, kể cả `/build:update`, kết thúc bằng cách nêu tên lệnh tiếp theo và hỏi có muốn tiếp tục ngay không, không kết thúc im lặng.
+
+## Cổng review tài liệu
+
+Sáu bước sinh tài liệu dựng bản nháp đầy đủ, đưa lên bề mặt review và chỉ ghi vào `prd/` sau khi người dùng duyệt.
+Lavish là bề mặt mặc định khi CLI chạy được và browser mở được local server.
+Trong cloud session, local server của Lavish không tới được browser của người dùng, nên cổng tự chuyển sang Artifact private trên claude.ai.
+Nếu cả hai bề mặt đều không dùng được, bản nháp được in bằng Markdown trong hội thoại để duyệt.
+Các lượt chạy không tương tác bỏ qua cổng để routine không bị treo.
 
 ## Chạy chuỗi từ đâu
 

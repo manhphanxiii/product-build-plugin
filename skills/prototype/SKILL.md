@@ -1,7 +1,6 @@
 ---
 name: prototype
 description: Resolve product and architecture uncertainty with throwaway spikes, review them visually when useful, and preserve decisions as ADRs.
-disable-model-invocation: true
 ---
 
 # Prototype

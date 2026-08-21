@@ -2,5 +2,6 @@ interface:
   display_name: "Start Repo"
   short_description: "Initialize and route product work once"
 policy:
+  # One-time repo init writes root governance files; keep this user-triggered only, unlike other chain skills.
   allow_implicit_invocation: false
 

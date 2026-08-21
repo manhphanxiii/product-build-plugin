@@ -1,5 +1,3 @@
 interface:
   display_name: "To Ticket"
   short_description: "Create dependency-ordered vertical slices"
-policy:
-  allow_implicit_invocation: false

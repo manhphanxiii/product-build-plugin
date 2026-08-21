@@ -16,7 +16,7 @@ Write the approved routine definition to `routines/update-roadmap.md` with sched
 Each run appends `report/product/roadmap-<YYYY-MM-DD>.md` using the three parts in [REPORT-FORMAT.md](REPORT-FORMAT.md).
 This daily roadmap routine and its report replace a separate daily brief.
 
-An unattended run skips the Phase 0 language question and reads the language from the Conventions line in `AGENTS.md` instead.
+An unattended run skips the Phase 0 language question and reads both the language and the working timezone from the Conventions lines in `AGENTS.md` instead.
 
 For a Stop hook, show the exact merged JSON patch for `<root>/.claude/settings.json`.
 State plainly that such a hook fires only for sessions opened in `<root>`, so it does nothing while the chain is driven from the skill-set repository; when that is the user's normal way of working, recommend `/loop` or a scheduled routine instead.

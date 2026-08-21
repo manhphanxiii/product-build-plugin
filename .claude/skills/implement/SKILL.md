@@ -1,7 +1,6 @@
 ---
 name: implement
 description: Implement one ready product ticket in the production application, test it, review the diff, commit it, and update status.
-disable-model-invocation: true
 ---
 
 # Implement

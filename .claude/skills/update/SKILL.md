@@ -1,7 +1,6 @@
 ---
 name: update
 description: Refresh evidence-backed product progress, reconcile configured sources into roadmap tasks, and optionally install a recurring update routine.
-disable-model-invocation: true
 ---
 
 # Update

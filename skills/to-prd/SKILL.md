@@ -1,7 +1,6 @@
 ---
 name: to-prd
 description: Synthesize the approved concept and prototype decisions into a PRD, architecture document, and finalized ADR history.
-disable-model-invocation: true
 ---
 
 # To PRD

@@ -50,6 +50,7 @@ Không biết lệnh nào thì giữ `TODO`, không đoán.
 ## Conventions
 
 - Giao tiếp với người dùng bằng {{COMM_LANGUAGE}}.
+- Múi giờ làm việc: {{TIMEZONE}}. Mọi artifact có ngày và mọi lịch chạy dùng múi giờ này.
 - Thay đổi nhỏ, dễ review. Một PR = một ý.
 - Theo code style sẵn có trong repo, không format lại file ngoài phạm vi.
 - Thay đổi ảnh hưởng hành vi phải bám `prd/PRD.md` và ticket đã duyệt.

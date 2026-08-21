@@ -1,7 +1,6 @@
 ---
 name: to-ticket
 description: Split an approved PRD and architecture into dependency-ordered vertical-slice tickets sized for one context window.
-disable-model-invocation: true
 ---
 
 # To Ticket

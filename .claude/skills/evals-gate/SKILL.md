@@ -1,7 +1,6 @@
 ---
 name: evals-gate
 description: Derive and run a permanent product eval set, enforce a measurable ship gate, and block shipping on failures or regressions.
-disable-model-invocation: true
 ---
 
 # Evals Gate

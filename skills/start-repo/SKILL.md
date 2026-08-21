@@ -21,6 +21,7 @@ Treat `client-note/` as read-only.
 Read `app/knowledge-base/` freely, but never write there because it is runtime data owned by the application.
 In the separate-folder branch of `restructure`, never create, edit, or delete anything inside the existing application repository, including `knowledge-base`.
 Do not write chain files outside these destinations and approved root governance files.
+Never propose creating a new product repository or a new separate folder before inspecting the repository the user named in phase 0b. When that existing repository already satisfies most of the canonical roles in [REPO-LAYOUT.md](REPO-LAYOUT.md), propose keeping it in place and filling only what is missing.
 
 Keep one canonical source for each fact.
 `AGENTS.md` is canonical for commands, conventions, constraints, and the definition of done.
@@ -31,32 +32,57 @@ Do not interview about the product, buyer, promise, or scope.
 Those decisions belong to `/idea-to-product-concept`.
 Record unknown setup facts as explicit TODOs and never invent project commands.
 
-## Phase 0: choose the language and the initialization mode
+## Phase 0: language, timezone, and the product repository
 
 Before anything else, ask exactly one question using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>`.
-Ask whether to use Vietnamese or English, offering Vietnamese for both, English for both, or a different language for each.
-That answer sets both the language of the conversation for the rest of the chain and the language of generated repository file content.
+Combine two things in this single question: conversation and content language, and working timezone.
+For language, offer Vietnamese for both, English for both, or a different language for each.
+For timezone, read the machine's current offset and name (`date +%Z` and `date +%z`) and suggest it as part of the recommended answer, using its IANA name, for example `➡️ Tiếng Việt cho cả hai, Asia/Ho_Chi_Minh (UTC+7)`.
+That answer sets the language of the conversation for the rest of the chain, the language of generated repository file content, and the working timezone recorded later in `AGENTS.md`.
 Only when the user picks a different language for each, ask one follow-up naming which language applies to which.
-Use the chosen conversation language from the next message onward, including the mode and path questions below.
+Use the chosen conversation language from the next message onward, including every question below.
 
-Then ask whether this product needs `new` or `restructure` mode.
-Use `new` only when no product code exists yet.
-Use `restructure` whenever an application or product code already exists.
+Then ask `❓ **Q2** - **Repo sản phẩm**`, always, regardless of what the product repository turns out to be.
+Accept any of three answers:
 
-For `new`, ask for the product repository path.
-The approved scaffold will create the directory and initialize Git, so the user does not need to prepare it.
+1. A local path.
+2. A Git link (a GitHub URL). Use `gh repo view <url>` read-only to confirm the repository exists and to read its default branch and description. Do not clone yet; recognizing this case is the only requirement of this question, the actual clone proposal happens in phase 1.
+3. Nothing yet, no product repository exists at all.
 
-For `restructure`, ask these two paths in one batch:
+Do not ask `new` versus `restructure` here. The mode is a conclusion of phase 0b, not an opening question.
+When the answer to Q2 is "nothing yet," skip phase 0b entirely, treat the mode as `new`, and let phase 0c ask only for the new repository's path.
 
-1. The existing application repository.
-2. The product repository, either in place at the application repository or in a separate folder beside it.
+## Phase 0b: inspect the product repository (read-only)
 
-Resolve and print the resulting `<root>` before phase 1.
+Run only when Q2 named an existing local path or Git link.
+Run the checks grouped under "Phase 0b checks" in [REPO-CHECKS.md](REPO-CHECKS.md) against the repository Q2 named.
+Read-only: create no directories, run no `git init`, and do not clone a Git link here.
+For a Git link not yet cloned, inspect as much as `gh` exposes and mark the rest "unknown until cloned"; state plainly that any placement proposal is provisional until the clone happens.
+
+Reach these conclusions before phase 0c:
+
+- Whether `prd/roadmap.md` already exists. If it does, the repository is already initialized; follow the report-only behavior phase 1 already describes for that case.
+- How many canonical roles from [REPO-LAYOUT.md](REPO-LAYOUT.md) already exist, and which real folder matches which role.
+- Whether the repository is a Git repository, and what its real production code path is (`src/`, `apps/web/`, etc).
+- Whether the repository already holds product documentation (`docs/product/`, `prd/`, etc).
+
+## Phase 0c: propose where the product repository belongs, then ask
+
+Print exactly one short table of what phase 0b found, and a proposed `<root>` placement with its reason.
+Then ask `❓ **Q3** - **Chỗ đặt repo sản phẩm**` with exactly one recommended answer marked `➡️`, offering three choices:
+
+| Choice | `<root>` | Recommended when |
+|---|---|---|
+| Keep it in place (`restructure`, in-place branch) | the existing repository itself | it already satisfies most canonical roles, or it is already the product's real home. This is the default whenever the existing repository is already close to correct |
+| A separate folder beside it (`restructure`, separate-folder branch) | a new folder next to the existing application repository | the existing repository is a plain, shared, or otherwise unsuitable home for product documents |
+| A new repository (`new`) | the path the user supplies | no product code exists yet |
+
+Resolve and print the resulting `<root>` after Q3 is answered.
 Do not create the directory or initialize Git until the phase 1 proposal is approved.
 
 ## Phase 1: inspect
 
-Read [REPO-CHECKS.md](REPO-CHECKS.md) and [REPO-LAYOUT.md](REPO-LAYOUT.md), then perform every check read-only.
+Reuse the findings from phase 0b instead of re-scanning `<root>` from scratch; read [REPO-CHECKS.md](REPO-CHECKS.md) and [REPO-LAYOUT.md](REPO-LAYOUT.md) and run only the checks grouped under "Phase 1 checks" there, plus a clone proposal row when Q2 named a Git link not yet cloned.
 State the selected mode and whether an existing `<root>` is already initialized before any change.
 Present exactly one table with `Item`, `Status`, and `Proposal` columns.
 Do not create files, initialize Git, authenticate services, or create directories before approval.
@@ -68,7 +94,7 @@ If a root-level `REVIEW.md` exists, that is the old layout. Propose migrating it
 
 ## Phase 1b: propose the role mapping
 
-Run this phase only in `restructure` mode.
+Run this phase only when Q3 chose a `restructure` option.
 Scan the existing code read-only, compare real folders with the roles in [REPO-LAYOUT.md](REPO-LAYOUT.md), and print exactly one mapping table:
 
 | Canonical role | Proposal | Existing source | Reason |
@@ -101,8 +127,9 @@ After symlinks are created, separately propose adding each symlink name to `.git
 Fill `AGENTS.md` first, then `CLAUDE.md`, `prd/evals/checklist.md`, and `prd/README.md` from the templates in [assets](assets/).
 In `AGENTS.md`, record the approved canonical-role mapping and whether each role is a symlink or a real directory.
 In `new` mode, record that every role is a real directory in this repository.
+Fill both Conventions lines in `AGENTS.md` from phase 0: the conversation language and the working timezone chosen in Q1. Every later chain skill reads both from these lines, so neither may be left as a template placeholder.
 Write a conservative permission posture into `AGENTS.md` and state how it may loosen after the review system proves reliable.
-Populate commands only with values verified by check 10 in [REPO-CHECKS.md](REPO-CHECKS.md).
+Populate commands only with values verified by the Phase 0b checks in [REPO-CHECKS.md](REPO-CHECKS.md).
 Leave every unverified command as `TODO`; do not ask and do not guess.
 A missing command is safer than a plausible but incorrect command.
 Leave product-specific quality criteria as the self-describing TODOs owned by `/to-prd` in the checklist template.
@@ -125,12 +152,12 @@ Do not infer progress or add tasks.
 
 ## Phase 4b: offer the morning brief routine
 
-Ask `❓ **Q2** - **Morning brief**` whether to run `/update` as a daily morning brief and at what time, recommending `➡️ Có, 08:00`.
+Ask `❓ **Q4** - **Morning brief**` whether to run `/update` as a daily morning brief and at what time, recommending `➡️ Có, 08:00` and stating that time is in the working timezone recorded in `AGENTS.md` during phase 3.
 When the answer is no, skip the rest of this phase, create no file, and note that routine mode in `/update` can enable this later.
 
-When the answer is yes, write `routines/update-roadmap.md` from the [morning brief template](assets/routines/update-roadmap.md) with the chosen time filled in.
+When the answer is yes, write `routines/update-roadmap.md` from the [morning brief template](assets/routines/update-roadmap.md) with the chosen time and the `AGENTS.md` timezone filled in.
 Then present exactly one table of activation mechanisms and their tradeoffs, the same style as the table in `skills/update/ROUTINE-SETUP.md`, and show the exact content that will be written or run before asking.
-Ask `❓ **Q3** - **Kích hoạt**` which mechanism to use and whether to activate now, recommending the one that actually fires on a wall-clock schedule.
+Ask `❓ **Q5** - **Kích hoạt**` which mechanism to use and whether to activate now, recommending the one that actually fires on a wall-clock schedule.
 A Stop hook in `.claude/settings.json` does not fire on a schedule and only runs for sessions opened in `<root>`; offer it only as an alternative for a session-based brief instead of a time-based one, and when chosen show the exact merged JSON patch and preserve existing settings.
 Wait for approval separate from the phase 1 approval before writing `.claude/settings.json` or registering anything with a scheduler.
 When the user declines activation, keep the routine definition file, state plainly that nothing runs it yet, and give the command to enable it later.
@@ -138,11 +165,10 @@ After activation, run the routine once so its first dated report at `report/prod
 
 Tell the user to use `/update`, not `/start-repo`, to refresh roadmap progress and choose future commands.
 
-Add the conversation language chosen in phase 0 as a new Conventions line in the `AGENTS.md` already written in phase 3, for example `- Giao tiếp với người dùng bằng <Tiếng Việt/English>.`.
-Every later chain skill reads its conversation language from that line, so it must be present.
+Confirm the `AGENTS.md` written in phase 3 already carries both Conventions lines from phase 0, conversation language and working timezone; every later chain skill reads both from there, so neither may be missing.
 
 Recommend `/idea-to-product-concept` as the next command with one sentence explaining why.
-Ask using `❓ **Q4** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+Ask using `❓ **Q6** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
 If yes, tell the user to run `/clear` and then `/idea-to-product-concept`.
 If not now, stop without further action.
 Do not start product code in the same turn.

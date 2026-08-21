@@ -1,5 +1,3 @@
 interface:
   display_name: "Prototype"
   short_description: "Resolve uncertainty with throwaway spikes"
-policy:
-  allow_implicit_invocation: false

@@ -1,7 +1,6 @@
 ---
 name: idea-to-product-concept
 description: Gather product evidence, interview the user once across all unresolved areas, and produce a traceable product concept.
-disable-model-invocation: true
 ---
 
 # Idea to Product Concept

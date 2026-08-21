@@ -21,7 +21,7 @@ Represent every case with stable fields:
     - <required observable behavior>
   must_not:
     - <forbidden observable behavior>
-  source: <PRD user story or permanent regression source>
+  source: <PRD user story, prototype fixture, or permanent regression source>
   added: YYYY-MM-DD
   critical: false
 ```

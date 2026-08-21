@@ -10,18 +10,18 @@ Every routine or morning brief report at `report/product/roadmap-<YYYY-MM-DD>.md
 
 | Bước | Lệnh | Trạng thái | Artifact | Ngày | Bằng chứng |
 |---|---|---|---|---|---|
-| 2. Concept | /build:idea-to-product-concept | xong | prd/concept.md | 2026-08-20 | file tồn tại, commit <sha> |
+| 2. Concept | /build:idea-to-product-concept | hoàn thành | prd/concept.md | 2026-08-20 | file tồn tại, commit <sha> |
 | 3. Prototype | /build:prototype | đang làm | prd/adr/ | | ADR-0001 nháp |
 
-Đã xong: <danh sách bước>.
+Đã hoàn thành: <danh sách bước>.
 Chưa xong: <danh sách bước>.
 
 Đề xuất ghi vào roadmap: <n> dòng bước, <n> task mới, <n> đổi trạng thái.
 
 ## 2. Current task
 
-| # | Task | Nguồn | Blocked by | Trạng thái | Bước |
-|---|---|---|---|---|---|
+| # | Task | Nguồn | Blocked by | Trạng thái | Commit | Bước |
+|---|---|---|---|---|---|---|
 
 Lệnh tiếp theo: /<command> - <một câu lý do>.
 
@@ -32,8 +32,9 @@ Lệnh tiếp theo: /<command> - <một câu lý do>.
 
 ## Part 1 - Cập nhật roadmap.md
 
-The table is the same seven-step big picture that `/build:start-repo` creates, minus step 1 (start-repo), which `/build:start-repo` owns and `/build:update` never edits, plus one line naming which steps are done and one line naming which are not.
-Every status cell must carry repository evidence such as a file path, a ticket `Status: done`, or a commit identifier; never guess a status.
+This six-column report table extends the five-column roadmap progress table with `Bằng chứng` and omits step 1, which `/build:start-repo` owns.
+Evidence lives in the dated report, not in the roadmap.
+Use the progress status values from [../start-repo/ROADMAP-FORMAT.md](../start-repo/ROADMAP-FORMAT.md), and support every status with repository evidence such as a file path, a ticket `Status: done`, or a commit identifier; never guess a status.
 End this part with the proposed diff grouped as new tasks, status changes, and conflicts, so the user approves a specific set of edits.
 
 ## Part 2 - Current task

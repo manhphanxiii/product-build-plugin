@@ -33,17 +33,17 @@ Read `app/knowledge-base/` freely, but never write there because it is runtime d
 Do not write chain files outside these destinations.
 
 Read `prd/PRD.md` and [EVAL-FORMAT.md](EVAL-FORMAT.md).
-Draft stable eval cases from every relevant user story for `prd/evals/cases.md`.
-Each case must have a stable `id`, `input`, `must`, `must_not`, `source`, and `added` date.
+Draft stable eval cases from every relevant user story for `prd/evals/cases.md`, importing any retained prototype input set as prototype fixtures.
+Each case must have a stable `id`, `input`, `must`, `must_not`, `source`, `added` date, and `critical` field.
 State the numeric ship gate at the top of the file.
-Default to pass rate at least 90 percent, zero critical failures, and zero pass-to-fail regressions unless the product has an approved stricter gate.
+Use the default gate in [EVAL-FORMAT.md](EVAL-FORMAT.md) unless the product has an approved stricter gate.
 
 Run the entire draft eval set against the current product behavior.
 Build the review draft as `prd/evals/cases.md`, the proposed run conclusion for `prd/evals/results.md`, and the proposed step 7 roadmap row.
 
 ## Review gate
 
-Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Run this gate after the last question of this skill is answered and before writing every document this skill is about to write.
 Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
 Never write the final file before that approval.
 
@@ -54,7 +54,7 @@ Choose the surface with this probe and state the chosen surface in one line befo
    When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
 2. When the probe fails, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
-   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+   Lavish drafts are temporary and do not survive a cloud session.
 3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
 
 With Lavish, call the Skill tool with "build:lavish".

@@ -4,7 +4,8 @@ This is a self-contained skill chain for building a product from idea to code th
 Read `README.md` before changing anything in this folder.
 Follow the three-destination rule: documents go into `prd/`, production code into `app/`, prototypes into `demos/prototypes/`.
 If a destination directory is missing, the agent must state its path, propose creating it, and wait for approval.
-`<root>` is the product repository and is never automatically the Git root of the current working directory: a skill uses the path the user supplied, requires `<root>/prd/roadmap.md` to exist, and never accepts this skill-set repository as `<root>`.
+`<root>` is the product repository: a skill uses the path the user supplied, falls back to the Git root of the current working directory, requires `<root>/prd/roadmap.md` to exist, and never accepts this skill-set repository as `<root>`.
+`start-repo` is the exception: it resolves `<root>` through its interview and does not require `prd/roadmap.md` to exist before initialization.
 No skill writes chain artifacts into this repository, and every path in a skill without an explicit prefix is relative to `<root>`.
 Never edit `client-note/` or runtime content in `app/knowledge-base/`.
 This skill must not depend on anything outside its own folder, and must work correctly when installed as a plugin, which is the only supported installation path.
@@ -12,14 +13,17 @@ Do not reference the name, brand, or path of any other skill set in this folder,
 `SKILL.md`, `AGENTS.md`, and `CLAUDE.md` are written in English; `README.md` is written in Vietnamese.
 A skill calls another skill through the Skill tool by its namespaced name `build:<skill>`, not by file path, because every skill here ships inside the `build` plugin.
 A script bundled with a skill is addressed as `${CLAUDE_PLUGIN_ROOT}/skills/<skill>/scripts/<file>`, never by a path relative to the current working directory.
-`## Review gate` is duplicated like `## Root resolution`; every copy must remain byte-identical, with Lavish as the default surface and the Artifact tool as the cloud fallback.
-Keep the frontmatter and invocation policy in `agents/openai.yaml` always in sync.
+The shared `## Review gate` preamble must remain byte-identical across the six document-generating skills, while skill-specific tails may differ to encode roadmap-row ownership.
+The shared `## Root resolution` block must remain byte-identical except in `start-repo`, which uses `## Ground rules`, `update`, where Phase 0 already uses Q1 and interactive runs always ask for language, and `review-code`, which receives `<root>` from its caller and adds diff and sub-agent instructions.
+Keep Lavish as the default surface and the Artifact tool as the cloud fallback.
+Keep first-party skill frontmatter and invocation policy in `agents/openai.yaml` in sync.
+Lavish is a vendored skill and does not need its description mirrored in `agents/openai.yaml`; only its interface metadata is required there.
 This repo is installed only as a plugin, so a new skill is added by creating `skills/<name>/SKILL.md` and nothing else; `.claude-plugin/plugin.json` must not list skills individually.
 When adding or renaming a skill, update the chain table and the install section in `README.md`.
 
 ## General Guidelines
 
-- Never use the em dash "–". Use plain dash "-" instead.
+- Never use the em dash or en dash. Use plain dash "-" instead.
 - When writing commit messages, never auto-add your agent name as co-author.
 - Never manually modify `CHANGELOG.md` files or any files that are marked as auto-generated.
 - When writing or substantially editing long Markdown files, put each full sentence on its own line.

@@ -40,7 +40,7 @@ Build the review draft as the complete ticket set with each ticket's size, depen
 
 ## Review gate
 
-Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Run this gate after the last question of this skill is answered and before writing every document this skill is about to write.
 Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
 Never write the final file before that approval.
 
@@ -51,7 +51,7 @@ Choose the surface with this probe and state the chosen surface in one line befo
    When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
 2. When the probe fails, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
-   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+   Lavish drafts are temporary and do not survive a cloud session.
 3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
 
 With Lavish, call the Skill tool with "build:lavish".

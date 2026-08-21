@@ -16,7 +16,7 @@ Verify that the diff is non-empty before delegating.
 Use the merge base with the default branch as the fixed point unless the caller supplies another one.
 Review `git -C <root> diff <fixed-point>...HEAD`.
 
-Run two sub-agents in parallel so their contexts remain independent.
+When delegation is available, run two sub-agents in parallel so their contexts remain independent; otherwise review the two axes sequentially and keep their reports separate.
 Limit each report to fewer than 400 words.
 
 ## Spec axis
@@ -30,8 +30,6 @@ For each finding, cite the corresponding specification line and the affected cod
 
 Read [SMELLS.md](SMELLS.md), the repository's `prd/evals/checklist.md`, relevant repository standards, and nearby code under `app/`.
 Evaluate clarity, consistency, maintainability, and fit with local patterns.
-Do not report issues already enforced by the configured linter.
-Treat smell guidance as judgment, with repository standards taking precedence.
 
 Return findings under exactly `## Spec` and `## Standards`.
 Do not mix the axes or rank findings across them.

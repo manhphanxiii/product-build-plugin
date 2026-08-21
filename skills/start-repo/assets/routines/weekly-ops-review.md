@@ -1,7 +1,7 @@
 # Routine: Weekly ops review
 
 **Cadence**: chiều thứ Sáu
-**Output**: `/report/weekly-ops.md` (append theo tuần, giữ lịch sử)
+**Output**: `report/weekly-ops-review-<YYYY-MM-DD>.md`
 
 ## Prompt
 

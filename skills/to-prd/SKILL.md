@@ -29,7 +29,7 @@ Follow its Conventions line about the language used with the user; when that lin
 
 ## Repository destinations
 
-Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, and prototypes only under `<root>/demos/prototypes/`.
+Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, prototypes only under `<root>/demos/prototypes/`, and promoted demos only under `<root>/demos/<name>/`.
 If a destination is missing, propose its exact path and wait for approval before creating it.
 Treat `client-note/` as read-only.
 Read `app/knowledge-base/` freely, but never write there because it is runtime data owned by the application.
@@ -39,20 +39,21 @@ Read [PRD-TEMPLATE.md](PRD-TEMPLATE.md) and [ARCHITECTURE-TEMPLATE.md](ARCHITECT
 Draft `prd/PRD.md` with Problem, Solution, numbered User Stories, Success Metrics, and Out of Scope.
 Write user stories as `As an <actor>, I want <feature>, so that <benefit>`.
 Do not add a required persona field.
-Draft `prd/architecture.md` with the `app/` tree, modules and interfaces, data model, main flows, test seams, external dependencies, boundaries, and accepted ADR index.
+Draft `prd/architecture.md` with the `app/` tree, modules and interfaces, data model, main flows, test seams, external dependencies, boundaries, and `## Accepted decisions`.
 Avoid concrete file paths and code snippets in the PRD unless a prototype snippet expresses an exact decision more clearly than prose.
 
-Draft the final state of every ADR without deleting any ADR file.
+Read [../prototype/ADR-FORMAT.md](../prototype/ADR-FORMAT.md) and draft the final state of every ADR without deleting any ADR file.
 Renumber gaps continuously while preserving slugs and updating references.
 Set frontmatter `Status:` to `accepted`, `superseded by ADR-NNNN`, or `deprecated`.
 When a newer decision replaces an older one, mark the older ADR as superseded and state the replacement relation in the newer ADR.
 Add an ADR for any qualifying prototype decision that was not recorded.
 
-Build one review artifact containing the complete drafts of `prd/PRD.md` and `prd/architecture.md`, together with the proposed step 4 roadmap row.
+Draft observable replacements for the product-specific TODO quality criteria in `prd/evals/checklist.md` from the PRD.
+Build one review artifact containing the complete drafts of `prd/PRD.md`, `prd/architecture.md`, and the updated `prd/evals/checklist.md`, together with the proposed step 4 roadmap row.
 
 ## Review gate
 
-Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Run this gate after the last question of this skill is answered and before writing every document this skill is about to write.
 Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
 Never write the final file before that approval.
 
@@ -63,7 +64,7 @@ Choose the surface with this probe and state the chosen surface in one line befo
    When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
 2. When the probe fails, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
-   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+   Lavish drafts are temporary and do not survive a cloud session.
 3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
 
 With Lavish, call the Skill tool with "build:lavish".
@@ -79,7 +80,7 @@ Republish the same file path after each revision so the link stays stable.
 `prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
 Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
 
-After approval, write the reviewed Markdown drafts, finalize the ADRs, and update only the step 4 row and decision index in `prd/roadmap.md`.
+After approval, write the reviewed Markdown drafts, finalize the ADRs, replace the checklist TODOs, and update only the step 4 row and `## Quyết định đã chốt` in `prd/roadmap.md`.
 If the user wants a presentation artifact, export it to `demos/<name>/`.
 
 ## Next step

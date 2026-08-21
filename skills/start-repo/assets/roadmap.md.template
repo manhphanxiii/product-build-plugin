@@ -8,7 +8,7 @@ Hoàn thành `prd/concept.md`.
 
 ## Out of scope
 
-TODO - `/build:idea-to-product-concept` sẽ xác nhận và điền từ concept.
+TODO - `/build:update` sẽ điền từ `prd/concept.md`.
 
 ## Tiến độ
 
@@ -40,4 +40,3 @@ Chưa có.
 ## Bước kế tiếp
 
 /build:idea-to-product-concept - cần chốt concept có bằng chứng trước mọi quyết định sản phẩm khác.
-

@@ -46,7 +46,7 @@ Where practical, write a test at the architecture-defined seam before production
 Run focused tests and type checking frequently using the exact commands recorded in the `Commands` section of `AGENTS.md`.
 Run the full test suite once at the end.
 
-After the implementation passes local checks, call the Skill tool with "build:review-code".
+After the implementation passes local checks, call the Skill tool with "build:review-code", passing `<root>` and the merge base with the default branch as the fixed point.
 Resolve every actionable finding and rerun affected checks.
 Commit on the current branch with the ticket identifier in the commit message.
 Change the ticket frontmatter to `Status: done`.

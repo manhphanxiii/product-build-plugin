@@ -10,7 +10,7 @@ Các file hướng dẫn riêng của từng tool chỉ trỏ về đây và ch�
 | Quy ước làm việc, commands, ràng buộc | `AGENTS.md` |
 | Sản phẩm, buyer, lời hứa | `prd/concept.md` |
 | Bối cảnh nghiệp vụ, thuật ngữ | `app/knowledge-base/` (chỉ đọc, app ghi lúc chạy) |
-| Tiếng nói khách hàng nguyên văn | `/client-note` |
+| Tiếng nói khách hàng nguyên văn | `client-note/` |
 | Đang làm gì, out of scope | `prd/roadmap.md` |
 | Spec đầy đủ | `prd/PRD.md` |
 | Kiến trúc | `prd/architecture.md` |
@@ -19,7 +19,7 @@ Các file hướng dẫn riêng của từng tool chỉ trỏ về đây và ch�
 | Eval và ngưỡng ship | `prd/evals/` |
 | Chuẩn để ship | `prd/evals/checklist.md` |
 | Nguồn thông tin ngoài | `prd/README.md` |
-| Việc lặp theo lịch, output | `/routines`, `/report` |
+| Việc lặp theo lịch, output | `routines/`, `report/` |
 
 ## Cấu trúc và liên kết
 
@@ -56,7 +56,7 @@ Không biết lệnh nào thì giữ `TODO`, không đoán.
 - Thay đổi ảnh hưởng hành vi phải bám `prd/PRD.md` và ticket đã duyệt.
 - Đụng component boundary hoặc dependency mới thì cập nhật `prd/architecture.md` trong cùng PR.
 - Quyết định kiến trúc đáng nhớ phải có ADR trong `prd/adr/`, gồm phương án đã loại và lý do loại.
-- Ngôn từ hiển thị cho người dùng lấy từ `/client-note`, không tự đặt.
+- Ngôn từ hiển thị cho người dùng lấy từ `client-note/`, không tự đặt.
 - Làm tươi roadmap bằng `/build:update`, không sửa tay bảng tiến độ.
 
 ## Constraints
@@ -82,7 +82,7 @@ Không biết lệnh nào thì giữ `TODO`, không đoán.
 
 ## General Guidelines
 
-- General Guidelines: Không dùng ký tự em dash hoặc en dash; dùng dấu gạch ngang thường.
+- Không dùng ký tự em dash hoặc en dash; dùng dấu gạch ngang thường.
 - Viết commit message thì không tự thêm tên agent làm co-author.
 - Không sửa tay `CHANGELOG.md` hay bất cứ file nào được đánh dấu auto-generated.
 - Markdown dài: mỗi câu đủ nằm trên một dòng riêng.

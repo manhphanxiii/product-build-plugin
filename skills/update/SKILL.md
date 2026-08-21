@@ -6,7 +6,7 @@ description: Refresh evidence-backed product progress, reconcile configured sour
 # Update
 
 Do not create or rebuild `prd/roadmap.md`.
-Add new task rows, update changed task rows, and add unresolved conflicts to `Đang vướng`.
+After approval, this skill may update only step 2 through 7 progress rows, the weekly goal, Out of scope, Task rows, `Đang vướng`, and `## Bước kế tiếp`, while preserving step 1 and externally sourced Task rows; it may also write the dated report and, in Routine mode, the approved routine definition.
 
 ## Phase 0: choose the conversation language
 
@@ -48,7 +48,7 @@ Do not write chain files outside these destinations.
 
 ## Refresh and report
 
-Read the roadmap and gather evidence for the seven-step progress table only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result. Steps 2 through 7 only; step 1 (start-repo) is owned by `/build:start-repo` and is never re-evaluated here.
+Read the roadmap and gather evidence for the progress rows within the scope above only from repository evidence such as existing artifacts, tickets with `Status: done`, recorded commits, and the latest eval result.
 
 Read the `Nguồn thông tin` section in `prd/README.md` and [SOURCES.md](SOURCES.md).
 State every disabled source that will be skipped.
@@ -60,14 +60,13 @@ When sources disagree about the status of the same work, do not choose a winner.
 Propose an entry under `Đang vướng` with both sources and ask the user to resolve it.
 
 Print the report using [REPORT-FORMAT.md](REPORT-FORMAT.md): exactly three parts, roadmap progress with the proposed diff grouped as new tasks, status changes, and conflicts; current task listing every open task in priority order and ending with one recommended next command; and an optional note, omitted entirely when there is nothing to note.
-Update the weekly goal and Out of scope from `prd/concept.md` together with actual progress.
-Do not recreate the file, remove externally sourced Task rows, or invent progress.
+Update the fields listed in the scope above from `prd/concept.md` and actual progress without inventing evidence.
 
 Build the review draft as the proposed roadmap-row diff and the complete `report/product/roadmap-<YYYY-MM-DD>.md` content.
 
 ## Review gate
 
-Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Run this gate after the last question of this skill is answered and before writing every document this skill is about to write.
 Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
 Never write the final file before that approval.
 
@@ -78,7 +77,7 @@ Choose the surface with this probe and state the chosen surface in one line befo
    When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
 2. When the probe fails, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
-   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+   Lavish drafts are temporary and do not survive a cloud session.
 3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
 
 With Lavish, call the Skill tool with "build:lavish".
@@ -94,7 +93,7 @@ Republish the same file path after each revision so the link stays stable.
 `prd/` stays the source of truth, and both `.lavish/` and the published artifact are disposable review surfaces.
 Skip this gate when the skill runs non-interactively, because no user is present to approve a draft.
 
-After approval, modify only the affected roadmap rows and blocker entries and write the dated report.
+After approval, apply only the scope defined above.
 State in one line what was actually applied.
 Do not propose work outside the roadmap.
 

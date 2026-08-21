@@ -1,0 +1,3 @@
+interface:
+  display_name: "Lavish"
+  short_description: "Build local interactive review surfaces"

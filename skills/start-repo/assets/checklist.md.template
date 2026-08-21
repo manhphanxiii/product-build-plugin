@@ -27,7 +27,7 @@ Còn một ô chưa tick thì chưa ship.
 - [ ] Có thêm độ phức tạp thừa không?
 - [ ] Boundary hoặc dependency thay đổi đã được cập nhật trong `prd/architecture.md` và ADR liên quan?
 - [ ] Có chép lại nội dung đã có ở file khác thay vì trỏ tới nó không?
-- [ ] Ngôn từ hiển thị cho người dùng có khớp `/client-note` không?
+- [ ] Ngôn từ hiển thị cho người dùng có khớp `client-note/` không?
 - [ ] Eval gate trong `/build:evals-gate` đã pass chưa?
 - [ ] Đã ghi rõ: đã đổi gì / đã test gì / cần người review gì?
 

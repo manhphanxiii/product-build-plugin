@@ -26,7 +26,7 @@ Follow its Conventions line about the language used with the user; when that lin
 
 ## Repository destinations
 
-Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, and prototypes only under `<root>/demos/prototypes/`.
+Write chain documents only under `<root>/prd/`, production code only under `<root>/app/`, prototypes only under `<root>/demos/prototypes/`, and promoted demos only under `<root>/demos/<name>/`.
 If a destination is missing, propose its exact path and wait for approval before creating it.
 Treat `client-note/` as read-only.
 Read `app/knowledge-base/` freely, but never write there because it is runtime data owned by the application.
@@ -45,13 +45,12 @@ Decide paper questions with the user and record qualifying decisions as ADRs.
 
 Read [PROTOTYPE-MODES.md](PROTOTYPE-MODES.md) and pick the mode that matches each recorded surface and each recorded logic level.
 For runnable questions, create one clearly marked throwaway spike under `demos/prototypes/<question-slug>/` after approval.
-Track and commit the spike alongside its ADR in the same PR; "throwaway" describes code meant to be run once and discarded later, not a file that stays unsaved. A cloud session's filesystem does not survive past the session, so an uncommitted spike is evidence that vanishes before anyone can review it.
+Track and commit the spike alongside its ADR in the same PR; "throwaway" means code run once and later discarded, not uncommitted code.
 Never default to a web spike when the concept records Zero UI, because a spike on the wrong surface answers a question nobody asked.
 For a Web/App spike, use multiple variants on one route controlled by a URL search parameter.
 Spike only the surfaces that carry an open question, ranked by risk, instead of building one prototype per stakeholder.
 Every row in the concept's stakeholder table is a spike candidate, and three stakeholders do not mean three spikes.
 Spike each capability at the lowest logic level that still answers its question, and climb only when a spike has shown the lower level breaks.
-When a capability is recorded as agent or skill, ask once which part of it could move down to plain code before spending a spike on it.
 Represent a proposed `app/` repository structure as a text tree, not production code.
 
 ## Decide with the user
@@ -70,7 +69,7 @@ For logic and architecture, use `diagram`, and add `comparison` when several opt
 
 ## Review gate
 
-Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Run this gate after the last question of this skill is answered and before writing every document this skill is about to write.
 Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
 Never write the final file before that approval.
 
@@ -81,7 +80,7 @@ Choose the surface with this probe and state the chosen surface in one line befo
    When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
 2. When the probe fails, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
-   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+   Lavish drafts are temporary and do not survive a cloud session.
 3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
 
 With Lavish, call the Skill tool with "build:lavish".
@@ -112,6 +111,6 @@ Update only the step 3 row and related decision entries in `prd/roadmap.md`.
 ## Next step
 
 Recommend `/build:to-prd` as the next command, with one sentence explaining why.
-Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+Ask whether to continue now using the next question number after the last one used, formatted as `❓ **Q<n>** - **<title>**` followed by `➡️ <recommended answer>`.
 If yes, tell the user to run `/clear` and then `/build:to-prd`.
 If not now, stop without further action.

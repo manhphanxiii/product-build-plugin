@@ -1,6 +1,7 @@
 # ADR Format
 
 Name files `NNNN-<slug>.md` under `prd/adr/`.
+Use `proposed` while a decision is under review, `accepted` when it is active, `superseded by ADR-NNNN` when a newer ADR replaces it, and `deprecated` when it is no longer active without a replacement.
 
 ```md
 ---

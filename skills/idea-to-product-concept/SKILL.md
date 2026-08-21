@@ -63,7 +63,7 @@ Use prose when the material remains easy to verify.
 When several documents, links, long transcripts, or data exports make a prose summary hard to audit, offer a Lavish consolidation surface before building one.
 If the user agrees, call the Skill tool with "build:lavish".
 Open the `table` playbook before writing HTML, add `comparison` when sources conflict, and add `input` when the user needs to confirm or correct rows in the artifact.
-Use the source table columns from [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md) and add one column for what remains unclear.
+Use the columns from the `## Nguồn` table in [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md) and add one column for what remains unclear.
 Poll for feedback, apply it, and only then interview so the questions cover facts the material could not answer.
 This surface consolidates evidence before the interview and does not replace the Review gate for the final concept.
 
@@ -102,7 +102,6 @@ A Zero UI answer must name the host product, such as Zalo, Google Sheets, Slack,
 
 Ask one logic question for each main capability, offering all four levels: plain code, workflow, skill, and agent.
 Say inside the question that the levels stack, so one product usually uses several at once.
-When an answer is agent or skill, ask exactly one follow-up about which part of that capability could move down to plain code.
 Ask separately what has to outlive a session, who owns it, and what already runs that the product must reuse.
 Add one optional question about concrete technology and say in the question itself that "not decided yet" is a fine answer.
 
@@ -114,7 +113,7 @@ Build the review draft as the complete `prd/concept.md` defined by [CONCEPT-TEMP
 
 ## Review gate
 
-Run this gate after the last question of this skill is answered and before writing any file under `prd/`.
+Run this gate after the last question of this skill is answered and before writing every document this skill is about to write.
 Build the full draft of every document this skill is about to write, show it on a review surface, and revise it until the user approves.
 Never write the final file before that approval.
 
@@ -125,7 +124,7 @@ Choose the surface with this probe and state the chosen surface in one line befo
    When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
 2. When the probe fails, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
-   `.lavish/` is also gitignored, so a Lavish draft does not survive a cloud session at all.
+   Lavish drafts are temporary and do not survive a cloud session.
 3. When neither surface is available, print the draft in the conversation as Markdown and collect approval there.
 
 With Lavish, call the Skill tool with "build:lavish".
@@ -147,11 +146,11 @@ Read [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md).
 Create or update `prd/concept.md` only after the needed destination has been approved.
 List every analyzed source and the questions it answered.
 If the interview reveals durable domain knowledge, record it in the appropriate section of `prd/concept.md` and cite it in `## Nguồn`.
-Update only the step 2 row in `prd/roadmap.md` and its evidence-backed next step.
+Update only the step 2 row in `prd/roadmap.md`; `/build:update` owns `## Bước kế tiếp`.
 
 ## Next step
 
 Recommend `/build:prototype` as the next command, with one sentence explaining why.
-Ask using `❓ **Q1** - **<title>**` followed by `➡️ <recommended answer>` whether to continue now.
+Ask whether to continue now using the next question number after the last one used, formatted as `❓ **Q<n>** - **<title>**` followed by `➡️ <recommended answer>`.
 If yes, tell the user to run `/clear` and then `/build:prototype`.
 If not now, stop without further action.

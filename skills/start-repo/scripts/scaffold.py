@@ -82,7 +82,6 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("target", help="repo root")
     parser.add_argument("--retrofit", action="store_true", help="repo đã có code: không tạo nội dung trong app dir")
-    parser.add_argument("--app-dir", default="app", help="tên thư mục code nếu khác app, ví dụ src")
     parser.add_argument("--link", action="append", default=[], metavar="ROLE=PATH", help="tạo symlink cho vai trò canonical")
     parser.add_argument("--no-knowledge-base", action="store_true", help="không tạo knowledge-base trong app dir")
     parser.add_argument("--init-git", action="store_true", help="git init nếu target chưa là một git repo riêng")
@@ -115,9 +114,9 @@ def main() -> int:
     folders = dict(BASE_FOLDER_READMES)
     app_blurb = folders.pop("app")
     if not args.retrofit:
-        folders[args.app_dir] = app_blurb
+        folders["app"] = app_blurb
     if not args.no_knowledge_base and not args.retrofit:
-        folders[f"{args.app_dir}/knowledge-base"] = (
+        folders["app/knowledge-base"] = (
             "Kho kiến thức runtime của app. App đọc và ghi; agent chỉ đọc và không sửa tay nội dung tại đây."
         )
 
@@ -163,7 +162,7 @@ def main() -> int:
         print("\nSymlink đã tạo:")
         for role, source in created_links:
             print(f"  @ {role} -> {source}")
-    print("\nBước tiếp: điền AGENTS.md trước, rồi CLAUDE.md, rồi prd/evals/checklist.md, rồi chạy /build:idea-to-product-concept.")
+    print("\nScaffold xong. Skill sẽ điền template và roadmap tiếp theo.")
     return 0
 
 

@@ -169,19 +169,19 @@ Các selector production dự kiến là `$build:start-repo`, `$build:prototype`
 Fallback standalone chỉ dùng khi universal plugin chưa được publish hoặc workspace chưa surfacing plugin.
 Nó từ chối tạo skill trùng khi phát hiện universal plugin đã cài, preflight toàn bộ collision, và không ghi đè entry không thuộc installer.
 
-Setup script cho release `v2.3.0`, sau khi tag này được publish:
+Setup script cho release `v2.4.0`, sau khi tag này được publish:
 
 ```bash
-git clone --branch v2.3.0 --depth 1 https://github.com/manhphanxiii/product-build-plugin.git "$HOME/.agents/product-build-plugin"
-bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.3.0
+git clone --branch v2.4.0 --depth 1 https://github.com/manhphanxiii/product-build-plugin.git "$HOME/.agents/product-build-plugin"
+bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.4.0
 ```
 
 Maintenance script giữ nguyên release đã pin và fail rõ nếu source không còn khớp:
 
 ```bash
 git -C "$HOME/.agents/product-build-plugin" fetch --tags origin
-git -C "$HOME/.agents/product-build-plugin" checkout --detach v2.3.0
-bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.3.0
+git -C "$HOME/.agents/product-build-plugin" checkout --detach v2.4.0
+bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.4.0
 ```
 
 Codex Cloud chạy setup trước agent với internet access.

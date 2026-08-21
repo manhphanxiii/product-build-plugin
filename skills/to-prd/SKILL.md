@@ -53,7 +53,7 @@ If the user agrees, call the Skill tool with "build:lavish".
 Open Lavish `plan` and `diagram` playbooks before writing the HTML artifact, poll for annotations, and apply accepted feedback back to the Markdown sources.
 Treat Markdown under `prd/` as the source of truth and `.lavish/` as a disposable review surface.
 If the user wants a presentation artifact, export it to `demos/<name>/`.
-Update only the step 3 row and decision index in `prd/roadmap.md`.
+Update only the step 4 row and decision index in `prd/roadmap.md`.
 
 ## Next step
 

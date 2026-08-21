@@ -6,12 +6,12 @@ Every path here is relative to the `<root>` resolved in [SKILL.md](SKILL.md), an
 
 ## GitHub Issues
 
-Run `gh issue list --state open --json number,title,labels,assignees`.
+Use the built-in GitHub tools to list open issues; fall back to `gh issue list --state open --json number,title,labels,assignees` only when the built-in tools are unavailable and `gh` is installed. A cloud session does not have `gh` installed.
 Create source labels such as `github#12`.
 
 ## GitHub pull requests
 
-Run `gh pr list --json number,title,state`.
+Use the built-in GitHub tools to list pull requests; fall back to `gh pr list --json number,title,state` only when the built-in tools are unavailable and `gh` is installed.
 Extract unfinished work and review blockers.
 
 ## Commits

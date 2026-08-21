@@ -125,6 +125,7 @@ For the in-place branch, keep that same prefix and use `--retrofit --app-dir <de
 
 The scaffold never creates or edits `.gitignore`.
 After symlinks are created, separately propose adding each symlink name to `.gitignore`, then apply only entries the user approves.
+The scaffold also seeds `.claude/settings.json` from [assets/settings.json.template](assets/settings.json.template), declaring `manhphanxiii` in `extraKnownMarketplaces` and enabling `build@manhphanxiii`. This is what lets a cloud session, a second machine, or a teammate load the `/build:*` commands at all: without it committed to `<root>`, only a session that already has the plugin enabled in its own user settings sees these skills. State this plainly when relaying the scaffold's created list, and never overwrite an existing `.claude/settings.json`; if one already exists without this marketplace declaration, propose the merged patch instead and wait for approval before writing it.
 Fill `AGENTS.md` first, then `CLAUDE.md`, `prd/evals/checklist.md`, and `prd/README.md` from the templates in [assets](assets/).
 In `AGENTS.md`, record the approved canonical-role mapping and whether each role is a symlink or a real directory.
 In `new` mode, record that every role is a real directory in this repository.
@@ -159,9 +160,9 @@ When the answer is no, skip the rest of this phase, create no file, and note tha
 
 When the answer is yes, write `routines/update-roadmap.md` from the [morning brief template](assets/routines/update-roadmap.md) with the chosen time and the `AGENTS.md` timezone filled in.
 Then present exactly one table of activation mechanisms and their tradeoffs, the same style as the table in `skills/update/ROUTINE-SETUP.md`, and show the exact content that will be written or run before asking.
-Ask `❓ **Q5** - **Kích hoạt**` which mechanism to use and whether to activate now, recommending the one that actually fires on a wall-clock schedule.
-A Stop hook in `.claude/settings.json` does not fire on a schedule and only runs for sessions opened in `<root>`; offer it only as an alternative for a session-based brief instead of a time-based one, and when chosen show the exact merged JSON patch and preserve existing settings.
-Wait for approval separate from the phase 1 approval before writing `.claude/settings.json` or registering anything with a scheduler.
+Ask `❓ **Q5** - **Kích hoạt**` which mechanism to use and whether to activate now, recommending `/schedule`, the mechanism that actually fires on a wall-clock schedule; it requires `<root>` to be on GitHub and Claude Code routines enabled on the account.
+A Stop hook in `.claude/settings.json` does not fire on a schedule and only runs for sessions opened in `<root>`, cloud or local; offer it only as an alternative for a session-based brief instead of a time-based one, and when chosen show the exact merged JSON patch and preserve existing settings.
+Wait for approval separate from the phase 1 approval before writing `.claude/settings.json` or creating a `/schedule` routine.
 When the user declines activation, keep the routine definition file, state plainly that nothing runs it yet, and give the command to enable it later.
 After activation, run the routine once so its first dated report at `report/product/roadmap-<YYYY-MM-DD>.md` exists.
 

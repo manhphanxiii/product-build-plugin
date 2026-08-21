@@ -116,7 +116,7 @@ Read [CONCEPT-TEMPLATE.md](CONCEPT-TEMPLATE.md).
 Create or update `prd/concept.md` only after the needed destination has been approved.
 List every analyzed source and the questions it answered.
 If the interview reveals durable domain knowledge, record it in the appropriate section of `prd/concept.md` and cite it in `## Nguồn`.
-Update only the step 1 row in `prd/roadmap.md` and its evidence-backed next step.
+Update only the step 2 row in `prd/roadmap.md` and its evidence-backed next step.
 
 ## Next step
 

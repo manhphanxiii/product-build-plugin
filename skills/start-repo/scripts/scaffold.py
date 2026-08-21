@@ -22,6 +22,7 @@ BASE_FOLDER_READMES = {
 SEEDED_FILES = {
     "AGENTS.md": "AGENTS.md.template",
     "CLAUDE.md": "CLAUDE.md.template",
+    ".claude/settings.json": "settings.json.template",
     "prd/evals/checklist.md": "checklist.md.template",
     "prd/README.md": "prd-README.md.template",
     "prd/roadmap.md": "roadmap.md.template",

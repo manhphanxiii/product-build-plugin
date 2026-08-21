@@ -45,6 +45,7 @@ Decide paper questions with the user and record qualifying decisions as ADRs.
 
 Read [PROTOTYPE-MODES.md](PROTOTYPE-MODES.md) and pick the mode that matches each recorded surface and each recorded logic level.
 For runnable questions, create one clearly marked throwaway spike under `demos/prototypes/<question-slug>/` after approval.
+Track and commit the spike alongside its ADR in the same PR; "throwaway" describes code meant to be run once and discarded later, not a file that stays unsaved. A cloud session's filesystem does not survive past the session, so an uncommitted spike is evidence that vanishes before anyone can review it.
 Never default to a web spike when the concept records Zero UI, because a spike on the wrong surface answers a question nobody asked.
 For a Web/App spike, use multiple variants on one route controlled by a URL search parameter.
 Spike only the surfaces that carry an open question, ranked by risk, instead of building one prototype per stakeholder.
@@ -85,7 +86,7 @@ For every spike, ask whether to discard or promote it.
 On discard, remove only that approved spike directory after its ADR exists.
 On promotion, move it to `demos/<name>/` and add a Vietnamese or project-language `SCRIPT.md` presentation script.
 Keep the ADR in either case.
-Update only the step 2 row and related decision entries in `prd/roadmap.md`.
+Update only the step 3 row and related decision entries in `prd/roadmap.md`.
 
 ## Next step
 

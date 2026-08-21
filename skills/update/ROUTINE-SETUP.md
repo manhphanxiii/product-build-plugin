@@ -4,9 +4,11 @@ Offer these choices before writing configuration:
 
 | Option | Runs when | Best fit | Tradeoff |
 |---|---|---|---|
-| Stop hook | A coding session ends | Roadmap should stay fresh without memory | Runs frequently and changes local settings |
+| Stop hook | A coding session ends | Roadmap should stay fresh without memory | Runs frequently, not on a wall-clock schedule; fires only for a session opened at `<root>` |
 | `/loop` | At an interval during one long session | Continuous building for several hours | Stops with the session |
-| Scheduled routine | A cron-like schedule, such as each morning | Long-running products with daily reporting | Requires scheduler setup and credentials |
+| `/schedule` routine | A cron-like schedule, such as each morning | Long-running products with daily reporting | Runs on Anthropic-managed cloud infrastructure; requires the product repository on GitHub with Claude Code routines enabled on the account |
+
+A Stop hook written to `<root>/.claude/settings.json` fires in a cloud session too, since that file travels with the clone; it is still not a wall-clock schedule; it fires whenever a session at `<root>` stops, cloud or local.
 
 When `routines/update-roadmap.md` already exists, read it and propose changes to its cadence or mechanism instead of offering to create a second file for the same job.
 `/build:start-repo` may seed this file once, during phase 4b, as a morning brief; `/build:update` owns refreshing it afterward.

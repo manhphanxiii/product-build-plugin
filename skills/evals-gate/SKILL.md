@@ -44,7 +44,7 @@ When the gate fails, explicitly refuse to ship.
 Diagnose failed cases before changing implementation.
 After a fix, rerun the complete set, not only failed cases.
 Before shipping a fix for any real-world bug, add a permanent regression case that reproduces it.
-Update only the step 6 row and related blocker entries in `prd/roadmap.md`.
+Update only the step 7 row and related blocker entries in `prd/roadmap.md`.
 
 ## Next step
 

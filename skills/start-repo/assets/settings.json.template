@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "manhphanxiii": {
+      "source": {
+        "source": "github",
+        "repo": "manhphanxiii/product-build-plugin"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "build@manhphanxiii": true
+  }
+}

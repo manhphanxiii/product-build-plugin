@@ -45,7 +45,7 @@ Write one approved ticket per file at `prd/tickets/NN-<slug>.md`, starting at `0
 Set `Status: ready` unless repository evidence requires another state.
 Declare `Blocked by` explicitly, using `none` where appropriate.
 Add one row per ticket to the roadmap Task table with the ticket path in `Nguồn`.
-Update only the step 4 row and the inserted task rows in `prd/roadmap.md`.
+Update only the step 5 row and the inserted task rows in `prd/roadmap.md`.
 
 ## Next step
 

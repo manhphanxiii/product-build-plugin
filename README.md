@@ -50,7 +50,7 @@ Quy ước đánh dấu:
 
 ```
 <workspace>/                          thư mục chứa cả hai, ví dụ ~/Developer
-├── product-building-agents/          bộ skill, ngang hàng với repo sản phẩm
+├── product-build-plugin/          bộ skill, ngang hàng với repo sản phẩm
 │
 └── <product-repo>/                   repo sản phẩm do /build:start-repo tạo hoặc bọc lại
     ├── AGENTS.md                     commands, conventions, definition of done
@@ -80,7 +80,7 @@ Với `restructure` ở nhánh folder riêng, app đang chạy giữ nguyên rep
 
 ```
 <workspace>/
-├── product-building-agents/
+├── product-build-plugin/
 ├── <app-repo>/                       app có sẵn, giữ nguyên cấu trúc và .git
 └── <product-repo>/                   repo sản phẩm mới, có .git riêng
     ├── AGENTS.md

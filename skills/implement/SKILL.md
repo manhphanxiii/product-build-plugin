@@ -50,7 +50,7 @@ After the implementation passes local checks, call the Skill tool with "build:re
 Resolve every actionable finding and rerun affected checks.
 Commit on the current branch with the ticket identifier in the commit message.
 Change the ticket frontmatter to `Status: done`.
-Update its Task row and the step 5 progress row in `prd/roadmap.md`, including the commit identifier.
+Update its Task row and the step 6 progress row in `prd/roadmap.md`, including the commit identifier.
 
 ## Next step
 

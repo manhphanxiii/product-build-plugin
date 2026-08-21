@@ -23,13 +23,22 @@ class CheckScriptTests(unittest.TestCase):
         )
         return target
 
-    def run_check(self, root: Path) -> subprocess.CompletedProcess[str]:
+    def run_check(
+        self, root: Path, *, release: bool = False
+    ) -> subprocess.CompletedProcess[str]:
+        command = [sys.executable, str(CHECKER), "--root", str(root)]
+        if release:
+            command.append("--release")
         return subprocess.run(
-            [sys.executable, str(CHECKER), "--root", str(root)],
+            command,
             check=False,
             text=True,
             capture_output=True,
         )
+
+    def manifest_version(self, root: Path) -> str:
+        path = root / ".claude-plugin" / "plugin.json"
+        return json.loads(path.read_text(encoding="utf-8"))["version"]
 
     def mutate_text(self, path: Path, old: str, new: str) -> None:
         text = path.read_text(encoding="utf-8")
@@ -59,6 +68,14 @@ class CheckScriptTests(unittest.TestCase):
                 ),
             ),
             (
+                "plan gate",
+                lambda root: self.mutate_text(
+                    root / "skills" / "start-repo" / "SKILL.md",
+                    "## Plan gate\n\nAt the start",
+                    "## Plan review\n\nAt the start",
+                ),
+            ),
+            (
                 "root block",
                 lambda root: self.mutate_text(
                     root / "skills" / "implement" / "SKILL.md",
@@ -85,6 +102,14 @@ class CheckScriptTests(unittest.TestCase):
             (
                 "manifest synchronization",
                 lambda root: self.set_codex_version(root, "9.9.9"),
+            ),
+            (
+                "README release ref",
+                lambda root: self.mutate_text(
+                    root / "README.md",
+                    f"v{self.manifest_version(root)}",
+                    "v9.9.9",
+                ),
             ),
             (
                 "Claude manifest skill list",
@@ -118,6 +143,64 @@ class CheckScriptTests(unittest.TestCase):
                 result = self.run_check(root)
                 self.assertNotEqual(result.returncode, 0, result.stdout)
                 self.assertIn("ERROR:", result.stderr)
+
+    def test_release_requires_manifest_tag_on_origin(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_root = Path(temp_dir)
+            root = self.copy_repo(temp_root)
+            origin = temp_root / "origin.git"
+            subprocess.run(
+                ["git", "init", "--bare", str(origin)],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "init"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "remote", "add", "origin", str(origin)],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "config", "user.name", "Check Fixture"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "config", "user.email", "check@example.com"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "add", "-A"],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "commit", "-m", "Fixture"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+
+            missing = self.run_check(root, release=True)
+            self.assertNotEqual(missing.returncode, 0, missing.stdout)
+            self.assertIn("does not exist on origin", missing.stderr)
+
+            tag = f"v{self.manifest_version(root)}"
+            subprocess.run(
+                ["git", "-C", str(root), "tag", tag],
+                check=True,
+            )
+            subprocess.run(
+                ["git", "-C", str(root), "push", "origin", f"refs/tags/{tag}"],
+                check=True,
+                capture_output=True,
+                text=True,
+            )
+            present = self.run_check(root, release=True)
+            self.assertEqual(present.returncode, 0, present.stderr)
 
     def set_codex_version(self, root: Path, version: str) -> None:
         path = root / ".codex-plugin" / "plugin.json"

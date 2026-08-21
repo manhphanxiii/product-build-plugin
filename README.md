@@ -11,7 +11,7 @@ Trên Codex universal plugin, đọc `/build:<skill>` thành `$build:<skill>`; v
 
 | Bước | Lệnh | Kết quả |
 |---|---|---|
-| 1 | `/build:start-repo` | Hỏi repo sản phẩm, soi trước rồi mới đề xuất chỗ đặt (`new` hoặc `restructure`), dựng workspace quanh code mới hoặc app có sẵn, ghi cấu hình, tạo roadmap ban đầu, và hỏi có kích hoạt morning brief hàng ngày không |
+| 1 | `/build:start-repo` | Hỏi và soi repo sản phẩm, dựng một plan đầy đủ để duyệt một lần, rồi chạy liền mạch việc tạo workspace, ghi cấu hình, tạo roadmap, publish GitHub khi chưa có remote và kích hoạt morning brief theo lựa chọn đã duyệt |
 | 2 | `/build:idea-to-product-concept` | Phân tích tư liệu, phỏng vấn và ghi `prd/concept.md` |
 | 3 | `/build:prototype` | Chạy spike để chốt quyết định và ghi ADR |
 | 4 | `/build:to-prd` | Ghi `prd/PRD.md`, `prd/architecture.md` và hoàn tất ADR |
@@ -25,6 +25,14 @@ Trên Codex universal plugin, đọc `/build:<skill>` thành `$build:<skill>`; v
 Chạy `/clear` giữa các bước chính và giữa mỗi ticket ở bước 6.
 Sau bước 1, chạy `/build:update` để làm tươi tiến độ và biết đúng một lệnh tiếp theo.
 Mỗi bước chính, kể cả `/build:update`, kết thúc bằng cách nêu tên lệnh tiếp theo và hỏi có muốn tiếp tục ngay không, không kết thúc im lặng.
+
+## Cổng plan
+
+`/build:start-repo` có một cổng plan duy nhất trước mọi thao tác ghi.
+Skill gom toàn bộ kết quả khảo sát, role mapping, lệnh scaffold, file sẽ tạo, phương án GitHub và cơ chế morning brief vào một plan để người dùng sửa và duyệt một lần.
+Sau khi plan được duyệt, các phase thực thi chạy liền mạch; chỉ chốt quét secret trước khi stage và câu hỏi bàn giao cuối cùng mới có thể dừng luồng.
+Cổng dùng cùng probe bề mặt Lavish, Artifact, rồi Markdown như cổng review tài liệu.
+Plan mode của host có thể chặn bước render hoặc local server của Lavish; khi đó skill báo bề mặt thay thế và hạ xuống Artifact hoặc Markdown mà vẫn giữ nguyên cổng duyệt trước write.
 
 ## Cổng review tài liệu
 
@@ -53,6 +61,7 @@ Mọi path trong skill không có tiền tố đều tính từ `<root>`, và m�
 Có hai chế độ khởi tạo.
 `new` dùng khi sản phẩm chưa có dòng code nào và tạo toàn bộ layout trong repo sản phẩm mới.
 `restructure` dùng khi app hoặc code đã tồn tại và bọc layout canonical quanh cấu trúc đó mà không di chuyển code.
+Trong chế độ `new` trên cloud session, publish repo lên GitHub là cách duy nhất để workspace sống sót sau khi session kết thúc, đồng thời là điều kiện để dùng `/schedule`.
 
 Cây sau gồm cả bộ skill lẫn repo sản phẩm, để hai vùng nằm cạnh nhau trong cùng một hình và trả lời rõ câu hỏi bộ skill nằm đâu so với repo sản phẩm.
 Bộ skill chỉ hiện dưới dạng một dòng gập lại; chi tiết bên trong nó nằm ở mục Cài đặt bên dưới.
@@ -160,19 +169,19 @@ Các selector production dự kiến là `$build:start-repo`, `$build:prototype`
 Fallback standalone chỉ dùng khi universal plugin chưa được publish hoặc workspace chưa surfacing plugin.
 Nó từ chối tạo skill trùng khi phát hiện universal plugin đã cài, preflight toàn bộ collision, và không ghi đè entry không thuộc installer.
 
-Setup script cho release `v2.1.0`, sau khi tag này được publish:
+Setup script cho release `v2.3.0`, sau khi tag này được publish:
 
 ```bash
-git clone --branch v2.1.0 --depth 1 https://github.com/manhphanxiii/product-build-plugin.git "$HOME/.agents/product-build-plugin"
-bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.1.0
+git clone --branch v2.3.0 --depth 1 https://github.com/manhphanxiii/product-build-plugin.git "$HOME/.agents/product-build-plugin"
+bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.3.0
 ```
 
 Maintenance script giữ nguyên release đã pin và fail rõ nếu source không còn khớp:
 
 ```bash
 git -C "$HOME/.agents/product-build-plugin" fetch --tags origin
-git -C "$HOME/.agents/product-build-plugin" checkout --detach v2.1.0
-bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.1.0
+git -C "$HOME/.agents/product-build-plugin" checkout --detach v2.3.0
+bash "$HOME/.agents/product-build-plugin/scripts/install-codex.sh" --ref v2.3.0
 ```
 
 Codex Cloud chạy setup trước agent với internet access.
@@ -204,7 +213,7 @@ Ma trận release bắt buộc:
 | Host | Smoke test | Tiêu chí pass |
 |---|---|---|
 | Claude Code | Cài từ Git marketplace và chạy `claude plugin details build` | Đủ mười skill |
-| Claude Code | `/build:start-repo` rồi `/build:update` trên scratch product repo | Scaffold dùng `<skill_dir>` và review gate chọn đúng surface |
+| Claude Code | `/build:start-repo` rồi `/build:update` trên scratch product repo | Plan gate chặn mọi write tới khi duyệt, scaffold dùng `<skill_dir>` và chọn đúng review surface |
 | Codex CLI plugin | Cài `build@<marketplace>` và mở conversation mới | Đủ mười skill dưới namespace `build`, explicit và implicit policy đúng |
 | Codex CLI fallback | Chạy installer bằng HOME test hoặc `--dest` tạm | Symlink, copy, collision, rerun, stale cleanup và uninstall đều pass |
 | Codex Cloud | Chạy `$build:update` trong environment có plugin | Markdown review dừng trước write và follow-up approval mới ghi |

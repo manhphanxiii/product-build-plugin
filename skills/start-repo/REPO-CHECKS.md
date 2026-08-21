@@ -19,12 +19,28 @@ Run against the repository named in Q2, before the mode or `<root>` placement is
 Run against the `<root>` chosen in phase 3.
 
 1. In `new` mode, verify that `<root>` does not exist or is empty. In `restructure` mode, verify that the existing application repository exists, is readable, and is a Git repository; for the separate-folder branch, also verify that `<root>` has no conflicting content.
-2. Check whether the `gh` CLI is installed. When it is, run `gh auth status`; if authenticated, ask which remote repository belongs to the product and whether GitHub Issues is an enabled task source. When `gh` is absent, such as in a cloud session, fall back to the built-in GitHub tools for the same questions and state plainly that `gh` is not installed. If Q2 named a Git link not yet cloned, propose the clone destination and command here as one row.
+2. Check whether the `gh` CLI is installed and whether `<root>` has an `origin` remote.
+   When `<root>` exists and is a Git repository, run `git -C <root> remote get-url origin` read-only; in `new` mode when `<root>` does not exist yet, treat it as having no remote.
+   When `gh` is installed, run `gh auth status`; if authenticated, use the reported account as the default owner, ask whether GitHub Issues is an enabled task source, and record `gh` as the preferred publication mechanism.
+   When `gh` is installed but is not authenticated, record that state and check for a GitHub connector or built-in GitHub tool next.
+   When `gh` is absent, state plainly that `gh` is not installed and check for a GitHub connector or built-in GitHub tool next.
+   Record the available publication mechanism in this order: authenticated `gh`, a GitHub connector or built-in GitHub tool, or no available mechanism.
+   If scaffold will initialize Git and `<root>` has no `origin`, add exactly one `Remote GitHub` row to the phase 4 table.
+   The row must show the concrete owner, repository name defaulting to the basename of `<root>`, visibility `private`, initial commit message, and the exact repository creation command or tool action that phase 9 will run.
+   Its `Status` must say whether the current environment is an ephemeral sandbox and, when it is, warn that the workspace will not survive the session unless it is published.
+   If `<root>` already has `origin`, report that remote and do not add a `Remote GitHub` row.
+   If Q2 named a Git link not yet cloned, propose the clone destination and command here as one row.
 3. Check whether a Notion connector is available; if unavailable, explain that the user must enable it in connector settings and this session cannot complete OAuth on its own.
 4. If Notion is enabled, ask for the root product page or database.
-5. For Claude Code, check whether `<root>/.claude/settings.json` declares `manhphanxiii` under `extraKnownMarketplaces` and enables `build@manhphanxiii`. This is what makes `/build:*` visible to a Claude Code cloud session, a second machine, or a teammate; a local Claude session with the plugin already enabled in user settings does not need it. Codex plugin installation is account or environment configuration and is not written into the product repository. If the Claude settings file is missing or lacks this declaration, the phase 4 table proposes seeding or patching it from [assets/settings.json.template](assets/settings.json.template).
+5. For Claude Code, check whether `<root>/.claude/settings.json` declares `manhphanxiii` under `extraKnownMarketplaces`, enables `build@manhphanxiii`, and preserves the `SessionStart` installation fallback and `permissions.allow` entries required by the Lavish probe.
+   These settings register the marketplace and request the project plugin, but a GitHub-backed plugin may still require consent or an explicit install before `/build:*` becomes visible.
+   The hook covers a fresh cloud session; a second machine or teammate may still see the normal trust prompt.
+   A local Claude session with the plugin already enabled in user settings does not need the fallback.
+   Codex plugin installation is account or environment configuration and is not written into the product repository.
+   If the Claude settings file is missing or lacks this declaration, the phase 4 table proposes seeding or patching it from [assets/settings.json.template](assets/settings.json.template).
 6. Require Node 22 or newer and working `npx` for visual review.
    Also check whether `open` on macOS or `xdg-open` on Linux is available.
+   This review-surface probe is also the single surface-selection probe for the plan gate; do not create a second source of truth.
    Report whether the setup will use Lavish, the Artifact tool when that tool and `artifact-design` are available, or Markdown in the conversation.
    Treat a user-started asynchronous cloud run as interactive across turns and stop before writing until the user approves the Markdown draft.
 7. Check whether `.gitignore` ignores `demos/prototypes/`; if it does, propose removing that line and tracking any prototype content already present but untracked, since prototypes are public evidence for their ADR and are the only artifact of a cloud-run spike that survives past the session. Check whether `.gitignore` ignores `.lavish/`, which should stay ignored; state that the scaffold does not edit `.gitignore`. In `restructure` mode, also propose ignoring the approved symlink names. Ask how `app/knowledge-base/` should be tracked only when `app/` is a real directory, with tracked README as the default until architecture defines runtime data behavior.

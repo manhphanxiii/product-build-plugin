@@ -4,7 +4,9 @@
       "Bash(git pull *)",
       "WebSearch",
       "Bash(git count-objects *)",
-      "WebFetch(domain:docs.claude.com)"
+      "WebFetch(domain:docs.claude.com)",
+      "Bash(npx -y lavish-axi *)",
+      "Bash(command -v *)"
     ]
   }
 }

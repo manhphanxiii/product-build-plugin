@@ -12,7 +12,7 @@ Offer these choices before writing configuration:
 A Stop hook written to `<root>/.claude/settings.json` fires in a cloud session too, since that file travels with the clone; it is still not a wall-clock schedule; it fires whenever a session at `<root>` stops, cloud or local.
 
 When `routines/update-roadmap.md` already exists, read it and propose changes to its cadence or mechanism instead of offering to create a second file for the same job.
-`/build:start-repo` may seed this file once, during phase 8, as a morning brief; `/build:update` owns refreshing it afterward.
+`/build:start-repo` may seed this file once, during phase 10, as a morning brief; `/build:update` owns refreshing it afterward.
 Neither skill touches `weekly-ops-review.md` or `pr-auto-review.md`, which belong to `/build:start-repo` alone.
 
 Write the approved routine definition to `routines/update-roadmap.md` with schedule, enabled sources, scan root, deduplication policy, conflict policy, and report path.

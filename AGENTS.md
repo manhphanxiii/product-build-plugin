@@ -32,6 +32,7 @@ Codex plugin selectors use `$build:<skill>`; standalone fallback selectors use `
 The shared `## Host resolution` preamble must remain byte-identical across the nine first-party skills, while skill-specific tails may differ.
 The shared `## Review gate` preamble must remain byte-identical across the six document-generating skills, while skill-specific tails may differ to encode roadmap-row ownership.
 The shared `## Root resolution` block must remain byte-identical except in `start-repo`, which uses `## Ground rules`, `update`, where Phase 0 already uses Q1 and interactive runs always ask for language, and `review-code`, which receives `<root>` from its caller and adds diff and sub-agent instructions.
+`start-repo` must contain `## Plan gate`, and every write phase from phase 7 through phase 10 must appear after it.
 
 ## Skill metadata and manifests
 
@@ -45,6 +46,8 @@ Keep shared metadata and the release version synchronized between `.claude-plugi
 ## Release checks
 
 `scripts/check.py` enforces shared-block, skill-metadata, and manifest-synchronization invariants, with negative fixtures in `tests/`.
+Every `vX.Y.Z` release ref in `README.md` must equal the version in both plugin manifests.
+When `scripts/check.py --release` runs, the matching `v<version>` tag must exist on `origin`.
 Run `python3 scripts/check.py` and `python3 -m unittest discover -s tests -v` before every release.
 When adding an invariant to `AGENTS.md`, add the corresponding check.
 

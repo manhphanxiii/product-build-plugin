@@ -63,7 +63,7 @@ Choose the surface with this probe and state the chosen surface in one line befo
 
 1. Prefer Lavish.
    Lavish is usable when its CLI runs, any required package is already installed or network access is available, and a local browser can be opened: `npx -y lavish-axi --help` exits 0, and `command -v open` resolves on macOS or `command -v xdg-open` resolves on Linux.
-   When `npx -y` exits opaquely, retry once with `node "$(npm root)/lavish-axi/dist/cli.mjs" --help` before declaring Lavish unusable.
+   When `npx -y` exits opaquely, retry once with `lavish-axi --help`; if that binary is unavailable, run `npm root -g`, then run `node <global-node-modules>/lavish-axi/dist/cli.mjs --help` using the printed path before declaring Lavish unusable.
 2. When the probe fails and both the Artifact tool and `artifact-design` skill are available, use the Artifact tool.
    Lavish serves the artifact from a local Express server, so a session whose browser is not on this machine, such as a cloud session, cannot see the page and its poll would wait forever.
    Lavish drafts are temporary and do not survive a cloud session.

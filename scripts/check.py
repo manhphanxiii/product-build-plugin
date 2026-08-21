@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -145,6 +146,29 @@ def check_identical_blocks(
             errors.append(f"{path}: {heading} differs from {baseline_path}")
 
 
+def check_plan_gate(root: Path, errors: list[str]) -> None:
+    path = root / "skills" / "start-repo" / "SKILL.md"
+    text = path.read_text(encoding="utf-8")
+    heading = "## Plan gate"
+    terminal_line = (
+        "For an already initialized repository, include only missing files in the plan; "
+        "when nothing is missing, execute nothing and direct the user to `/build:update`."
+    )
+    block = extract_block(text, heading, terminal_line)
+    if block is None:
+        errors.append(f"{path}: missing or incomplete {heading}")
+        return
+
+    gate_position = text.find(f"{heading}\n")
+    for phase in range(7, 11):
+        marker = f"## Phase {phase}:"
+        phase_position = text.find(marker)
+        if phase_position < 0:
+            errors.append(f"{path}: missing {marker}")
+        elif phase_position < gate_position:
+            errors.append(f"{path}: {marker} must appear after {heading}")
+
+
 def check_skill_metadata(root: Path, errors: list[str]) -> None:
     skill_dirs = sorted(
         path.parent.name for path in (root / "skills").glob("*/SKILL.md")
@@ -189,7 +213,7 @@ def check_skill_metadata(root: Path, errors: list[str]) -> None:
             )
 
 
-def check_manifests(root: Path, errors: list[str]) -> None:
+def check_manifests(root: Path, errors: list[str]) -> tuple[object, object]:
     claude_path = root / ".claude-plugin" / "plugin.json"
     codex_path = root / ".codex-plugin" / "plugin.json"
     claude = read_json(claude_path, errors)
@@ -219,6 +243,67 @@ def check_manifests(root: Path, errors: list[str]) -> None:
                 errors.append(f"{codex_path}: interface.{field} is required")
         if interface.get("displayName") != claude.get("displayName"):
             errors.append("plugin manifests: display names are not synchronized")
+    return claude.get("version"), codex.get("version")
+
+
+def check_readme_release_refs(
+    root: Path,
+    manifest_versions: tuple[object, object],
+    errors: list[str],
+) -> None:
+    claude_version, codex_version = manifest_versions
+    if not isinstance(claude_version, str) or claude_version != codex_version:
+        return
+    readme_path = root / "README.md"
+    refs = sorted(
+        set(
+            re.findall(
+                r"\bv\d+\.\d+\.\d+\b",
+                readme_path.read_text(encoding="utf-8"),
+            )
+        )
+    )
+    expected = f"v{claude_version}"
+    for ref in refs:
+        if ref != expected:
+            errors.append(
+                f"{readme_path}: release ref {ref!r} must match manifest version {expected!r}"
+            )
+
+
+def check_release_tag(
+    root: Path,
+    manifest_versions: tuple[object, object],
+    errors: list[str],
+) -> None:
+    claude_version, codex_version = manifest_versions
+    if not isinstance(claude_version, str) or claude_version != codex_version:
+        return
+    tag = f"v{claude_version}"
+    try:
+        result = subprocess.run(
+            [
+                "git",
+                "-C",
+                str(root),
+                "ls-remote",
+                "--exit-code",
+                "--tags",
+                "origin",
+                f"refs/tags/{tag}",
+            ],
+            check=False,
+            text=True,
+            capture_output=True,
+        )
+    except OSError as exc:
+        errors.append(f"release tag {tag!r}: could not run git: {exc}")
+        return
+    if result.returncode == 2:
+        errors.append(f"release tag {tag!r} does not exist on origin")
+    elif result.returncode != 0:
+        detail = result.stderr.strip() or f"git exited with status {result.returncode}"
+        errors.append(f"release tag {tag!r}: could not query origin: {detail}")
 
 
 def check_portability(root: Path, errors: list[str]) -> None:
@@ -259,6 +344,11 @@ def main() -> int:
         default=Path(__file__).resolve().parent.parent,
         help="Repository root to validate",
     )
+    parser.add_argument(
+        "--release",
+        action="store_true",
+        help="Also require the manifest version tag to exist on origin",
+    )
     args = parser.parse_args()
     root = args.root.resolve()
     errors: list[str] = []
@@ -277,9 +367,13 @@ def main() -> int:
         "Skip this gate only for genuinely unattended automation with no user available to approve a draft; a user-started asynchronous cloud run does not qualify.",
         errors,
     )
+    check_plan_gate(root, errors)
     check_identical_sections(root, STANDARD_ROOT_SKILLS, "## Root resolution", errors)
     check_skill_metadata(root, errors)
-    check_manifests(root, errors)
+    manifest_versions = check_manifests(root, errors)
+    check_readme_release_refs(root, manifest_versions, errors)
+    if args.release:
+        check_release_tag(root, manifest_versions, errors)
     check_portability(root, errors)
 
     if errors:

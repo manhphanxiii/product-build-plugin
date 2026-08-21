@@ -1,4 +1,10 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(npx -y lavish-axi *)",
+      "Bash(command -v *)"
+    ]
+  },
   "extraKnownMarketplaces": {
     "manhphanxiii": {
       "source": {
@@ -9,5 +15,19 @@
   },
   "enabledPlugins": {
     "build@manhphanxiii": true
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "claude plugin install build@manhphanxiii --scope project --yes",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
   }
 }
